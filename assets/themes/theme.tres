@@ -1,7 +1,0 @@
-[gd_resource type="Theme" format=3 uid="uid://b7v3piu52ejp0"]
-
-[ext_resource type="FontFile" uid="uid://xe2qm8od602y" path="res://assets/fonts/RussoOne-Regular.ttf" id="1_e1x85"]
-
-[resource]
-default_font = ExtResource("1_e1x85")
-default_font_size = 18

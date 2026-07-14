@@ -1,20 +1,16 @@
 [gd_scene format=3 uid="uid://bllyklhjrkoao"]
 
 [ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="1_2jtls"]
-[ext_resource type="FontFile" uid="uid://xe2qm8od602y" path="res://assets/fonts/RussoOne-Regular.ttf" id="2_tq5jo"]
+[ext_resource type="Script" uid="uid://deogl75dm54qc" path="res://scenes/ui/main_menu/MainMenu.cs" id="1_iff4g"]
+[ext_resource type="FontFile" uid="uid://cgo8tw1sqarj3" path="res://assets/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf" id="2_2jtls"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="3_iff4g"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmr83"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3hlpf"]
 texture = ExtResource("1_2jtls")
 
-[sub_resource type="Theme" id="Theme_e1x85"]
-
-[sub_resource type="Theme" id="Theme_cjfk0"]
-
-[sub_resource type="Theme" id="Theme_vj6dk"]
-
-[sub_resource type="Theme" id="Theme_110ce"]
-
-[sub_resource type="Theme" id="Theme_05tig"]
+[sub_resource type="FontVariation" id="FontVariation_iff4g"]
+base_font = ExtResource("2_2jtls")
+spacing_glyph = 20
 
 [node name="main_menu" type="Control" unique_id=1769929666]
 layout_mode = 3
@@ -23,79 +19,112 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_iff4g")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=656651350]
+[node name="Panel" type="Panel" parent="." unique_id=267616030]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_3hlpf")
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1451838051]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_rmr83")
+[node name="patternshift" type="Label" parent="Panel" unique_id=883839969]
+layout_mode = 1
+offset_left = 130.0
+offset_top = 82.0
+offset_right = 1762.0
+offset_bottom = 405.0
+theme_override_colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_fonts/font = SubResource("FontVariation_iff4g")
+theme_override_font_sizes/font_size = 159
+text = "patternshift
+"
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer" unique_id=774427880]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("2_tq5jo")
-text = "PatternShift"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1741202261]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=1929324700]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=474015087]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-
-[node name="Button" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=984815483]
-layout_mode = 2
-size_flags_vertical = 4
-theme = SubResource("Theme_e1x85")
+[node name="play" type="Button" parent="Panel" unique_id=988099423]
+layout_mode = 1
+offset_left = 143.0
+offset_top = 313.0
+offset_right = 370.0
+offset_bottom = 396.0
+theme = ExtResource("3_iff4g")
 theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("2_tq5jo")
+theme_override_colors/font_pressed_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/icon_normal_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/icon_focus_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/icon_pressed_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/icon_hover_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+theme_override_constants/h_separation = 4
+theme_override_font_sizes/font_size = 61
 text = "Играть"
-text_direction = 1
+alignment = 0
 
-[node name="Button2" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1496653664]
-layout_mode = 2
+[node name="settings" type="Button" parent="Panel" unique_id=1102611088]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 143.0
+offset_top = -97.0
+offset_right = 489.0
+offset_bottom = -14.0
+grow_vertical = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = SubResource("Theme_cjfk0")
+theme = ExtResource("3_iff4g")
 theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("2_tq5jo")
 text = "Настройки"
+alignment = 0
 
-[node name="Button3" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=974839770]
-layout_mode = 2
+[node name="achievements" type="Button" parent="Panel" unique_id=1968913132]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 143.0
+offset_top = 107.0
+offset_right = 544.0
+offset_bottom = 190.0
+grow_vertical = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = SubResource("Theme_vj6dk")
+theme = ExtResource("3_iff4g")
 theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("2_tq5jo")
-text = "Коллекция"
-
-[node name="Button4" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1440178312]
-layout_mode = 2
-size_flags_vertical = 4
-theme = SubResource("Theme_110ce")
-theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("2_tq5jo")
 text = "Достижения"
+alignment = 0
+icon_alignment = 1
 
-[node name="Button5" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1743620918]
-layout_mode = 2
+[node name="collection" type="Button" parent="Panel" unique_id=644014742]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 143.0
+offset_top = 5.0
+offset_right = 495.0
+offset_bottom = 88.0
+grow_vertical = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = SubResource("Theme_05tig")
+theme = ExtResource("3_iff4g")
 theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("2_tq5jo")
-text = "Выход"
+text = "Коллекция
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=84643117]
-layout_mode = 2
-size_flags_horizontal = 3
+"
+alignment = 0
+
+[node name="exit" type="Button" parent="Panel" unique_id=445627512]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 824.0
+offset_right = 323.0
+offset_bottom = 907.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_iff4g")
+theme_type_variation = &"FlatButton"
+text = "Выйти"
+alignment = 0

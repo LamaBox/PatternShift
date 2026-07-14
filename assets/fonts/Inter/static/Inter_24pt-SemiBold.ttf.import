@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://xe2qm8od602y"
-path="res://.godot/imported/RussoOne-Regular.ttf-6dfa1e4f3354d5ba40d0775191309a1f.fontdata"
+uid="uid://bi6f2rtxjnu5d"
+path="res://.godot/imported/Inter_24pt-SemiBold.ttf-4361b70630fc18ac97e8f290f00a81b9.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/RussoOne-Regular.ttf"
-dest_files=["res://.godot/imported/RussoOne-Regular.ttf-6dfa1e4f3354d5ba40d0775191309a1f.fontdata"]
+source_file="res://assets/fonts/Inter/static/Inter_24pt-SemiBold.ttf"
+dest_files=["res://.godot/imported/Inter_24pt-SemiBold.ttf-4361b70630fc18ac97e8f290f00a81b9.fontdata"]
 
 [params]
 
