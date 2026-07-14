@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bllyklhjrkoao"]
+
+[ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="1_2jtls"]
+[ext_resource type="FontFile" uid="uid://xe2qm8od602y" path="res://assets/fonts/RussoOne-Regular.ttf" id="2_tq5jo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmr83"]
+texture = ExtResource("1_2jtls")
+
+[sub_resource type="Theme" id="Theme_e1x85"]
+
+[sub_resource type="Theme" id="Theme_cjfk0"]
+
+[sub_resource type="Theme" id="Theme_vj6dk"]
+
+[sub_resource type="Theme" id="Theme_110ce"]
+
+[sub_resource type="Theme" id="Theme_05tig"]
+
+[node name="main_menu" type="Control" unique_id=1769929666]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=656651350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1451838051]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rmr83")
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer" unique_id=774427880]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "PatternShift"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1741202261]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=1929324700]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=474015087]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=984815483]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_e1x85")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "Играть"
+text_direction = 1
+
+[node name="Button2" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1496653664]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_cjfk0")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "Настройки"
+
+[node name="Button3" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=974839770]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_vj6dk")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "Коллекция"
+
+[node name="Button4" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1440178312]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_110ce")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "Достижения"
+
+[node name="Button5" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1743620918]
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_05tig")
+theme_type_variation = &"FlatButton"
+theme_override_fonts/font = ExtResource("2_tq5jo")
+text = "Выход"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer" unique_id=84643117]
+layout_mode = 2
+size_flags_horizontal = 3
