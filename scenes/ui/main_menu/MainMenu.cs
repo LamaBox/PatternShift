@@ -2,54 +2,40 @@ using Godot;
 
 public partial class MainMenu : Control
 {
-	private Button _playButton;
-	private Button _settingsButton;
-	private Button _achievementsButton;
-	private Button _collectionButton;
-	private Button _exitButton;
+	[Export] private Button _playButton;
+	[Export] private Button _settingsButton;
+	[Export] private Button _achievementsButton;
+	[Export] private Button _collectionButton;
+	[Export] private Button _quitButton;
 
 	public override void _Ready()
 	{
-		_playButton = GetNode<Button>("Panel/play");
-		_settingsButton = GetNode<Button>("Panel/settings");
-		_achievementsButton = GetNode<Button>("Panel/achievements");
-		_collectionButton = GetNode<Button>("Panel/collection");
-		_exitButton = GetNode<Button>("Panel/exit");
-
 		_playButton.Pressed += OnPlayPressed;
 		_settingsButton.Pressed += OnSettingsPressed;
 		_achievementsButton.Pressed += OnAchievementsPressed;
 		_collectionButton.Pressed += OnCollectionPressed;
-		_exitButton.Pressed += OnExitPressed;
+		_quitButton.Pressed += OnQuitPressed;
 	}
 
 	private void OnPlayPressed()
 	{
-		GD.Print("Играть");
-		//GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.ModeSelect);
+		GD.Print("Play");
+		// GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.ModeSelect);
 	}
 
 	private void OnSettingsPressed()
 	{
-		GD.Print("Настройки (пока в разработке)");
-		//GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.Settings);
+		GD.Print("Settings");
+		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.Settings);
 	}
 
-	private void OnAchievementsPressed()
-	{
-		GD.Print("Достижения (пока в разработке)");
-		//GetNode<SceneManager>("/root/SceneManager").ChangeScene(Achievements.Settings)
-	}
+	private void OnAchievementsPressed() => GD.Print("Achievements (in development)");
 
-	private void OnCollectionPressed()
-	{
-		GD.Print("Коллекция (пока в разработке)");
-		//GetNode<SceneManager>("/root/SceneManager").ChangeScene(Collection.Settings)
-	}
+	private void OnCollectionPressed() => GD.Print("Collection (in development)");
 
-	private void OnExitPressed()
+	private void OnQuitPressed()
 	{
-		GD.Print("Выход");
+		GD.Print("Quit");
 		GetNode<SceneManager>("/root/SceneManager").QuitGame();
 	}
 }

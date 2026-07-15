@@ -1,30 +1,174 @@
 [gd_scene format=3 uid="uid://gkrqxojarqt3"]
 
+[ext_resource type="Script" uid="uid://buhk7gfeh5y0f" path="res://scenes/ui/settings/Settings.cs" id="1_3x2gm"]
 [ext_resource type="Texture2D" uid="uid://5ofkfelmil77" path="res://assets/images/backgrounds/settings_bg.png" id="1_wcv47"]
+[ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="1_wyiwp"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="2_7oi5m"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7kwmf"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_umv47"]
+texture = ExtResource("1_wyiwp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7oi5m"]
 texture = ExtResource("1_wcv47")
 
-[node name="Control" type="Control" unique_id=1751048793]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm2xv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfles"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5yxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27dni"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hu66t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dm3ql"]
+
+[node name="settings" type="Control" unique_id=1751048793 node_paths=PackedStringArray("_musicVolumeSlider", "_soundsVolumeSlider", "_musicValueEdit", "_soundsValueEdit", "_closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_3x2gm")
+_musicVolumeSlider = NodePath("Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox/HBoxContainer/MusicVolumeSlider")
+_soundsVolumeSlider = NodePath("Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox/HBoxContainer/SoundsVolumeSlider")
+_musicValueEdit = NodePath("Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox/HBoxContainer/LineEdit")
+_soundsValueEdit = NodePath("Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox/HBoxContainer/LineEdit")
+_closeButton = NodePath("Settings/MarginContainer/VBoxContainer/HBoxContainer/CloseButton")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1657605788]
+[node name="MainMenuBg" type="Panel" parent="." unique_id=1986541987]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 350
-theme_override_constants/margin_top = 100
-theme_override_constants/margin_right = 350
-theme_override_constants/margin_bottom = 100
+theme_override_styles/panel = SubResource("StyleBoxTexture_umv47")
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1835532080]
+[node name="Settings" type="Panel" parent="." unique_id=908378374]
+custom_minimum_size = Vector2(1287, 835)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7oi5m")
+
+[node name="MarginContainer" type="MarginContainer" parent="Settings" unique_id=1657605788]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/MarginContainer" unique_id=957766217]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_7kwmf")
+alignment = 1
+
+[node name="Settings" type="Label" parent="Settings/MarginContainer/VBoxContainer" unique_id=1338117602]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 0.55
+theme = ExtResource("2_7oi5m")
+theme_override_font_sizes/font_size = 60
+text = "Настройки"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=1618677177]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.95
+
+[node name="CloseButton" type="Button" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1269978490]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.9
+theme = ExtResource("2_7oi5m")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 50
+text = "Назад"
+alignment = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1620243320]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicVBox" type="VBoxContainer" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=782593034]
+layout_mode = 2
+size_flags_horizontal = 9
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="MusicVolume" type="Label" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox" unique_id=454471162]
+layout_mode = 2
+theme = ExtResource("2_7oi5m")
+theme_override_font_sizes/font_size = 40
+text = "Громкость музыки"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox" unique_id=1281828732]
+layout_mode = 2
+
+[node name="MusicVolumeSlider" type="HSlider" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox/HBoxContainer" unique_id=1557337287]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+
+[node name="LineEdit" type="LineEdit" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MusicVBox/HBoxContainer" unique_id=1232518366]
+layout_mode = 2
+theme = ExtResource("2_7oi5m")
+theme_override_constants/minimum_character_width = 3
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cm2xv")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_tfles")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l5yxn")
+text = "100%"
+alignment = 1
+max_length = 4
+
+[node name="SoundsVBox" type="VBoxContainer" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1994867430]
+layout_mode = 2
+size_flags_horizontal = 9
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="SoundsVolume" type="Label" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox" unique_id=417682319]
+layout_mode = 2
+theme = ExtResource("2_7oi5m")
+theme_override_font_sizes/font_size = 40
+text = "Громкость звуков"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox" unique_id=1591428036]
+layout_mode = 2
+
+[node name="SoundsVolumeSlider" type="HSlider" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox/HBoxContainer" unique_id=1139034071]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+
+[node name="LineEdit" type="LineEdit" parent="Settings/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SoundsVBox/HBoxContainer" unique_id=1023827739]
+layout_mode = 2
+theme = ExtResource("2_7oi5m")
+theme_override_constants/minimum_character_width = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_27dni")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_hu66t")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dm3ql")
+text = "100%"
+alignment = 1
+max_length = 4

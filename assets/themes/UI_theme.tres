@@ -8,6 +8,20 @@ spacing_glyph = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_buhf3"]
 
+[sub_resource type="FontVariation" id="FontVariation_5slce"]
+base_font = ExtResource("1_ok3pn")
+spacing_glyph = 5
+
+[sub_resource type="FontVariation" id="FontVariation_cm2xv"]
+base_font = ExtResource("1_ok3pn")
+spacing_glyph = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5yxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfles"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27dni"]
+
 [resource]
 Button/colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
 Button/colors/font_focus_color = Color(0.9999998, 0.9837727, 0.25299123, 1)
@@ -17,3 +31,11 @@ Button/colors/font_pressed_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
 Button/font_sizes/font_size = 61
 Button/fonts/font = SubResource("FontVariation_rxv2n")
 Button/styles/pressed = SubResource("StyleBoxEmpty_buhf3")
+Label/colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+Label/font_sizes/font_size = 50
+Label/fonts/font = SubResource("FontVariation_5slce")
+LineEdit/font_sizes/font_size = 40
+LineEdit/fonts/font = SubResource("FontVariation_cm2xv")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_l5yxn")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_tfles")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_27dni")

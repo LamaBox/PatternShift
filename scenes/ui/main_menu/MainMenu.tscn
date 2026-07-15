@@ -12,14 +12,21 @@ texture = ExtResource("1_2jtls")
 base_font = ExtResource("2_2jtls")
 spacing_glyph = 20
 
-[node name="main_menu" type="Control" unique_id=1769929666]
+[node name="main_menu" type="Control" unique_id=1769929666 node_paths=PackedStringArray("_playButton", "_settingsButton", "_achievementsButton", "_collectionButton", "_quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 3.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iff4g")
+_playButton = NodePath("Panel/Play")
+_settingsButton = NodePath("Panel/Settings")
+_achievementsButton = NodePath("Panel/Achievements")
+_collectionButton = NodePath("Panel/Collection")
+_quitButton = NodePath("Panel/Quit")
 
 [node name="Panel" type="Panel" parent="." unique_id=267616030]
 layout_mode = 1
@@ -42,7 +49,7 @@ theme_override_font_sizes/font_size = 159
 text = "patternshift
 "
 
-[node name="play" type="Button" parent="Panel" unique_id=988099423]
+[node name="Play" type="Button" parent="Panel" unique_id=988099423]
 layout_mode = 1
 offset_left = 143.0
 offset_top = 313.0
@@ -62,7 +69,7 @@ theme_override_font_sizes/font_size = 61
 text = "Играть"
 alignment = 0
 
-[node name="settings" type="Button" parent="Panel" unique_id=1102611088]
+[node name="Settings" type="Button" parent="Panel" unique_id=1102611088]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -79,7 +86,7 @@ theme_type_variation = &"FlatButton"
 text = "Настройки"
 alignment = 0
 
-[node name="achievements" type="Button" parent="Panel" unique_id=1968913132]
+[node name="Achievements" type="Button" parent="Panel" unique_id=1968913132]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -97,7 +104,7 @@ text = "Достижения"
 alignment = 0
 icon_alignment = 1
 
-[node name="collection" type="Button" parent="Panel" unique_id=644014742]
+[node name="Collection" type="Button" parent="Panel" unique_id=644014742]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -116,7 +123,7 @@ text = "Коллекция
 "
 alignment = 0
 
-[node name="exit" type="Button" parent="Panel" unique_id=445627512]
+[node name="Quit" type="Button" parent="Panel" unique_id=445627512]
 layout_mode = 0
 offset_left = 143.0
 offset_top = 824.0
