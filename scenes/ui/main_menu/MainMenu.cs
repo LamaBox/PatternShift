@@ -19,14 +19,14 @@ public partial class MainMenu : Control
 
 	private void OnPlayPressed()
 	{
-		GD.Print("Play");
 		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.ModeSelect);
 	}
 
 	private void OnSettingsPressed()
 	{
-		GD.Print("Settings");
-		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.Settings);
+		var settingsScene = (PackedScene)GD.Load("res://scenes/ui/settings/Settings.tscn");
+		var settingsInstance = settingsScene.Instantiate<Control>();
+		AddChild(settingsInstance);
 	}
 
 	private void OnAchievementsPressed() => GD.Print("Achievements (in development)");
@@ -35,7 +35,6 @@ public partial class MainMenu : Control
 
 	private void OnQuitPressed()
 	{
-		GD.Print("Quit");
 		GetNode<SceneManager>("/root/SceneManager").QuitGame();
 	}
 }

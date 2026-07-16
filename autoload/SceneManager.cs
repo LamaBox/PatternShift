@@ -7,6 +7,7 @@ public partial class SceneManager : Node
 	public const string ModeSelect = "res://scenes/ui/mode_select/ModeSelect.tscn";
 	public const string Settings = "res://scenes/ui/settings/Settings.tscn";
 	public const string GameUI = "res://scenes/ui/game_ui/GameUI.tscn";
+	public const string PausePopup = "res://scenes/ui/pause/PausePopup.tscn";
 	public const string GameOver = "res://scenes/ui/game_over/GameOver.tscn";
 
 	private Node _currentScene;

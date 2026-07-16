@@ -77,7 +77,6 @@ public partial class Settings : Control
 
 	private void OnClosePressed()
 	{
-		GD.Print("Return to the main menu");
-		GetNode<SceneManager>("/root/SceneManager").GoToMainMenu();
+		QueueFree();
 	}
 }

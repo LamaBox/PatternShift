@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://ce7878rafwud8"]
+
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="1_yrwxr"]
+[ext_resource type="Script" uid="uid://bstinvi4c7wuw" path="res://scenes/ui/pause/PausePopup.cs" id="2_jg3dj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpryf"]
+bg_color = Color(0.12156863, 0.15686275, 0.21176471, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+border_blend = true
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+
+[node name="PausePopup" type="Control" unique_id=1957672427 node_paths=PackedStringArray("_resumeButton", "_settingsButton", "_quitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yrwxr")
+script = ExtResource("2_jg3dj")
+_resumeButton = NodePath("Pause/MarginContainer/VBoxContainer/ResumeButton")
+_settingsButton = NodePath("Pause/MarginContainer/VBoxContainer/SettingsButton")
+_quitButton = NodePath("Pause/MarginContainer/VBoxContainer/QuitButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=162537972]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Pause" type="Panel" parent="." unique_id=1481922371]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vpryf")
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause" unique_id=1924659491]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/MarginContainer" unique_id=1681351083]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Pause/MarginContainer/VBoxContainer" unique_id=460887156]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Продолжить"
+
+[node name="SettingsButton" type="Button" parent="Pause/MarginContainer/VBoxContainer" unique_id=1150232934]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Настройки"
+
+[node name="QuitButton" type="Button" parent="Pause/MarginContainer/VBoxContainer" unique_id=543777572]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Выйти в меню"
