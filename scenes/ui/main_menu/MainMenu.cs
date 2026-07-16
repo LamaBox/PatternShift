@@ -20,7 +20,7 @@ public partial class MainMenu : Control
 	private void OnPlayPressed()
 	{
 		GD.Print("Play");
-		// GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.ModeSelect);
+		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.ModeSelect);
 	}
 
 	private void OnSettingsPressed()

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://gkrqxojarqt3"]
 
 [ext_resource type="Script" uid="uid://buhk7gfeh5y0f" path="res://scenes/ui/settings/Settings.cs" id="1_3x2gm"]
-[ext_resource type="Texture2D" uid="uid://5ofkfelmil77" path="res://assets/images/backgrounds/settings_bg.png" id="1_wcv47"]
+[ext_resource type="Texture2D" uid="uid://5ofkfelmil77" path="res://assets/images/backgrounds/panel.png" id="1_wcv47"]
 [ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="1_wyiwp"]
 [ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="2_7oi5m"]
 
@@ -28,10 +28,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3x2gm")
@@ -51,7 +47,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_umv47")
 
 [node name="Settings" type="Panel" parent="." unique_id=908378374]
-custom_minimum_size = Vector2(1287, 835)
+custom_minimum_size = Vector2(1500, 850)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,7 +80,7 @@ size_flags_vertical = 2
 size_flags_stretch_ratio = 0.55
 theme = ExtResource("2_7oi5m")
 theme_override_font_sizes/font_size = 60
-text = "Настройки"
+text = "НАСТРОЙКИ"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=1618677177]
