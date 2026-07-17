@@ -10,7 +10,7 @@ public partial class RewardSystem : Node
     [Export] public Score GameScore { get; set; }
     [Export] public Streak GameStreak { get; set; }
 
-    [Export] public List<RewardData> AllRewards { get; set; } = new();
+    [Export] public Godot.Collections.Array<RewardData> AllRewards { get; set; } = new();
 
     public override void _Ready()
     {
