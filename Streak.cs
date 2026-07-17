@@ -4,12 +4,12 @@ using System;
 [GlobalClass]
 public partial class Streak : Node
 {
-	[Export] public int maxValue = int.MaxValue; //Максимальное значение серии, настраивается в редакторе Godot
-	[Export] public int minValue = 0; //Минимальное значение серии, настраивается в редакторе Godot
-	[Export] public int startValue = 0; //Стартовое значение серии, настраивается в редакторе Godot
+	[Export] public int maxValue = int.MaxValue; //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
+	[Export] public int minValue = 0; //РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
+	[Export] public int startValue = 0; //РЎС‚Р°СЂС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 
-	public int currentValue; //Текущее значение серии, доступно для чтения и записи
-	public int maxStreak; //Максимальное значение серии, доступно для чтения и записи
+	public int CurrentValue { get; set; } //РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РґРѕСЃС‚СѓРїРЅРѕ РґР»СЏ С‡С‚РµРЅРёСЏ Рё Р·Р°РїРёСЃРё
+	public int MaxStreak { get; set; } //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РґРѕСЃС‚СѓРїРЅРѕ РґР»СЏ С‡С‚РµРЅРёСЏ Рё Р·Р°РїРёСЃРё
 
 	public override void _Ready()
 	{
@@ -18,21 +18,21 @@ public partial class Streak : Node
 
 	private void InitializeScore()
 	{
-		currentValue = startValue;
-		maxStreak = startValue;
+        CurrentValue = startValue;
+        MaxStreak = startValue;
 	}
 
 	public void Increment()
 	{
-		currentValue = Mathf.Clamp(currentValue + 1, minValue, maxValue); //Увеличение серии на 1 в пределах ограничений
+        CurrentValue = Mathf.Clamp(CurrentValue + 1, minValue, maxValue); //РЈРІРµР»РёС‡РµРЅРёРµ СЃРµСЂРёРё РЅР° 1 РІ РїСЂРµРґРµР»Р°С… РѕРіСЂР°РЅРёС‡РµРЅРёР№
 
-		if (currentValue > maxStreak)
+		if (CurrentValue > MaxStreak)
 		{
-			maxStreak = currentValue; //Обновление рекорда, если текущее значение его превышает
+            MaxStreak = CurrentValue; //РћР±РЅРѕРІР»РµРЅРёРµ СЂРµРєРѕСЂРґР°, РµСЃР»Рё С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РµРіРѕ РїСЂРµРІС‹С€Р°РµС‚
 		}
 	}
 
-	public void ResetCurrentValue() => currentValue = startValue; //Сброс текущего значения серии к стартовому значению
+	public void ResetCurrentValue() => CurrentValue = startValue; //РЎР±СЂРѕСЃ С‚РµРєСѓС‰РµРіРѕ Р·РЅР°С‡РµРЅРёСЏ СЃРµСЂРёРё Рє СЃС‚Р°СЂС‚РѕРІРѕРјСѓ Р·РЅР°С‡РµРЅРёСЋ
 
-	public void ResetMaxStreak() => maxStreak = currentValue; //Сброс рекордного значения серии к текущему значению
+	public void ResetMaxStreak() => MaxStreak = CurrentValue; //РЎР±СЂРѕСЃ СЂРµРєРѕСЂРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ СЃРµСЂРёРё Рє С‚РµРєСѓС‰РµРјСѓ Р·РЅР°С‡РµРЅРёСЋ
 }
