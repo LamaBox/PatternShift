@@ -4,7 +4,9 @@ using System;
 [GlobalClass]
 public partial class Streak : Node
 {
-	[Export] public int maxValue = int.MaxValue; //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
+    [Signal] public delegate void ValueChangedEventHandler(int newValue);
+
+    [Export] public int maxValue = int.MaxValue; //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 	[Export] public int minValue = 0; //РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 	[Export] public int startValue = 0; //РЎС‚Р°СЂС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃРµСЂРёРё, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 
@@ -30,7 +32,9 @@ public partial class Streak : Node
 		{
             MaxStreak = CurrentValue; //РћР±РЅРѕРІР»РµРЅРёРµ СЂРµРєРѕСЂРґР°, РµСЃР»Рё С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РµРіРѕ РїСЂРµРІС‹С€Р°РµС‚
 		}
-	}
+
+        EmitSignal(SignalName.ValueChanged, CurrentValue);
+    }
 
 	public void ResetCurrentValue() => CurrentValue = startValue; //РЎР±СЂРѕСЃ С‚РµРєСѓС‰РµРіРѕ Р·РЅР°С‡РµРЅРёСЏ СЃРµСЂРёРё Рє СЃС‚Р°СЂС‚РѕРІРѕРјСѓ Р·РЅР°С‡РµРЅРёСЋ
 

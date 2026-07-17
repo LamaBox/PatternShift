@@ -4,7 +4,9 @@ using System;
 [GlobalClass]
 public partial class Score : Node
 {
-	[Export] public int maxValue = int.MaxValue; //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕС‡РєРѕРІ, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
+	[Signal] public delegate void ValueChangedEventHandler(int newValue);
+
+    [Export] public int maxValue = int.MaxValue; //РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕС‡РєРѕРІ, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 	[Export] public int minValue = 0; //РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕС‡РєРѕРІ, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 	[Export] public int startValue = 0; //РЎС‚Р°СЂС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕС‡РєРѕРІ, РЅР°СЃС‚СЂР°РёРІР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ Godot
 
@@ -33,9 +35,10 @@ public partial class Score : Node
 		{
             HighScore = CurrentValue; //РћР±РЅРѕРІР»СЏРµС‚СЃСЏ СЂРµРєРѕСЂРґ, РµСЃР»Рё С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РѕС‡РєРѕРІ РїСЂРµРІС‹С€Р°РµС‚ СЂРµРєРѕСЂРґРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
 		}
-	}
 
-	public void ResetCurrentValue() => CurrentValue = startValue; //РЎР±СЂРѕСЃ С‚РµРєСѓС‰РµРіРѕ Р·РЅР°С‡РµРЅРёСЏ РѕС‡РєРѕРІ Рє СЃС‚Р°СЂС‚РѕРІРѕРјСѓ Р·РЅР°С‡РµРЅРёСЋ
+        EmitSignal(SignalName.ValueChanged, CurrentValue);
+    }
 
-	public void ResetHighScore() => HighScore = CurrentValue; //РЎР±СЂРѕСЃ СЂРµРєРѕСЂРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РѕС‡РєРѕРІ Рє С‚РµРєСѓС‰РµРјСѓ Р·РЅР°С‡РµРЅРёСЋ
+	public void ResetCurrentValue() => CurrentValue = startValue; //РЎР±СЂРѕСЃ С‚РµРєСѓС‰РµРіРѕ Р·РЅР°С‡РµРЅРёСЏ РѕС‡РєРѕРІ Рє СЃС‚Р°СЂС‚РѕРІРѕРјСѓ Р·R
+	public void ResetHighScore() => HighScore = CurrentValue; //РЎР±СЂРѕСЃ СЂРµРєРѕСЂРґНё Р·R
 }

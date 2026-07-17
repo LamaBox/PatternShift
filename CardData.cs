@@ -1,3 +1,5 @@
+using Godot;
+
 public enum CardFigure { Ellipse, Rhomb, Snot }
 
 public enum CardColor { Red, Green, Violet }
@@ -6,8 +8,8 @@ public enum CardFill { Empty, Striped, Full }
 
 public enum CardCount { One, Two, Three }
 
-
-public struct CardData
+[GlobalClass]
+public partial class CardData : Resource
 {
     public CardFigure Figure { get; set; }
     public CardColor Color { get; set; }
