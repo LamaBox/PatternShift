@@ -12,6 +12,7 @@ public partial class GameController : Node
 
     [Export] public BaseCardValidator CardValidator { get; set; }
     [Export] public BaseStreakStrategy StreakStrategy { get; set; }
+    [Export] public BasePenaltyStrategy PenaltyStrategy { get; set; }
 
     public void ProcessSelectedSet(List<CardData> cards)
     {
