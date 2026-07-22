@@ -22,7 +22,7 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 corner_detail = 10
 
-[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_pausePopup")]
+[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_gridContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,7 @@ _streakLabel = NodePath("HBoxContainer/Streak")
 _timerLabel = NodePath("HBoxContainer2/Time")
 _scoreLabel = NodePath("HBoxContainer2/Score")
 _pauseButton = NodePath("HBoxContainer/PauseButton")
-_pausePopup = NodePath("")
+_gridContainer = NodePath("CenterContainer/Panel/GridContainer")
 
 [node name="Panel" type="Panel" parent="." unique_id=707826528]
 layout_mode = 1
@@ -66,6 +66,15 @@ grow_vertical = 2
 custom_minimum_size = Vector2(1300, 880)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5nu6f")
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/Panel" unique_id=1158632028]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=234364656]
 layout_mode = 1
