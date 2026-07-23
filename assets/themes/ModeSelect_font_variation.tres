@@ -1,9 +1,9 @@
-[gd_resource type="Theme" format=3 uid="uid://vm3qx3vxv0sr"]
+[gd_resource type="Theme" format=3 uid="uid://g0en87gf7qtb"]
 
-[ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_buhf3"]
+[ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_5cxro"]
 
 [sub_resource type="FontVariation" id="FontVariation_2voy0"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok3pn"]
 bg_color = Color(0.16470589, 0.41960785, 0.78039217, 1)
@@ -37,11 +37,11 @@ shadow_size = 1
 shadow_offset = Vector2(0, 10)
 
 [sub_resource type="FontVariation" id="FontVariation_cvf2j"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 spacing_glyph = 10
 
 [sub_resource type="FontVariation" id="FontVariation_pq8hh"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5yxn"]
 
@@ -50,22 +50,22 @@ base_font = ExtResource("1_buhf3")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27dni"]
 
 [sub_resource type="FontVariation" id="FontVariation_2b04s"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [sub_resource type="FontVariation" id="FontVariation_buhf3"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [sub_resource type="FontVariation" id="FontVariation_ok3pn"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 variation_transform = Transform2D(1, 0.4, 0, 1, 0, 0)
 spacing_glyph = 20
 spacing_top = 2
 
 [sub_resource type="FontVariation" id="FontVariation_tq5jo"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [sub_resource type="FontVariation" id="FontVariation_iff4g"]
-base_font = ExtResource("1_buhf3")
+base_font = ExtResource("1_5cxro")
 
 [resource]
 Button/colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)

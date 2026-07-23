@@ -2,7 +2,6 @@ using Godot;
 
 public partial class SceneManager : Node
 {
-	// Paths to scenes
 	public const string MainMenu = "res://scenes/ui/main_menu/MainMenu.tscn";
 	public const string ModeSelect = "res://scenes/ui/mode_select/ModeSelect.tscn";
 	public const string Settings = "res://scenes/ui/settings/Settings.tscn";
@@ -12,11 +11,7 @@ public partial class SceneManager : Node
 
 	private Node _currentScene;
 
-	public override void _Ready()
-	{
-		GD.Print("SceneManager loaded");
-		_currentScene = GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1);
-	}
+	public override void _Ready() => _currentScene = GetTree().Root.GetChild(GetTree().Root.GetChildCount() - 1);
 
 	public void ChangeScene(string scenePath)
 	{

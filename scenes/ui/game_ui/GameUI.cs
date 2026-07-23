@@ -43,37 +43,30 @@ public partial class GameUI : Control
 
 	private void GenerateCards()
 	{
-		// Загружаем сцену карточки
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 
-		// Очищаем контейнер, если там уже есть карты
 		foreach (Node child in _gridContainer.GetChildren())
 		{
 			child.QueueFree();
 		}
 
-		// Генерируем 12 карт
 		for (int i = 0; i < 12; i++)
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			// Случайные параметры
 			var shape = (Card.ShapeType)_random.Next(0, 3);
 			var color = (Card.ColorType)_random.Next(0, 3);
 			var fill = (Card.FillType)_random.Next(0, 3);
 			int count = _random.Next(1, 4);
 
-			// Настраиваем карту
 			card.Setup(shape, color, fill, count);
 
-			// Добавляем в сетку
 			_gridContainer.AddChild(card);
 		}
 	}
 
 	private void OnPausePressed()
 	{
-		GD.Print("Pause");
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
 		var pauseInstance = pauseScene.Instantiate<Control>();
 		AddChild(pauseInstance);

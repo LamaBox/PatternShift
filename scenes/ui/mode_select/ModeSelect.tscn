@@ -1,19 +1,8 @@
 [gd_scene format=3 uid="uid://bd0mj1poih1vv"]
 
 [ext_resource type="Script" uid="uid://hbib0ogcym7h" path="res://scenes/ui/mode_select/ModeSelect.cs" id="1_crvcy"]
-[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="1_lsgh0"]
-[ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="2_aww40"]
-[ext_resource type="Texture2D" uid="uid://5ofkfelmil77" path="res://assets/images/backgrounds/panel.png" id="4_4pnp1"]
-[ext_resource type="FontFile" uid="uid://b45o0jwu4mmb4" path="res://assets/fonts/Inter/static/Inter_28pt-Light.ttf" id="4_n6wff"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3hlpf"]
-texture = ExtResource("2_aww40")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5slce"]
-texture = ExtResource("4_4pnp1")
-
-[sub_resource type="FontVariation" id="FontVariation_crvcy"]
-base_font = ExtResource("4_n6wff")
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_n6wff"]
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="4_4pnp1"]
 
 [node name="ModeSelect" type="Control" unique_id=675892168 node_paths=PackedStringArray("_classicButton", "_standardButton", "_timeTrialButton", "_dailyButton", "_endlessButton", "_classicDesc", "_standardDesc", "_timeTrialDesc", "_dailyDesc", "_endlessDesc", "_startButton", "_backButton")]
 layout_mode = 3
@@ -23,30 +12,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_crvcy")
-_classicButton = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Classic/Button")
-_standardButton = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Standard/Button")
-_timeTrialButton = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial/Button")
-_dailyButton = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Daily/Button")
-_endlessButton = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Endless/Button")
-_classicDesc = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Classic/Label")
-_standardDesc = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Standard/Label")
-_timeTrialDesc = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial/Label")
-_dailyDesc = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Daily/Label")
-_endlessDesc = NodePath("Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Endless/Label")
-_startButton = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/StartButton")
-_backButton = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/CloseButton")
+_classicButton = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Classic/ClassicButton")
+_standardButton = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Standard/StandardButton")
+_timeTrialButton = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial/TimeTrialButton")
+_dailyButton = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Daily/DailyButton")
+_endlessButton = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Endless/EndlessButton")
+_classicDesc = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Classic/Description")
+_standardDesc = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Standard/Description")
+_timeTrialDesc = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial/Description")
+_dailyDesc = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Daily/Description")
+_endlessDesc = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer/Endless/Description")
+_startButton = NodePath("Panel/VBoxContainer/HBoxContainer/StartButton")
+_backButton = NodePath("Panel/VBoxContainer/HBoxContainer/CloseButton")
 
-[node name="MainMenuBg" type="Panel" parent="." unique_id=337139785]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=658239869]
+modulate = Color(0, 0, 0, 0.59607846)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_lsgh0")
-theme_override_styles/panel = SubResource("StyleBoxTexture_3hlpf")
+color = Color(0, 0, 0, 1)
 
-[node name="Panel" type="Panel" parent="." unique_id=680912039]
+[node name="Panel" type="PanelContainer" parent="." unique_id=2118870183]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -59,196 +48,171 @@ offset_right = 750.0
 offset_bottom = 425.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_lsgh0")
-theme_override_styles/panel = SubResource("StyleBoxTexture_5slce")
+theme = ExtResource("4_4pnp1")
+theme_override_styles/panel = ExtResource("3_n6wff")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=103222636]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1363839523]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1363839523]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=871625308]
+[node name="SelectingAGameMode" type="Label" parent="Panel/VBoxContainer" unique_id=871625308]
 layout_mode = 2
-size_flags_vertical = 6
-size_flags_stretch_ratio = 0.79
+size_flags_vertical = 2
+size_flags_stretch_ratio = 1.03
 theme_override_font_sizes/font_size = 60
 text = "ВЫБОР РЕЖИМА ИГРЫ"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1993623978]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1993623978]
 layout_mode = 2
-size_flags_vertical = 7
-size_flags_stretch_ratio = 5.82
+size_flags_vertical = 11
+size_flags_stretch_ratio = 7.84
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=369341109]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=369341109]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.96
+theme_override_constants/separation = 35
 
-[node name="Classic" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2070459209]
+[node name="Classic" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2070459209]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Classic" unique_id=1821465852]
+[node name="ClassicButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Classic" unique_id=1821465852]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 55
 text = "Классический"
 autowrap_trim_flags = 192
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Classic" unique_id=392851789]
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Classic" unique_id=392851789]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme = ExtResource("1_lsgh0")
-theme_override_fonts/font = SubResource("FontVariation_crvcy")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 30
 text = "Поиск максимального количества комбинаций за 5 минут."
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Standard" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=287300079]
+[node name="Standard" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=287300079]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Standard" unique_id=523557901]
+[node name="StandardButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Standard" unique_id=523557901]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 55
 text = "Стандартный"
 autowrap_trim_flags = 192
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Standard" unique_id=1428064363]
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Standard" unique_id=1428064363]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme = ExtResource("1_lsgh0")
-theme_override_fonts/font = SubResource("FontVariation_crvcy")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 30
 text = "Поиск максимального количества комбинаций за 5 минут. Могут появиться модификаторы."
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="TimeTrial" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2079272290]
+[node name="TimeTrial" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2079272290]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial" unique_id=1007932622]
+[node name="TimeTrialButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial" unique_id=1007932622]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 55
 text = "Испытание
 на время"
 autowrap_trim_flags = 192
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial" unique_id=1393682699]
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/TimeTrial" unique_id=1393682699]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme = ExtResource("1_lsgh0")
-theme_override_fonts/font = SubResource("FontVariation_crvcy")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 30
 text = "Найди как можно больше комбинаций за определённое время. Могут появиться модификаторы."
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Daily" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=390962685]
+[node name="Daily" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=390962685]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Daily" unique_id=547923182]
+[node name="DailyButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Daily" unique_id=547923182]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 55
 text = "Ежедневный"
 autowrap_trim_flags = 192
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Daily" unique_id=819804200]
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Daily" unique_id=819804200]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme = ExtResource("1_lsgh0")
-theme_override_fonts/font = SubResource("FontVariation_crvcy")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 30
 text = "Все игроки получают одинаковое поле. Результаты в таблице лидеров."
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Endless" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=863063290]
+[node name="Endless" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=863063290]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Endless" unique_id=349543317]
+[node name="EndlessButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Endless" unique_id=349543317]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 55
 text = "Бесконечный"
 autowrap_trim_flags = 192
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Endless" unique_id=1093165903]
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/VBoxContainer/Endless" unique_id=1093165903]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme = ExtResource("1_lsgh0")
-theme_override_fonts/font = SubResource("FontVariation_crvcy")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 30
 text = "Бесконечный режим до первой ошибки. Без модификаторов."
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=903922508]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=903922508]
 layout_mode = 2
 size_flags_vertical = 10
-size_flags_stretch_ratio = 0.2
+size_flags_stretch_ratio = 1.27
 
-[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1639410398]
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1639410398]
+custom_minimum_size = Vector2(350, 80)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 50
 text = "Назад"
-alignment = 0
 
-[node name="StartButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=48775295]
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=48775295]
+custom_minimum_size = Vector2(350, 80)
 layout_mode = 2
 size_flags_horizontal = 10
-theme = ExtResource("1_lsgh0")
+theme = ExtResource("4_4pnp1")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 50
 text = "Начать"
-alignment = 2

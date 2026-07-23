@@ -1,26 +1,13 @@
 [gd_scene format=3 uid="uid://c4olymd7hjnr4"]
 
-[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="1_7utn3"]
-[ext_resource type="Texture2D" uid="uid://b6cane3svyib3" path="res://assets/images/backgrounds/main_menu_bg.png" id="2_5nu6f"]
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="1_dcmdd"]
 [ext_resource type="Script" uid="uid://b4eh8an14sjig" path="res://scenes/ui/game_ui/GameUI.cs" id="2_f8c3s"]
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_cvr6e"]
+[ext_resource type="Texture2D" uid="uid://48jpl6yerg5q" path="res://assets/images/backgrounds/animated_main_menu_bg.png" id="3_dcmdd"]
 [ext_resource type="Texture2D" uid="uid://8k6b6nhpy46l" path="res://assets/images/icons/PauseButton.png" id="4_cvr6e"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7utn3"]
-texture = ExtResource("2_5nu6f")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5nu6f"]
-bg_color = Color(0.12156863, 0.15686275, 0.21176471, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
-border_blend = true
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-corner_detail = 10
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_os7y1"]
+texture = ExtResource("3_dcmdd")
 
 [node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_gridContainer")]
 layout_mode = 3
@@ -31,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_7utn3")
+theme = ExtResource("1_dcmdd")
 script = ExtResource("2_f8c3s")
 _streakLabel = NodePath("HBoxContainer/Streak")
 _timerLabel = NodePath("HBoxContainer2/Time")
@@ -39,14 +26,14 @@ _scoreLabel = NodePath("HBoxContainer2/Score")
 _pauseButton = NodePath("HBoxContainer/PauseButton")
 _gridContainer = NodePath("CenterContainer/Panel/GridContainer")
 
-[node name="Panel" type="Panel" parent="." unique_id=707826528]
+[node name="Panel" type="Panel" parent="." unique_id=954952931]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_7utn3")
+theme_override_styles/panel = SubResource("StyleBoxTexture_os7y1")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=836524274]
 layout_mode = 1
@@ -65,7 +52,7 @@ grow_vertical = 2
 [node name="Panel" type="Panel" parent="CenterContainer" unique_id=1158740903]
 custom_minimum_size = Vector2(1300, 880)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5nu6f")
+theme_override_styles/panel = ExtResource("3_cvr6e")
 
 [node name="GridContainer" type="GridContainer" parent="CenterContainer/Panel" unique_id=1158632028]
 layout_mode = 1
@@ -84,7 +71,7 @@ offset_left = 40.0
 offset_top = 40.0
 offset_right = -40.0
 grow_horizontal = 2
-theme = ExtResource("1_7utn3")
+theme = ExtResource("1_dcmdd")
 
 [node name="Streak" type="Label" parent="HBoxContainer" unique_id=1877919944]
 layout_mode = 2
@@ -93,12 +80,14 @@ theme_override_font_sizes/font_size = 60
 text = "Серия x100"
 
 [node name="PauseButton" type="Button" parent="HBoxContainer" unique_id=279347710]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 60
 icon = ExtResource("4_cvr6e")
+icon_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1505270119]
 layout_mode = 1

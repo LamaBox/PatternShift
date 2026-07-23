@@ -27,8 +27,8 @@ public partial class ModeSelect : Control
 		_dailyButton.Pressed += () => SelectMode("daily");
 		_endlessButton.Pressed += () => SelectMode("endless");
 
-		_backButton.Pressed += () => GetNode<SceneManager>("/root/SceneManager").GoToMainMenu();
-		_startButton.Pressed += () => GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.GameUI);
+		_backButton.Pressed += OnBackPressed;
+		_startButton.Pressed += OnStartPressed;
 
 		SelectMode("classic");
 	}
@@ -36,7 +36,6 @@ public partial class ModeSelect : Control
 	private void SelectMode(string mode)
 	{
 		_selectedMode = mode;
-
 		ResetDescriptions();
 
 		switch (mode)
@@ -66,5 +65,15 @@ public partial class ModeSelect : Control
 		_timeTrialDesc.Modulate = new Color(1, 1, 1, 0.5f);
 		_dailyDesc.Modulate = new Color(1, 1, 1, 0.5f);
 		_endlessDesc.Modulate = new Color(1, 1, 1, 0.5f);
+	}
+
+	private void OnBackPressed()
+	{
+		QueueFree();
+	}
+
+	private void OnStartPressed()
+	{
+		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.GameUI);
 	}
 }

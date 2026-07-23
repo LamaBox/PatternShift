@@ -15,13 +15,11 @@ public partial class PausePopup : Control
 
 	private void OnResumePressed()
 	{
-		GD.Print("Resume");
 		QueueFree();
 	}
 
 	private void OnSettingsPressed()
 	{
-		GD.Print("Настройки!");
 		var settingsScene = (PackedScene)GD.Load("res://scenes/ui/settings/Settings.tscn");
 		var settingsInstance = settingsScene.Instantiate<Control>();
 		AddChild(settingsInstance);
@@ -29,7 +27,6 @@ public partial class PausePopup : Control
 
 	private void OnQuitPressed()
 	{
-		GD.Print("Выйти в меню!");
 		GetNode<SceneManager>("/root/SceneManager").GoToMainMenu();
 	}
 }
