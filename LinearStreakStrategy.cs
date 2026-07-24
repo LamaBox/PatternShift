@@ -4,8 +4,8 @@ using System;
 [GlobalClass]
 public partial class LinearStreakStrategy : BaseStreakStrategy
 {
-    [Export] public int PointsPerStreakStep { get; set; } = 5; //Прибавка за увеличение серии
-    [Export] public int MaxMultiplier { get; set; } = 5; //Максимально возможное число прибавок от количества серии
+    [Export] public int PointsPerStreakStep { get; set; } = 5;
+    [Export] public int MaxMultiplier { get; set; } = 5;
 
     public override int CalculateScore(Score score, Streak streak)
     {

@@ -9,11 +9,10 @@ public partial class ClassicCardValidator : BaseCardValidator
     {
         if (cardList.Count != 3)
         {
-            GD.PrintErr("Invalid number of cards. Expected 3, got " + cardList.Count); //Сообщение об ошибке, если количество карточек не равно 3
+            GD.PrintErr("Invalid number of cards. Expected 3, got " + cardList.Count);
             return false;
         }
 
-        //Проверка всех свойств карточек на соответствие правилам игры "Set"
         return CheckProperty(cardList, c => c.Figure) &&
                CheckProperty(cardList, c => c.Color) &&
                CheckProperty(cardList, c => c.Fill) &&

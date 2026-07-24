@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class FixedPenaltyStrategy : BasePenaltyStrategy
 {
-    [Export] public int PenaltyPoints { get; set; } = 10; //Фиксированное количество очков штрафа
+    [Export] public int PenaltyPoints { get; set; } = 10;
 
     public override int CalculatePenalty(Score score, Streak streak)
     {
