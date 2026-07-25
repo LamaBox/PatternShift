@@ -229,6 +229,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_3hlpf")
+metadata/_edit_use_anchors_ = true
 
 [node name="FallingCardsLayer" type="Node2D" parent="." unique_id=214008716]
 
