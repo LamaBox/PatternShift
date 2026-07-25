@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://buhk7gfeh5y0f" path="res://scenes/ui/settings/Settings.cs" id="1_3x2gm"]
 [ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="2_wyiwp"]
 [ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="3_wyiwp"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="4_3x2gm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm2xv"]
 
@@ -81,7 +82,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 10
 size_flags_stretch_ratio = 0.9
-theme = ExtResource("3_wyiwp")
+theme = ExtResource("4_3x2gm")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 50
 text = "Назад"

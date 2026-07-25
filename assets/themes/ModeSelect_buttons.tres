@@ -1,0 +1,97 @@
+[gd_resource type="Theme" format=3 uid="uid://b7eib4mt07ld6"]
+
+[ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_juu5e"]
+
+[sub_resource type="FontVariation" id="FontVariation_2voy0"]
+base_font = ExtResource("1_juu5e")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok3pn"]
+bg_color = Color(0.16470589, 0.41960785, 0.78039217, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0.08235294, 0.24705882, 0.4862745, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buhf3"]
+bg_color = Color(0.12156863, 0.4, 0.7019608, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0.05882353, 0.23137255, 0.41960785, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pq8hh"]
+content_margin_top = 20.0
+bg_color = Color(0.12156863, 0.4, 0.7019608, 0)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0.16470589, 0.41960785, 0.78039217, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="FontVariation" id="FontVariation_cvf2j"]
+base_font = ExtResource("1_juu5e")
+spacing_glyph = 10
+
+[sub_resource type="FontVariation" id="FontVariation_pq8hh"]
+base_font = ExtResource("1_juu5e")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5yxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfles"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27dni"]
+
+[sub_resource type="FontVariation" id="FontVariation_2b04s"]
+base_font = ExtResource("1_juu5e")
+
+[sub_resource type="FontVariation" id="FontVariation_buhf3"]
+base_font = ExtResource("1_juu5e")
+
+[sub_resource type="FontVariation" id="FontVariation_ok3pn"]
+base_font = ExtResource("1_juu5e")
+variation_transform = Transform2D(1, 0.4, 0, 1, 0, 0)
+spacing_glyph = 20
+spacing_top = 2
+
+[sub_resource type="FontVariation" id="FontVariation_tq5jo"]
+base_font = ExtResource("1_juu5e")
+
+[sub_resource type="FontVariation" id="FontVariation_iff4g"]
+base_font = ExtResource("1_juu5e")
+
+[resource]
+Button/colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 40
+Button/fonts/font = SubResource("FontVariation_2voy0")
+Button/styles/hover = SubResource("StyleBoxFlat_ok3pn")
+Button/styles/normal = SubResource("StyleBoxFlat_buhf3")
+Button/styles/pressed = SubResource("StyleBoxFlat_pq8hh")
+Label/colors/font_color = Color(0.9490196, 0.9607843, 0.96862745, 1)
+Label/font_sizes/font_size = 50
+Label/fonts/font = SubResource("FontVariation_cvf2j")
+LineEdit/font_sizes/font_size = 40
+LineEdit/fonts/font = SubResource("FontVariation_pq8hh")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_l5yxn")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_tfles")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_27dni")
+RichTextLabel/font_sizes/bold_font_size = 150
+RichTextLabel/font_sizes/bold_italics_font_size = 150
+RichTextLabel/font_sizes/italics_font_size = 150
+RichTextLabel/font_sizes/mono_font_size = 150
+RichTextLabel/font_sizes/normal_font_size = 150
+RichTextLabel/fonts/bold_font = SubResource("FontVariation_2b04s")
+RichTextLabel/fonts/bold_italics_font = SubResource("FontVariation_buhf3")
+RichTextLabel/fonts/italics_font = SubResource("FontVariation_ok3pn")
+RichTextLabel/fonts/mono_font = SubResource("FontVariation_tq5jo")
+RichTextLabel/fonts/normal_font = SubResource("FontVariation_iff4g")

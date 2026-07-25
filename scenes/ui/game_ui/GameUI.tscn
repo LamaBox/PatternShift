@@ -2,12 +2,133 @@
 
 [ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="1_dcmdd"]
 [ext_resource type="Script" uid="uid://b4eh8an14sjig" path="res://scenes/ui/game_ui/GameUI.cs" id="2_f8c3s"]
-[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_cvr6e"]
 [ext_resource type="Texture2D" uid="uid://48jpl6yerg5q" path="res://assets/images/backgrounds/animated_main_menu_bg.png" id="3_dcmdd"]
-[ext_resource type="Texture2D" uid="uid://8k6b6nhpy46l" path="res://assets/images/icons/PauseButton.png" id="4_cvr6e"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="4_dcmdd"]
+[ext_resource type="FontVariation" uid="uid://qpi6b1k7liw1" path="res://assets/themes/GameUI_score_streak.tres" id="4_w8ajx"]
+[ext_resource type="Texture2D" uid="uid://dsyg2t080onwg" path="res://assets/images/icons/pause_button_rect.svg" id="5_os7y1"]
+[ext_resource type="FontVariation" uid="uid://c4nsdbrhwj3qt" path="res://assets/themes/GameUI_font_time.tres" id="6_os7y1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_os7y1"]
+content_margin_left = 0.0
+content_margin_top = 40.0
+content_margin_right = 0.0
+content_margin_bottom = 80.0
 texture = ExtResource("3_dcmdd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hlpf"]
+content_margin_left = 100.0
+content_margin_right = 100.0
+bg_color = Color(0.19607843, 0.11764706, 0.3137255, 1)
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4tqt3"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2509804, 0.13725491, 0.41960785, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pqf0"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2509804, 0.13725491, 0.41960785, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5slce"]
+bg_color = Color(0.2509804, 0.13725491, 0.41960785, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8ajx"]
+bg_color = Color(0.12156863, 0.4, 0.7019608, 1)
+corner_radius_top_left = 21
+corner_radius_top_right = 21
+corner_radius_bottom_right = 21
+corner_radius_bottom_left = 21
+shadow_color = Color(0.05882353, 0.23137255, 0.41960785, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hlo1"]
+content_margin_top = 20.0
+bg_color = Color(0.12156863, 0.4, 0.7019608, 0)
+corner_radius_top_left = 21
+corner_radius_top_right = 21
+corner_radius_bottom_right = 21
+corner_radius_bottom_left = 21
+shadow_color = Color(0.16470589, 0.41960785, 0.78039217, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b25yk"]
+bg_color = Color(0.16470589, 0.41960785, 0.78039217, 1)
+corner_radius_top_left = 21
+corner_radius_top_right = 21
+corner_radius_bottom_right = 21
+corner_radius_bottom_left = 21
+shadow_color = Color(0.08235294, 0.24705882, 0.4862745, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os7y1"]
+content_margin_left = 50.0
+content_margin_top = 30.0
+content_margin_right = 50.0
+content_margin_bottom = 30.0
+bg_color = Color(0.19607843, 0.11764706, 0.3137255, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcmdd"]
+content_margin_left = 50.0
+content_margin_top = 30.0
+content_margin_right = 50.0
+content_margin_bottom = 30.0
+bg_color = Color(0.19607843, 0.11764706, 0.3137255, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_gridContainer")]
 layout_mode = 3
@@ -20,13 +141,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_dcmdd")
 script = ExtResource("2_f8c3s")
-_streakLabel = NodePath("HBoxContainer/Streak")
-_timerLabel = NodePath("HBoxContainer2/Time")
-_scoreLabel = NodePath("HBoxContainer2/Score")
-_pauseButton = NodePath("HBoxContainer/PauseButton")
-_gridContainer = NodePath("CenterContainer/Panel/GridContainer")
+_streakLabel = NodePath("Background/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel/VBoxContainer/Streak")
+_timerLabel = NodePath("Background/VBoxContainer/HorizontalPanel/TimePanel/Time")
+_scoreLabel = NodePath("Background/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer/Score")
+_pauseButton = NodePath("Background/VBoxContainer/HorizontalPanel/PauseButton")
+_gridContainer = NodePath("Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards/GridContainer")
 
-[node name="Background" type="Panel" parent="." unique_id=954952931]
+[node name="Background" type="PanelContainer" parent="." unique_id=1243382175]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,98 +156,134 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_os7y1")
+metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=885947693]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VerticalPanel" type="PanelContainer" parent="VBoxContainer" unique_id=1752874185]
+[node name="VBoxContainer" type="VBoxContainer" parent="Background" unique_id=885947693]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=318276077]
+[node name="HorizontalPanel" type="PanelContainer" parent="Background/VBoxContainer" unique_id=1752874185]
+custom_minimum_size = Vector2(1920, 174)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3hlpf")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=836524274]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -700.0
-offset_top = -465.0
-offset_right = 700.0
-offset_bottom = 465.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="CenterContainer" unique_id=1158740903]
-custom_minimum_size = Vector2(1300, 880)
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/VBoxContainer/HorizontalPanel" unique_id=1923823494]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_cvr6e")
+theme_override_constants/separation = 5
+alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer/Panel" unique_id=1158632028]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=234364656]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_left = 40.0
-offset_top = 40.0
-offset_right = -40.0
-grow_horizontal = 2
-theme = ExtResource("1_dcmdd")
-
-[node name="Streak" type="Label" parent="HBoxContainer" unique_id=1877919944]
+[node name="ScorePanel" type="PanelContainer" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer" unique_id=1396339286]
+custom_minimum_size = Vector2(240, 80)
 layout_mode = 2
-size_flags_horizontal = 2
-theme_override_font_sizes/font_size = 60
-text = "Серия x100"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_4tqt3")
 
-[node name="PauseButton" type="Button" parent="HBoxContainer" unique_id=279347710]
-custom_minimum_size = Vector2(80, 80)
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel" unique_id=1085877848]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer" unique_id=882924140]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5411765, 0.47843137, 0.6666667, 1)
+theme_override_font_sizes/font_size = 20
+text = "счёт"
+
+[node name="Score" type="Label" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer" unique_id=839252850]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.62352943, 0.2509804, 1)
+theme_override_font_sizes/font_size = 45
+text = "0000"
+
+[node name="StreakPanel" type="PanelContainer" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer" unique_id=311215033]
+custom_minimum_size = Vector2(155, 70)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_8pqf0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel" unique_id=1970909521]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel/VBoxContainer" unique_id=1374502336]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5411765, 0.47843137, 0.6666667, 1)
+theme_override_fonts/font = ExtResource("4_w8ajx")
+theme_override_font_sizes/font_size = 20
+text = "серия"
+
+[node name="Streak" type="Label" parent="Background/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel/VBoxContainer" unique_id=1877919944]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("4_w8ajx")
+theme_override_font_sizes/font_size = 30
+text = "x100"
+vertical_alignment = 1
+
+[node name="TimePanel" type="PanelContainer" parent="Background/VBoxContainer/HorizontalPanel" unique_id=2416547]
+custom_minimum_size = Vector2(220, 83)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_5slce")
+
+[node name="Time" type="Label" parent="Background/VBoxContainer/HorizontalPanel/TimePanel" unique_id=161856098]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("6_os7y1")
+theme_override_font_sizes/font_size = 35
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseButton" type="Button" parent="Background/VBoxContainer/HorizontalPanel" unique_id=279347710]
+custom_minimum_size = Vector2(120, 120)
+custom_maximum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -5)
+theme = ExtResource("4_dcmdd")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 60
-icon = ExtResource("4_cvr6e")
+theme_override_styles/normal = SubResource("StyleBoxFlat_w8ajx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7hlo1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b25yk")
+icon = ExtResource("5_os7y1")
 icon_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1505270119]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 37.0
-offset_top = -114.0
-offset_right = -43.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Time" type="Label" parent="HBoxContainer2" unique_id=161856098]
+[node name="MarginContainer" type="MarginContainer" parent="Background/VBoxContainer" unique_id=550754550]
 layout_mode = 2
-size_flags_horizontal = 2
-theme_override_font_sizes/font_size = 60
-text = "00:00"
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 50
 
-[node name="Score" type="Label" parent="HBoxContainer2" unique_id=839252850]
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/VBoxContainer/MarginContainer" unique_id=318276077]
 layout_mode = 2
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 60
-text = "Счёт: 0000"
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="DeckAndSets" type="PanelContainer" parent="Background/VBoxContainer/MarginContainer/HBoxContainer" unique_id=2050139835]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = SubResource("StyleBoxFlat_os7y1")
+
+[node name="GridOfCards" type="PanelContainer" parent="Background/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1055236217]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dcmdd")
+
+[node name="GridContainer" type="GridContainer" parent="Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards" unique_id=1158632028]
+layout_mode = 2
+columns = 4

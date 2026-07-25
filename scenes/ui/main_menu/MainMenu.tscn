@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://deogl75dm54qc" path="res://scenes/ui/main_menu/MainMenu.cs" id="1_iff4g"]
 [ext_resource type="Texture2D" uid="uid://48jpl6yerg5q" path="res://assets/images/backgrounds/animated_main_menu_bg.png" id="2_iff4g"]
 [ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_iff4g"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="5_2voy0"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3hlpf"]
 texture = ExtResource("2_iff4g")
@@ -328,14 +329,14 @@ text = "Играть"
 [node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer" unique_id=1102611088]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("1_2voy0")
+theme = ExtResource("5_2voy0")
 theme_type_variation = &"FlatButton"
 text = "Настройки"
 
 [node name="AchievementsButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer" unique_id=1968913132]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("1_2voy0")
+theme = ExtResource("5_2voy0")
 theme_type_variation = &"FlatButton"
 text = "Достижения"
 icon_alignment = 1
@@ -343,7 +344,7 @@ icon_alignment = 1
 [node name="CollectionButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer" unique_id=644014742]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("1_2voy0")
+theme = ExtResource("5_2voy0")
 theme_type_variation = &"FlatButton"
 text = "Коллекция"
 

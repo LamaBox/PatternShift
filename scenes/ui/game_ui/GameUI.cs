@@ -36,8 +36,8 @@ public partial class GameUI : Control
 
 	private void UpdateUI()
 	{
-		_streakLabel.Text = $"Серия: x{_streak}";
-		_scoreLabel.Text = $"Счёт: {_score:D4}";
+		_streakLabel.Text = $"x{_streak}";
+		_scoreLabel.Text = $"{_score:D4}";
 		_timerLabel.Text = $"{Mathf.Floor(_time / 60):00}:{Mathf.Floor(_time % 60):00}";
 	}
 
