@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beuyhflwak4s6"
-path="res://.godot/imported/shape_triangle_empty.svg-5802c9566010eb016e0ae9e3d58f1af7.ctex"
+uid="uid://btfot5dx56o0c"
+path="res://.godot/imported/shape_hexagon_empty.png-98b3954a6a7457f1720ced3081f5b0de.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_triangle_empty.svg"
-dest_files=["res://.godot/imported/shape_triangle_empty.svg-5802c9566010eb016e0ae9e3d58f1af7.ctex"]
+source_file="res://assets/images/cards/shapes/shape_hexagon_empty.png"
+dest_files=["res://.godot/imported/shape_hexagon_empty.png-98b3954a6a7457f1720ced3081f5b0de.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsvdu4td2ephu"
-path="res://.godot/imported/shape_rect_solid.svg-b709c2aa399abb40b16f132cdc2e2cdb.ctex"
+uid="uid://caeuus4whcng1"
+path="res://.godot/imported/shape_rect_empty.png-a3defc172b94745aebb3fb57ffc6b704.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_rect_solid.svg"
-dest_files=["res://.godot/imported/shape_rect_solid.svg-b709c2aa399abb40b16f132cdc2e2cdb.ctex"]
+source_file="res://assets/images/cards/shapes/shape_rect_empty.png"
+dest_files=["res://.godot/imported/shape_rect_empty.png-a3defc172b94745aebb3fb57ffc6b704.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -22,17 +22,17 @@ public partial class Card : Control
 
 	private static readonly Dictionary<(ShapeType, FillType), string> ShapePaths = new()
 	{
-		{ (ShapeType.Rectangle, FillType.Empty), "res://assets/images/cards/shapes/shape_rect_empty.svg" },
-		{ (ShapeType.Rectangle, FillType.Striped), "res://assets/images/cards/shapes/shape_rect_striped.svg" },
-		{ (ShapeType.Rectangle, FillType.Solid), "res://assets/images/cards/shapes/shape_rect_solid.svg" },
+		{ (ShapeType.Rectangle, FillType.Empty), "res://assets/images/cards/shapes/shape_rect_empty.png" },
+		{ (ShapeType.Rectangle, FillType.Striped), "res://assets/images/cards/shapes/shape_rect_striped.png" },
+		{ (ShapeType.Rectangle, FillType.Solid), "res://assets/images/cards/shapes/shape_rect_solid.png" },
 		
-		{ (ShapeType.Triangle, FillType.Empty), "res://assets/images/cards/shapes/shape_triangle_empty.svg" },
-		{ (ShapeType.Triangle, FillType.Striped), "res://assets/images/cards/shapes/shape_triangle_striped.svg" },
-		{ (ShapeType.Triangle, FillType.Solid), "res://assets/images/cards/shapes/shape_triangle_solid.svg" },
+		{ (ShapeType.Triangle, FillType.Empty), "res://assets/images/cards/shapes/shape_triangle_empty.png" },
+		{ (ShapeType.Triangle, FillType.Striped), "res://assets/images/cards/shapes/shape_triangle_striped.png" },
+		{ (ShapeType.Triangle, FillType.Solid), "res://assets/images/cards/shapes/shape_triangle_solid.png" },
 		
-		{ (ShapeType.Hexagon, FillType.Empty), "res://assets/images/cards/shapes/shape_hexagon_empty.svg" },
-		{ (ShapeType.Hexagon, FillType.Striped), "res://assets/images/cards/shapes/shape_hexagon_striped.svg" },
-		{ (ShapeType.Hexagon, FillType.Solid), "res://assets/images/cards/shapes/shape_hexagon_solid.svg" }
+		{ (ShapeType.Hexagon, FillType.Empty), "res://assets/images/cards/shapes/shape_hexagon_empty.png" },
+		{ (ShapeType.Hexagon, FillType.Striped), "res://assets/images/cards/shapes/shape_hexagon_striped.png" },
+		{ (ShapeType.Hexagon, FillType.Solid), "res://assets/images/cards/shapes/shape_hexagon_solid.png" }
 	};
 
 	private ShapeType _shape = ShapeType.Rectangle;
@@ -40,6 +40,7 @@ public partial class Card : Control
 	private FillType _fill = FillType.Empty;
 	private int _count = 1;
 	private bool _isSelected = false;
+	private float _currentScale = 1.0f;
 
 	public override void _Ready()
 	{
@@ -64,6 +65,12 @@ public partial class Card : Control
 		UpdateCard();
 	}
 
+	public void SetScale(float scale)
+	{
+		_currentScale = scale;
+		UpdateCard();
+	}
+
 	private void UpdateCard()
 	{
 		if (_shapeTemplate == null) return;
@@ -81,7 +88,13 @@ public partial class Card : Control
 			GD.PrintErr($"Texture not loaded: {shapePath}");
 			return;
 		}
+
 		_shapeTemplate.Texture = texture;
+
+		float baseWidth = 70f;
+		float baseHeight = 25f;
+		_shapeTemplate.Size = new Vector2(baseWidth * _currentScale, baseHeight * _currentScale);
+		_shapeTemplate.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
 
 		Color color = ColorMap[_color];
 		_shapeTemplate.Modulate = color;

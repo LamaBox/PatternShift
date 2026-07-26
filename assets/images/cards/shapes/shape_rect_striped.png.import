@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://putob64qlnku"
-path="res://.godot/imported/shape_hexagon_empty.svg-a562770f57f294faa9c981a329823a59.ctex"
+uid="uid://bhgbgwxxed8x7"
+path="res://.godot/imported/shape_rect_striped.png-28de5539391b804515c979bd6f449124.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_hexagon_empty.svg"
-dest_files=["res://.godot/imported/shape_hexagon_empty.svg-a562770f57f294faa9c981a329823a59.ctex"]
+source_file="res://assets/images/cards/shapes/shape_rect_striped.png"
+dest_files=["res://.godot/imported/shape_rect_striped.png-28de5539391b804515c979bd6f449124.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

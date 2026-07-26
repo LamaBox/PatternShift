@@ -85,6 +85,9 @@ public partial class MainMenu : Control
 		int count = (int)GD.RandRange(1, 3);
 		card.Setup(shape, color, fill, count);
 
+		float scale = GD.Randf() * 1.5f + 1.5f;
+		card.SetScale(scale);
+
 		return card;
 	}
 

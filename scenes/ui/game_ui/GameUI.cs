@@ -30,8 +30,17 @@ public partial class GameUI : Control
 		if (_time <= 0)
 		{
 			_time = 0;
+			EndGame();
 		}
 		UpdateUI();
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+		{
+			EndGame();
+		}
 	}
 
 	private void UpdateUI()
@@ -60,6 +69,8 @@ public partial class GameUI : Control
 			int count = _random.Next(1, 4);
 
 			card.Setup(shape, color, fill, count);
+			
+			card.SetScale(1.2f);
 
 			_gridContainer.AddChild(card);
 		}
@@ -70,6 +81,16 @@ public partial class GameUI : Control
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
 		var pauseInstance = pauseScene.Instantiate<Control>();
 		AddChild(pauseInstance);
+	}
+
+	private void EndGame()
+	{
+		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
+		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
+		
+		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
+		
+		AddChild(gameOverInstance);
 	}
 
 	public void AddScore(int points)
