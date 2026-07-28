@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" format=3 uid="uid://c4nsdbrhwj3qt"]
+
+[ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_pijpm"]
+
+[resource]
+base_font = ExtResource("1_pijpm")
+variation_transform = Transform2D(1, 0, 0, 1.65, 0, 0)
+spacing_top = 30

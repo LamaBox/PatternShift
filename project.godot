@@ -11,13 +11,23 @@ config_version=5
 [application]
 
 config/name="PatternShift"
+run/main_scene="uid://bllyklhjrkoao"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dse0xvs2tbsqe"
+
+[autoload]
+
+SceneManager="*uid://hsr5anb7k11h"
+EffectsLayer="*uid://cg0d4ju5c36j2"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch_mode=1
 
 [dotnet]
 
@@ -29,6 +39,7 @@ project/assembly_name="PatternShift"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,254 @@
+[gd_scene format=3 uid="uid://bd0mj1poih1vv"]
+
+[ext_resource type="Script" uid="uid://hbib0ogcym7h" path="res://scenes/ui/mode_select/ModeSelect.cs" id="1_crvcy"]
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_n6wff"]
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="4_4pnp1"]
+[ext_resource type="Theme" uid="uid://b7eib4mt07ld6" path="res://assets/themes/ModeSelect_buttons.tres" id="4_an8n5"]
+[ext_resource type="FontFile" uid="uid://dcv8ojyrmkrn1" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_n6wff"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="6_1qemi"]
+
+[sub_resource type="FontVariation" id="FontVariation_4pnp1"]
+base_font = ExtResource("4_n6wff")
+
+[node name="ModeSelect" type="Control" unique_id=675892168 node_paths=PackedStringArray("_classicButton", "_standardButton", "_timeTrialButton", "_dailyButton", "_endlessButton", "_classicDesc", "_standardDesc", "_timeTrialDesc", "_dailyDesc", "_endlessDesc", "_startButton", "_backButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_crvcy")
+_classicButton = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Classic/ClassicButton")
+_standardButton = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Standard/StandardButton")
+_timeTrialButton = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/TimeTrial/TimeTrialButton")
+_dailyButton = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Daily/DailyButton")
+_endlessButton = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Endless/EndlessButton")
+_classicDesc = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Classic/Description")
+_standardDesc = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Standard/Description")
+_timeTrialDesc = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/TimeTrial/Description")
+_dailyDesc = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Daily/Description")
+_endlessDesc = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Endless/Description")
+_startButton = NodePath("Panel/VBoxContainer/HBoxContainer/StartButton")
+_backButton = NodePath("Panel/VBoxContainer/HBoxContainer/CloseButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=658239869]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=2118870183]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -425.0
+offset_right = 750.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_4pnp1")
+theme_override_styles/panel = ExtResource("3_n6wff")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1363839523]
+layout_mode = 2
+
+[node name="SelectingAGameMode" type="Label" parent="Panel/VBoxContainer" unique_id=871625308]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 1.03
+theme_override_font_sizes/font_size = 60
+text = "ВЫБОР РЕЖИМА ИГРЫ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1993623978]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.84
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=1131437547]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer" unique_id=369341109]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.96
+theme_override_constants/separation = 35
+
+[node name="Classic" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=2070459209]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="ClassicButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Classic" unique_id=1821465852]
+custom_minimum_size = Vector2(700, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_an8n5")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 55
+text = "Классический"
+autowrap_trim_flags = 192
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Classic" unique_id=392851789]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("4_4pnp1")
+theme_override_fonts/font = SubResource("FontVariation_4pnp1")
+theme_override_font_sizes/font_size = 30
+text = "Поиск максимального количества комбинаций за 5 минут."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Standard" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=287300079]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 25
+
+[node name="StandardButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Standard" unique_id=523557901]
+custom_minimum_size = Vector2(700, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_an8n5")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 55
+text = "Стандартный"
+autowrap_trim_flags = 192
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Standard" unique_id=1428064363]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("4_4pnp1")
+theme_override_fonts/font = SubResource("FontVariation_4pnp1")
+theme_override_font_sizes/font_size = 30
+text = "Поиск максимального количества комбинаций за 5 минут. Могут появиться модификаторы."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TimeTrial" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=2079272290]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 25
+
+[node name="TimeTrialButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/TimeTrial" unique_id=1007932622]
+custom_minimum_size = Vector2(700, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_an8n5")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 55
+text = "Испытание
+на время"
+autowrap_trim_flags = 192
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/TimeTrial" unique_id=1393682699]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("4_4pnp1")
+theme_override_fonts/font = SubResource("FontVariation_4pnp1")
+theme_override_font_sizes/font_size = 30
+text = "Найди как можно больше комбинаций за определённое время. Могут появиться модификаторы."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Daily" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=390962685]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 25
+
+[node name="DailyButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Daily" unique_id=547923182]
+custom_minimum_size = Vector2(700, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_an8n5")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 55
+text = "Ежедневный"
+autowrap_trim_flags = 192
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Daily" unique_id=819804200]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("4_4pnp1")
+theme_override_fonts/font = SubResource("FontVariation_4pnp1")
+theme_override_font_sizes/font_size = 30
+text = "Все игроки получают одинаковое поле. Результаты в таблице лидеров."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Endless" type="HBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=863063290]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 25
+
+[node name="EndlessButton" type="Button" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Endless" unique_id=349543317]
+custom_minimum_size = Vector2(700, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_an8n5")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 55
+text = "Бесконечный"
+autowrap_trim_flags = 192
+
+[node name="Description" type="Label" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Endless" unique_id=1093165903]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("4_4pnp1")
+theme_override_fonts/font = SubResource("FontVariation_4pnp1")
+theme_override_font_sizes/font_size = 30
+text = "Бесконечный режим до первой ошибки. Без модификаторов."
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=903922508]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 1.27
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1639410398]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("6_1qemi")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 50
+text = "Назад"
+
+[node name="StartButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=48775295]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("6_1qemi")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 50
+text = "Начать"

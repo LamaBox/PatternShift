@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://ce7878rafwud8"]
+
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="1_yrwxr"]
+[ext_resource type="Script" uid="uid://bstinvi4c7wuw" path="res://scenes/ui/pause/PausePopup.cs" id="2_jg3dj"]
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_d3hbx"]
+
+[node name="PausePopup" type="Control" unique_id=1957672427 node_paths=PackedStringArray("_resumeButton", "_settingsButton", "_quitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yrwxr")
+script = ExtResource("2_jg3dj")
+_resumeButton = NodePath("Pause/VBoxContainer/ResumeButton")
+_settingsButton = NodePath("Pause/VBoxContainer/SettingsButton")
+_quitButton = NodePath("Pause/VBoxContainer/QuitButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=162537972]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Pause" type="PanelContainer" parent="." unique_id=1001397953]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -365.0
+offset_top = -250.0
+offset_right = 365.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_d3hbx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause" unique_id=1681351083]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ResumeButton" type="Button" parent="Pause/VBoxContainer" unique_id=460887156]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Продолжить"
+
+[node name="SettingsButton" type="Button" parent="Pause/VBoxContainer" unique_id=1150232934]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Настройки"
+
+[node name="QuitButton" type="Button" parent="Pause/VBoxContainer" unique_id=543777572]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Выйти в меню"

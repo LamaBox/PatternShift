@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cg0d4ju5c36j2"]
+
+[ext_resource type="Shader" uid="uid://sy3lgohqlm30" path="res://assets/shaders/pixelate.gdshader" id="1_dvj7t"]
+[ext_resource type="Shader" uid="uid://bu0gm1x4g1dq1" path="res://assets/shaders/crt.gdshader" id="2_k73pa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4piv"]
+shader = ExtResource("1_dvj7t")
+shader_parameter/pixel_size = 1.0
+shader_parameter/jitter_amount = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8bcwn"]
+shader = ExtResource("2_k73pa")
+shader_parameter/scanline_opacity = 0.30000001192093
+shader_parameter/vignette_intensity = 0.1370000065075
+shader_parameter/curvature = 0.015
+shader_parameter/glow_intensity = 0.40000000596046
+shader_parameter/zoom = 1.02
+shader_parameter/chromatic_intensity = 0.0010000000475
+shader_parameter/chromatic_angle = 0.0
+
+[node name="EffectsLayer" type="CanvasLayer" unique_id=727737741]
+visible = false
+
+[node name="PixelateLayer" type="ColorRect" parent="." unique_id=1012895744]
+visible = false
+material = SubResource("ShaderMaterial_t4piv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="CRTLayer" type="ColorRect" parent="." unique_id=1722218878]
+material = SubResource("ShaderMaterial_8bcwn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)

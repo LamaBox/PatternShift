@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://c77to543wcawv"]
+
+[ext_resource type="Script" uid="uid://lqgdhj3hdslv" path="res://scenes/game/cards/Card.cs" id="1_n7pkt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hlpf"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15264422, 0.08957764, 0.29835638, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yv0wl"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.84313726, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yv0wl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n7pkt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ai2te"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sc8of"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_564t5"]
+
+[node name="Card" type="AspectRatioContainer" unique_id=210637065]
+custom_minimum_size = Vector2(100, 140)
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -70.0
+offset_right = 50.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+ratio = 0.714
+script = ExtResource("1_n7pkt")
+
+[node name="Background" type="Panel" parent="." unique_id=569949390]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3hlpf")
+
+[node name="ShapesContainer" type="VBoxContainer" parent="." unique_id=166330573]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Shape" type="TextureRect" parent="ShapesContainer" unique_id=2035345863]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Highlight" type="Panel" parent="." unique_id=854907641]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yv0wl")
+
+[node name="ClickArea" type="Button" parent="." unique_id=1595180708]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yv0wl")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_n7pkt")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ai2te")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sc8of")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_564t5")
