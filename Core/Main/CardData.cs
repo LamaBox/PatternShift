@@ -1,12 +1,16 @@
 using Godot;
 
-public enum CardFigure { Ellipse, Rhomb, Snot }
+public enum CardFigure { Rectangle, Triangle, Hexagon }
 
-public enum CardColor { Red, Green, Violet }
+public enum CardColor { Orange, Blue, Purple }
 
-public enum CardFill { Empty, Striped, Full }
+public enum CardFill { Empty, Striped, Solid }
 
-public enum CardCount { One, Two, Three }
+public enum CardCount { 
+    One = 1, 
+    Two = 2,
+    Three = 3
+}
 
 [GlobalClass]
 public partial class CardData : Resource

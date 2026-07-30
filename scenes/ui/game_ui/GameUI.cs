@@ -3,6 +3,8 @@ using System;
 
 public partial class GameUI : Control
 {
+	[Export] private GameController gameController;
+
 	[Export] private Label _streakLabel;
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
@@ -63,13 +65,14 @@ public partial class GameUI : Control
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			var shape = (Card.ShapeType)_random.Next(0, 3);
-			var color = (Card.ColorType)_random.Next(0, 3);
-			var fill = (Card.FillType)_random.Next(0, 3);
-			int count = _random.Next(1, 4);
+			var figure = (CardFigure)_random.Next(0, 3);
+			var color = (CardColor)_random.Next(0, 3);
+			var fill = (CardFill)_random.Next(0, 3);
+			var count = (CardCount)_random.Next(1, 4);
 
-			card.Setup(shape, color, fill, count);
-			
+			CardData data = new CardData(figure, color, fill, count);
+			card.Setup(data);
+
 			card.SetScale(1.2f);
 
 			_gridContainer.AddChild(card);
