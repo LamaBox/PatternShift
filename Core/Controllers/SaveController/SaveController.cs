@@ -7,13 +7,12 @@ public partial class SaveController : Node
     private const string GameDataPath = "user://game_save.tres";
     private const string SettingsPath = "user://settings.cfg";
 
-    public static void SaveSettings(float volume, bool fullscreen, int comboModeIndex)
+    public static void SaveSettings(float volume, bool fullscreen)
     {
         var config = new ConfigFile();
 
         config.SetValue("Audio", "Volume", volume);
         config.SetValue("Video", "Fullscreen", fullscreen);
-        config.SetValue("Gameplay", "ComboMode", comboModeIndex);
 
         Error result = config.Save(SettingsPath);
 

@@ -91,6 +91,15 @@ public partial class GameUI : Control
 		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
 		
 		AddChild(gameOverInstance);
+
+		var save = SaveController.LoadGameData();
+		if (save == null) save = new GameSaveData();
+
+		save.TotalGames++;
+		save.BestScore = Math.Max(save.BestScore, _score);
+		save.BestStreak = Math.Max(save.BestStreak, _streak);
+
+		SaveController.SaveGameData(save);
 	}
 
 	public void AddScore(int points)
