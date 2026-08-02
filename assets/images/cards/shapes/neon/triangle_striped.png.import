@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qwu0oc0drj0v"
-path="res://.godot/imported/shape_rect_solid.png-5020d478ac27fbbac4489e9e6570e433.ctex"
+uid="uid://82hy6efo7fyp"
+path="res://.godot/imported/triangle_striped.png-0aa9bdf55ff4f070c92184fad444a66b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_rect_solid.png"
-dest_files=["res://.godot/imported/shape_rect_solid.png-5020d478ac27fbbac4489e9e6570e433.ctex"]
+source_file="res://assets/images/cards/shapes/neon/triangle_striped.png"
+dest_files=["res://.godot/imported/triangle_striped.png-0aa9bdf55ff4f070c92184fad444a66b.ctex"]
 
 [params]
 

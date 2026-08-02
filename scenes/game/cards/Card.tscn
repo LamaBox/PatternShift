@@ -60,7 +60,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3hlpf")
 
 [node name="ShapesContainer" type="VBoxContainer" parent="." unique_id=166330573]
-custom_minimum_size = Vector2(70, 25)
+custom_minimum_size = Vector2(70, 27)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -68,7 +68,7 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="Shape" type="TextureRect" parent="ShapesContainer" unique_id=2035345863]
-custom_minimum_size = Vector2(70, 25)
+custom_minimum_size = Vector2(70, 27)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
