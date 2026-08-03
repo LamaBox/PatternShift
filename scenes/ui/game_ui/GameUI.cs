@@ -15,6 +15,7 @@ public partial class GameUI : Control
 	private int _streak = 0;
 	private float _time = 300f;
 	private bool _isPaused = false;
+	private bool _isGameOver = false;
 	private Random _random = new Random();
 
 	public override void _Ready()
@@ -26,7 +27,8 @@ public partial class GameUI : Control
 
 	public override void _Process(double delta)
 	{
-		if (_isPaused) return;
+		if (_isPaused || _isGameOver)
+			return;
 
 		_time -= (float)delta;
 		if (_time <= 0)
@@ -82,12 +84,24 @@ public partial class GameUI : Control
 	private void OnPausePressed()
 	{
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
-		var pauseInstance = pauseScene.Instantiate<Control>();
+		var pauseInstance = pauseScene.Instantiate<PausePopup>();
+
+		pauseInstance.CompleteGame += () =>
+		{
+			pauseInstance.QueueFree();
+			EndGame();
+		};
+
 		AddChild(pauseInstance);
 	}
 
 	private void EndGame()
 	{
+		if (_isGameOver)
+			return;
+
+		_isGameOver = true;
+
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
 		
