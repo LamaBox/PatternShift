@@ -8,6 +8,8 @@ public partial class Card : Control
 	private TextureRect _shapeTemplate;
 	private Panel _highlight;
 	private Button _clickArea;
+	private Vector2 _baseScale = Vector2.One;
+	private int _originalZIndex = 0;
 
 	public enum ShapeType { Rectangle, Triangle, Hexagon }
 	public enum FillType { Empty, Striped, Solid }
@@ -17,7 +19,6 @@ public partial class Card : Control
 	{
 		public Vector2 ShapeSize { get; set; }
 		public int Separation { get; set; }
-
 		public CardStyleParams(float width, float height, int separation)
 		{
 			ShapeSize = new Vector2(width, height);
@@ -54,9 +55,43 @@ public partial class Card : Control
 		_clickArea = GetNode<Button>("ClickArea");
 
 		if (_clickArea != null)
+		{
 			_clickArea.Pressed += OnCardPressed;
+			_clickArea.MouseEntered += OnHover;
+			_clickArea.MouseExited += OnUnhover;
+		}
 
 		UpdateCard();
+	}
+
+	public void SetBaseScale(Vector2 scale)
+	{
+		_baseScale = scale;
+		Scale = scale;
+		_originalZIndex = ZIndex;
+		PivotOffset = Size / 2;
+	}
+
+	private void OnHover()
+	{
+		ZIndex = 10;
+
+		var tween = CreateTween();
+		tween.TweenProperty(this, "scale", _baseScale * 1.1f, 0.15f);
+
+		var shakeTween = CreateTween();
+		shakeTween.TweenProperty(this, "rotation", 0.02f, 0.05f);
+		shakeTween.TweenProperty(this, "rotation", -0.02f, 0.05f);
+		shakeTween.TweenProperty(this, "rotation", 0.0f, 0.05f);
+	}
+
+	private void OnUnhover()
+	{
+		ZIndex = _originalZIndex;
+
+		var tween = CreateTween();
+		tween.TweenProperty(this, "scale", _baseScale, 0.15f);
+		tween.Parallel().TweenProperty(this, "rotation", 0.0f, 0.1f);
 	}
 
 	public void Setup(ShapeType shape, ColorType color, FillType fill, int count)
@@ -131,7 +166,14 @@ public partial class Card : Control
 	{
 		_isSelected = selected;
 		if (_highlight != null)
+		{
 			_highlight.Visible = selected;
+			if (selected)
+			{
+				var tween = CreateTween();
+				tween.TweenProperty(_highlight, "modulate:a", 0.8f, 0.3f);
+			}
+		}
 	}
 
 	private void OnCardPressed()

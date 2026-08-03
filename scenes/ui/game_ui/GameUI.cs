@@ -70,7 +70,7 @@ public partial class GameUI : Control
 		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
 
 		float startX = screen.X * -0.17f;
-		float startY = screen.Y * -0.335f;
+		float startY = screen.Y * -0.29f;
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -85,6 +85,7 @@ public partial class GameUI : Control
 			card.SetScale(1.0f);
 
 			card.Scale = new Vector2(cardScale, cardScale);
+			card.SetBaseScale(card.Scale);
 
 			int row = i / 4;
 			int col = i % 4;
@@ -96,6 +97,8 @@ public partial class GameUI : Control
 
 			_cardsContainer.AddChild(card);
 		}
+
+		GD.Print($"Generated {_cardsContainer.GetChildCount()} cards");
 	}
 
 	private void OnViewportResized()
