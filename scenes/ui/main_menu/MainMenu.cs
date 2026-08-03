@@ -125,7 +125,12 @@ public partial class MainMenu : Control
 		AddChild(settingsInstance);
 	}
 
-	private void OnAchievementsPressed() { }
+	private void OnAchievementsPressed() 
+	{
+		var achievementsScene = (PackedScene)GD.Load("res://scenes/ui/achievements/Achievements.tscn");
+		var achievementsInstance = achievementsScene.Instantiate<Control>();
+		AddChild(achievementsInstance);
+	}
 
 	private void OnCollectionPressed() { }
 

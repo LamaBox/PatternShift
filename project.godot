@@ -19,6 +19,7 @@ config/icon="uid://dse0xvs2tbsqe"
 
 SceneManager="*uid://hsr5anb7k11h"
 EffectsLayer="*uid://cg0d4ju5c36j2"
+Achievements="*uid://j4lf4vc45o3n"
 
 [display]
 

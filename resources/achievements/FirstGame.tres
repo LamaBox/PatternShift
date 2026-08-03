@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://bwfcy42k2nmt8"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_4x5tm"]
+[ext_resource type="Texture2D" uid="uid://c6tf8p3hxkxtu" path="res://assets/images/icons/achievements/first_steps.png" id="1_q1wyh"]
+
+[resource]
+script = ExtResource("1_4x5tm")
+Id = "first_game"
+AchievementName = "Первые шаги"
+AchievementDescription = "Закончить первую игру"
+TargetValue = 1
+Icon = ExtResource("1_q1wyh")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

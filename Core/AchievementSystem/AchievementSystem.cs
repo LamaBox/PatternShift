@@ -4,76 +4,146 @@ using System;
 [GlobalClass]
 public partial class AchievementSystem : Node
 {
-    [Signal] public delegate void AchievementUnlockedEventHandler(AchievementData achievement);
+	[Signal] public delegate void AchievementUnlockedEventHandler(AchievementData achievement);
 
-    [Export] public Score GameScore { get; set; }
-    [Export] public Streak GameStreak { get; set; }
+	public Score GameScore { get; set; }
+	public Streak GameStreak { get; set; }
 
-    [Export] public Godot.Collections.Array<AchievementData> AllAchievements { get; set; } = new();
+	[Export] public Godot.Collections.Array<AchievementData> AllAchievements { get; set; } = new();
 
-    public override void _Ready()
-    {
-        if (GameScore != null)
-            GameScore.ValueChanged += score => CheckAchievements(AchievementType.Score, score);
+	private GameSaveData saveData;
 
-        if (GameStreak != null)
-            GameStreak.ValueChanged += streak => CheckAchievements(AchievementType.Streak, streak);
-    }
+	public override void _Ready()
+	{
+		saveData = SaveController.LoadGameData();
 
-    private void UnlockAchievement(AchievementData achievement)
-    {
-        if (achievement.IsUnlocked)
-            return;
+		if (saveData == null)
+		{
+			saveData = new GameSaveData();
+		}
 
-        achievement.IsUnlocked = true;
+		if (!saveData.Achievements.Contains("first_set"))
+		{
+			saveData.Achievements.Add("first_set");
+		}
+		
+		if (!saveData.Achievements.Contains("points_1000"))
+		{
+			saveData.Achievements.Add("points_1000");
+		}
 
-        // Сохраняем факт разблокировки в сохранениях
-        var save = SaveController.LoadGameData();
-        if (save != null && !save.Achievements.Contains(achievement.AchievementName))
-        {
-            save.Achievements.Add(achievement.AchievementName);
-            SaveController.SaveGameData(save);
-        }
+		foreach (var achievement in AllAchievements)
+		{
+			achievement.IsUnlocked =
+				saveData.Achievements.Contains(achievement.Id);
+		}
+	}
 
-        EmitSignal(SignalName.AchievementUnlocked, achievement);
-    }
+	public void Initialize(Score score, Streak streak)
+	{
+		if (GameScore != null)
+			GameScore.ValueChanged -= OnScoreChanged;
 
-    private void CheckAchievements(AchievementType type, int value)
-    {
-        foreach (var achievement in AllAchievements)
-        {
-            if (achievement.IsUnlocked)
-                continue;
+		if (GameStreak != null)
+			GameStreak.ValueChanged -= OnStreakChanged;
 
-            if (achievement.Type != type)
-                continue;
+		GameScore = score;
+		GameStreak = streak;
 
-            if (value >= achievement.TargetValue)
-                UnlockAchievement(achievement);
-        }
-    }
+		if (GameScore != null)
+			GameScore.ValueChanged += OnScoreChanged;
 
-    public void CheckTotalSets(int totalSets)
-    {
-        CheckAchievements(AchievementType.TotalSets, totalSets);
-    }
+		if (GameStreak != null)
+			GameStreak.ValueChanged += OnStreakChanged;
+	}
 
-    public void CheckStreak(int streak)
-    {
-        CheckAchievements(AchievementType.Streak, streak);
-    }
+	private void OnScoreChanged(int score)
+	{
+		CheckAchievements(AchievementType.Score, score);
+	}
 
-    public void CheckScore(int score)
-    {
-        CheckAchievements(AchievementType.Score, score);
-    }
+	private void OnStreakChanged(int streak)
+	{
+		CheckAchievements(AchievementType.Streak, streak);
+	}
 
-    public void UnlockByType(AchievementType type)
-    {
-        foreach (var achievement in AllAchievements)
-        {
-            if (!achievement.IsUnlocked && achievement.Type == type)
-                UnlockAchievement(achievement);
-        }
-    }
+	private void UnlockAchievement(AchievementData achievement)
+	{
+		if (achievement.IsUnlocked)
+			return;
+
+		achievement.IsUnlocked = true;
+
+		if (saveData != null && !saveData.Achievements.Contains(achievement.Id))
+		{
+			saveData.Achievements.Add(achievement.Id);
+			SaveController.SaveGameData(saveData);
+		}
+
+		EmitSignal(SignalName.AchievementUnlocked, achievement);
+
+		if (achievement.Type != AchievementType.AllAchievements)
+		{
+			CheckLegend();
+		}
+	}
+
+	private void CheckAchievements(AchievementType type, int value = 1)
+	{
+		foreach (var achievement in AllAchievements)
+		{
+			if (achievement.IsUnlocked)
+				continue;
+
+			if (achievement.Type != type)
+				continue;
+
+			if (value >= achievement.TargetValue)
+				UnlockAchievement(achievement);
+		}
+
+	}
+
+	public void CheckTotalSets(int totalSets)
+	{
+		CheckAchievements(AchievementType.TotalSets, totalSets);
+	}
+
+	public void CheckSkins(int totalSkins)
+	{
+		CheckAchievements(AchievementType.CardSkin, totalSkins);
+	}
+
+	public void CheckStreak(int streak)
+	{
+		CheckAchievements(AchievementType.Streak, streak);
+	}
+
+	public void CheckScore(int score)
+	{
+		CheckAchievements(AchievementType.Score, score);
+	}
+
+	public void UnlockByType(AchievementType type)
+	{
+		foreach (var achievement in AllAchievements)
+		{
+			if (!achievement.IsUnlocked && achievement.Type == type)
+				UnlockAchievement(achievement);
+		}
+	}
+
+	private void CheckLegend()
+	{
+		foreach (var achievement in AllAchievements)
+		{
+			if (achievement.Type == AchievementType.AllAchievements)
+				continue;
+
+			if (!achievement.IsUnlocked)
+				return;
+		}
+
+		UnlockByType(AchievementType.AllAchievements);
+	}
 }

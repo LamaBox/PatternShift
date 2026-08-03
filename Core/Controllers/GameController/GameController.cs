@@ -17,7 +17,7 @@ public partial class GameController : Node
     [Export] public BaseStreakStrategy StreakStrategy { get; set; }
     [Export] public BasePenaltyStrategy PenaltyStrategy { get; set; }
 
-    [Export] public AchievementSystem GameAchievementSystem { get; set; }
+    private AchievementSystem gameAchievementSystem;
 
     private GameSaveData SaveData;
 
@@ -25,6 +25,16 @@ public partial class GameController : Node
     {
         ValidateDependencies();
         SaveData = SaveController.LoadGameData();
+
+        if (SaveData == null)
+        {
+            SaveData = new GameSaveData();
+            SaveController.SaveGameData(SaveData);
+        }
+
+        gameAchievementSystem = GetNode<AchievementSystem>("/root/Achievements");
+
+        gameAchievementSystem.Initialize(GameScore, GameStreak);
     }
 
     public void ProcessSelectedSet(List<CardData> cards)
@@ -53,8 +63,15 @@ public partial class GameController : Node
         int streakBonus = StreakStrategy.CalculateScore(GameScore, GameStreak);
         GameScore.Modify(ScoreForOneSet + streakBonus);
 
-        if (SaveData == null) SaveData = SaveController.LoadGameData();
         SaveData.TotalSets++;
+
+        gameAchievementSystem.CheckTotalSets(SaveData.TotalSets);
+
+        if (SaveData.TotalSets == 1)
+        {
+            gameAchievementSystem.UnlockByType(AchievementType.FirstSet);
+        }
+
         SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.HighScore);
         SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
         SaveController.SaveGameData(SaveData);
@@ -69,11 +86,27 @@ public partial class GameController : Node
         GameScore.Modify(-penalty);
         GameStreak.ResetCurrentValue();
 
-        if (SaveData == null) SaveData = SaveController.LoadGameData();
         SaveData.TotalMistakes++;
         SaveController.SaveGameData(SaveData);
 
         EmitSignal(SignalName.SetCheckFailed);
+    }
+
+    public void FinishGame()
+    {
+        SaveData.TotalGames++;
+
+        SaveData.TotalScore += GameScore.CurrentValue;
+
+        SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.CurrentValue);
+        SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
+
+        if (SaveData.TotalGames == 1)
+        {
+            gameAchievementSystem.UnlockByType(AchievementType.FirstGame);
+        }
+
+        SaveController.SaveGameData(SaveData);
     }
 
     private void ValidateDependencies()
