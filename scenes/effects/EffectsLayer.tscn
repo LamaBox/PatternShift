@@ -11,15 +11,14 @@ shader_parameter/jitter_amount = 4.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8bcwn"]
 shader = ExtResource("2_k73pa")
 shader_parameter/scanline_opacity = 0.30000001192093
-shader_parameter/vignette_intensity = 0.1370000065075
-shader_parameter/curvature = 0.015
+shader_parameter/vignette_intensity = 0.090000004275
+shader_parameter/curvature = 0.0150000007125
 shader_parameter/glow_intensity = 0.40000000596046
-shader_parameter/zoom = 1.02
+shader_parameter/zoom = 1.02000000095
 shader_parameter/chromatic_intensity = 0.0010000000475
-shader_parameter/chromatic_angle = 0.0
+shader_parameter/chromatic_angle = 1.0270000487825
 
 [node name="EffectsLayer" type="CanvasLayer" unique_id=727737741]
-visible = false
 
 [node name="PixelateLayer" type="ColorRect" parent="." unique_id=1012895744]
 visible = false

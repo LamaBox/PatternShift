@@ -171,7 +171,14 @@ public partial class Card : Control
 			if (selected)
 			{
 				var tween = CreateTween();
-				tween.TweenProperty(_highlight, "modulate:a", 0.8f, 0.3f);
+				tween.SetLoops();
+				tween.TweenProperty(_highlight, "modulate:a", 0.9f, 0.3f);
+				tween.TweenProperty(_highlight, "modulate:a", 0.4f, 0.3f);
+			}
+			else
+			{
+				_highlight.Modulate = new Color(1, 1, 1, 0);
+				_highlight.Visible = false;
 			}
 		}
 	}
