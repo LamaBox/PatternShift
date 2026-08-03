@@ -14,8 +14,8 @@ base_font = ExtResource("3_cdsk0")
 
 [node name="AchievementCard" type="PanelContainer" unique_id=358657792 node_paths=PackedStringArray("icon", "nameLabel", "descriptionLabel", "statusLabel")]
 custom_minimum_size = Vector2(0, 80)
-offset_right = 830.0
-offset_bottom = 80.0
+offset_right = 870.0
+offset_bottom = 120.0
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_juv27")
 script = ExtResource("1_iicgl")

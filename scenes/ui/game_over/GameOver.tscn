@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="3_6r1l5"]
 [ext_resource type="FontVariation" uid="uid://qpi6b1k7liw1" path="res://assets/themes/GameUI_score_streak.tres" id="4_4xif4"]
 
-[node name="GameOver" type="Control" unique_id=692902592 node_paths=PackedStringArray("_scoreLabel", "_streakLabel", "_patternsLabel", "_recordLabel1", "_recordLabel2", "_recordLabel3", "_quitButton")]
+[node name="GameOver" type="Control" unique_id=692902592 node_paths=PackedStringArray("_scoreLabel", "_streakLabel", "_patternsLabel", "_recordLabel1", "_recordLabel2", "_recordLabel3", "_quitButton", "_playAgainButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,7 @@ _recordLabel1 = NodePath("GameOverPanel/VBoxContainer/GridContainer/Record")
 _recordLabel2 = NodePath("GameOverPanel/VBoxContainer/GridContainer/Record2")
 _recordLabel3 = NodePath("GameOverPanel/VBoxContainer/GridContainer/Record3")
 _quitButton = NodePath("GameOverPanel/VBoxContainer/HBoxContainer/QuitButton")
+_playAgainButton = NodePath("GameOverPanel/VBoxContainer/HBoxContainer/PlayAgainButton")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2039019444]
 modulate = Color(0, 0, 0, 0.59607846)
@@ -74,7 +75,7 @@ columns = 3
 layout_mode = 2
 theme = ExtResource("3_6r1l5")
 theme_override_fonts/font = ExtResource("4_4xif4")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 32
 text = "Счёт:"
 
 [node name="Score" type="Label" parent="GameOverPanel/VBoxContainer/GridContainer" unique_id=1275805208]
@@ -96,7 +97,7 @@ text = "Новый рекорд!"
 layout_mode = 2
 theme = ExtResource("3_6r1l5")
 theme_override_fonts/font = ExtResource("4_4xif4")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 32
 text = "Лучшая серия:"
 
 [node name="Streak" type="Label" parent="GameOverPanel/VBoxContainer/GridContainer" unique_id=1020624300]
@@ -118,7 +119,7 @@ text = "Новый рекорд!"
 layout_mode = 2
 theme = ExtResource("3_6r1l5")
 theme_override_fonts/font = ExtResource("4_4xif4")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 32
 text = "Найдено комбинаций:"
 
 [node name="Sets" type="Label" parent="GameOverPanel/VBoxContainer/GridContainer" unique_id=754120985]
@@ -142,14 +143,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PlayAgainButton" type="Button" parent="GameOverPanel/VBoxContainer/HBoxContainer" unique_id=738478294]
-custom_minimum_size = Vector2(250, 80)
+custom_minimum_size = Vector2(275, 80)
+custom_maximum_size = Vector2(550, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+theme_override_font_sizes/font_size = 38
 text = "Играть снова"
+
+[node name="Control" type="Control" parent="GameOverPanel/VBoxContainer/HBoxContainer" unique_id=1690428103]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
 
 [node name="QuitButton" type="Button" parent="GameOverPanel/VBoxContainer/HBoxContainer" unique_id=1970552888]
 custom_minimum_size = Vector2(250, 80)
+custom_maximum_size = Vector2(550, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6

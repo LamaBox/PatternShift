@@ -16,12 +16,6 @@ public partial class AchievementCard : PanelContainer
 		nameLabel.Text = achievement.AchievementName;
 		descriptionLabel.Text = achievement.AchievementDescription;
 
-		GD.Print(
-			$"CARD: {achievement.Id}, " +
-			$"Name={achievement.AchievementName}, " +
-			$"Unlocked={achievement.IsUnlocked}"
-		);
-
 		if (achievement.IsUnlocked)
 		{
 			statusLabel.Text = "Разблокировано!";
