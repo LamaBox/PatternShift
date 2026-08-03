@@ -8,31 +8,36 @@ public partial class Card : Control
 	private TextureRect _shapeTemplate;
 	private Panel _highlight;
 	private Button _clickArea;
+	private GpuParticles2D _selectionParticles;
+	private Vector2 _baseScale = Vector2.One;
+	private int _originalZIndex = 0;
 
 	public enum ShapeType { Rectangle, Triangle, Hexagon }
 	public enum FillType { Empty, Striped, Solid }
 	public enum ColorType { Orange, Blue, Purple }
+
+	public class CardStyleParams
+	{
+		public Vector2 ShapeSize { get; set; }
+		public int Separation { get; set; }
+		public CardStyleParams(float width, float height, int separation)
+		{
+			ShapeSize = new Vector2(width, height);
+			Separation = separation;
+		}
+	}
+
+	private static readonly Dictionary<CardStyle, CardStyleParams> StyleParams = new()
+	{
+		{ CardStyle.Default, new CardStyleParams(70f, 27f, 8) },
+		{ CardStyle.Neon, new CardStyleParams(76f, 32f, 3) }
+	};
 
 	private static readonly Dictionary<ColorType, Color> ColorMap = new()
 	{
 		{ ColorType.Orange, new Color("#FF9800") },
 		{ ColorType.Blue, new Color("#4FC3F7") },
 		{ ColorType.Purple, new Color("#9C27B0") }
-	};
-
-	private static readonly Dictionary<(ShapeType, FillType), string> ShapePaths = new()
-	{
-		{ (ShapeType.Rectangle, FillType.Empty), "res://assets/images/cards/shapes/shape_rect_empty.png" },
-		{ (ShapeType.Rectangle, FillType.Striped), "res://assets/images/cards/shapes/shape_rect_striped.png" },
-		{ (ShapeType.Rectangle, FillType.Solid), "res://assets/images/cards/shapes/shape_rect_solid.png" },
-		
-		{ (ShapeType.Triangle, FillType.Empty), "res://assets/images/cards/shapes/shape_triangle_empty.png" },
-		{ (ShapeType.Triangle, FillType.Striped), "res://assets/images/cards/shapes/shape_triangle_striped.png" },
-		{ (ShapeType.Triangle, FillType.Solid), "res://assets/images/cards/shapes/shape_triangle_solid.png" },
-		
-		{ (ShapeType.Hexagon, FillType.Empty), "res://assets/images/cards/shapes/shape_hexagon_empty.png" },
-		{ (ShapeType.Hexagon, FillType.Striped), "res://assets/images/cards/shapes/shape_hexagon_striped.png" },
-		{ (ShapeType.Hexagon, FillType.Solid), "res://assets/images/cards/shapes/shape_hexagon_solid.png" }
 	};
 
 	private ShapeType _shape = ShapeType.Rectangle;
@@ -49,11 +54,47 @@ public partial class Card : Control
 		_shapeTemplate = GetNode<TextureRect>("ShapesContainer/Shape");
 		_highlight = GetNode<Panel>("Highlight");
 		_clickArea = GetNode<Button>("ClickArea");
+		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
 
 		if (_clickArea != null)
+		{
 			_clickArea.Pressed += OnCardPressed;
+			_clickArea.MouseEntered += OnHover;
+			_clickArea.MouseExited += OnUnhover;
+		}
 
+		_selectionParticles.Emitting = false;
 		UpdateCard();
+	}
+
+	public void SetBaseScale(Vector2 scale)
+	{
+		_baseScale = scale;
+		Scale = scale;
+		_originalZIndex = ZIndex;
+		PivotOffset = Size / 2;
+	}
+
+	private void OnHover()
+	{
+		ZIndex = 10;
+
+		var tween = CreateTween();
+		tween.TweenProperty(this, "scale", _baseScale * 1.1f, 0.15f);
+
+		var shakeTween = CreateTween();
+		shakeTween.TweenProperty(this, "rotation", 0.02f, 0.05f);
+		shakeTween.TweenProperty(this, "rotation", -0.02f, 0.05f);
+		shakeTween.TweenProperty(this, "rotation", 0.0f, 0.05f);
+	}
+
+	private void OnUnhover()
+	{
+		ZIndex = _originalZIndex;
+
+		var tween = CreateTween();
+		tween.TweenProperty(this, "scale", _baseScale, 0.15f);
+		tween.Parallel().TweenProperty(this, "rotation", 0.0f, 0.1f);
 	}
 
 	public void Setup(ShapeType shape, ColorType color, FillType fill, int count)
@@ -71,9 +112,27 @@ public partial class Card : Control
 		UpdateCard();
 	}
 
+	private string GetShapePath(ShapeType shape, FillType fill)
+	{
+		string styleFolder = CardStyleManager.CurrentStyle == CardStyle.Default ? "default" : "neon";
+
+		string shapeName = shape switch
+		{
+			ShapeType.Rectangle => "rect",
+			ShapeType.Triangle => "triangle",
+			ShapeType.Hexagon => "hexagon",
+			_ => "rect"
+		};
+
+		string fillName = fill.ToString().ToLower();
+		return $"res://assets/images/cards/shapes/{styleFolder}/{shapeName}_{fillName}.png";
+	}
+
 	private void UpdateCard()
 	{
 		if (_shapeTemplate == null) return;
+
+		var styleParams = StyleParams[CardStyleManager.CurrentStyle];
 
 		foreach (Node child in _shapesContainer.GetChildren())
 		{
@@ -81,7 +140,7 @@ public partial class Card : Control
 				child.QueueFree();
 		}
 
-		string shapePath = ShapePaths[(_shape, _fill)];
+		string shapePath = GetShapePath(_shape, _fill);
 		var texture = (Texture2D)GD.Load(shapePath);
 		if (texture == null)
 		{
@@ -90,10 +149,7 @@ public partial class Card : Control
 		}
 
 		_shapeTemplate.Texture = texture;
-
-		float baseWidth = 70f;
-		float baseHeight = 25f;
-		_shapeTemplate.Size = new Vector2(baseWidth * _currentScale, baseHeight * _currentScale);
+		_shapeTemplate.Size = styleParams.ShapeSize * _currentScale;
 		_shapeTemplate.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
 
 		Color color = ColorMap[_color];
@@ -105,13 +161,32 @@ public partial class Card : Control
 			if (duplicate != null)
 				_shapesContainer.AddChild(duplicate);
 		}
+
+		_shapesContainer.AddThemeConstantOverride("separation", styleParams.Separation);
 	}
 
 	public void SetSelected(bool selected)
 	{
 		_isSelected = selected;
 		if (_highlight != null)
+		{
 			_highlight.Visible = selected;
+			if (selected)
+			{
+				_selectionParticles.Emitting = true;
+
+				var tween = CreateTween();
+				tween.SetLoops();
+				tween.TweenProperty(_highlight, "modulate:a", 0.9f, 0.3f);
+				tween.TweenProperty(_highlight, "modulate:a", 0.4f, 0.3f);
+			}
+			else
+			{
+				_highlight.Modulate = new Color(1, 1, 1, 0);
+				_highlight.Visible = false;
+				_selectionParticles.Emitting = false;
+			}
+		}
 	}
 
 	private void OnCardPressed()

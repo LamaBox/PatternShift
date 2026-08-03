@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c67lhe6w1homq"
-path="res://.godot/imported/shape_triangle_striped.png-6308b4efc93a60239e91e8168b6450b3.ctex"
+uid="uid://c7fi1oxpfclbc"
+path="res://.godot/imported/collector.png-ffb40ec9a8f57572f26e6d4c0ea37ba1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_triangle_striped.png"
-dest_files=["res://.godot/imported/shape_triangle_striped.png-6308b4efc93a60239e91e8168b6450b3.ctex"]
+source_file="res://assets/images/achievements/collector.png"
+dest_files=["res://.godot/imported/collector.png-ffb40ec9a8f57572f26e6d4c0ea37ba1.ctex"]
 
 [params]
 

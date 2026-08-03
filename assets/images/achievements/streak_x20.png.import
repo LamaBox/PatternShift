@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caeuus4whcng1"
-path="res://.godot/imported/shape_rect_empty.png-a3defc172b94745aebb3fb57ffc6b704.ctex"
+uid="uid://ifxglfh6dkdq"
+path="res://.godot/imported/streak_x20.png-9472c368ace56985b486ebc0aee38635.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_rect_empty.png"
-dest_files=["res://.godot/imported/shape_rect_empty.png-a3defc172b94745aebb3fb57ffc6b704.ctex"]
+source_file="res://assets/images/achievements/streak_x20.png"
+dest_files=["res://.godot/imported/streak_x20.png-9472c368ace56985b486ebc0aee38635.ctex"]
 
 [params]
 

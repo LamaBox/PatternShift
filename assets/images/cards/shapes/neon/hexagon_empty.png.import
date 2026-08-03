@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk4s2anx1c2nk"
-path="res://.godot/imported/shape_hexagon_solid.png-f923704bca7f69a1bce78cb8b6d69ab1.ctex"
+uid="uid://dnw2l8s57mh6u"
+path="res://.godot/imported/hexagon_empty.png-06e3ce4f46756acba569308246af75d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_hexagon_solid.png"
-dest_files=["res://.godot/imported/shape_hexagon_solid.png-f923704bca7f69a1bce78cb8b6d69ab1.ctex"]
+source_file="res://assets/images/cards/shapes/neon/hexagon_empty.png"
+dest_files=["res://.godot/imported/hexagon_empty.png-06e3ce4f46756acba569308246af75d1.ctex"]
 
 [params]
 

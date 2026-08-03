@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btfot5dx56o0c"
-path="res://.godot/imported/shape_hexagon_empty.png-98b3954a6a7457f1720ced3081f5b0de.ctex"
+uid="uid://dqrcr6vpa7yyw"
+path="res://.godot/imported/genius.png-caa80fd15fd6b1955e2eebed788020c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/cards/shapes/shape_hexagon_empty.png"
-dest_files=["res://.godot/imported/shape_hexagon_empty.png-98b3954a6a7457f1720ced3081f5b0de.ctex"]
+source_file="res://assets/images/achievements/genius.png"
+dest_files=["res://.godot/imported/genius.png-caa80fd15fd6b1955e2eebed788020c0.ctex"]
 
 [params]
 
