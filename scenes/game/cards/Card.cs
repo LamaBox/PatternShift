@@ -8,6 +8,7 @@ public partial class Card : Control
 	private TextureRect _shapeTemplate;
 	private Panel _highlight;
 	private Button _clickArea;
+	private GpuParticles2D _selectionParticles;
 	private Vector2 _baseScale = Vector2.One;
 	private int _originalZIndex = 0;
 
@@ -53,6 +54,7 @@ public partial class Card : Control
 		_shapeTemplate = GetNode<TextureRect>("ShapesContainer/Shape");
 		_highlight = GetNode<Panel>("Highlight");
 		_clickArea = GetNode<Button>("ClickArea");
+		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
 
 		if (_clickArea != null)
 		{
@@ -61,6 +63,7 @@ public partial class Card : Control
 			_clickArea.MouseExited += OnUnhover;
 		}
 
+		_selectionParticles.Emitting = false;
 		UpdateCard();
 	}
 
@@ -170,6 +173,8 @@ public partial class Card : Control
 			_highlight.Visible = selected;
 			if (selected)
 			{
+				_selectionParticles.Emitting = true;
+
 				var tween = CreateTween();
 				tween.SetLoops();
 				tween.TweenProperty(_highlight, "modulate:a", 0.9f, 0.3f);
@@ -179,6 +184,7 @@ public partial class Card : Control
 			{
 				_highlight.Modulate = new Color(1, 1, 1, 0);
 				_highlight.Visible = false;
+				_selectionParticles.Emitting = false;
 			}
 		}
 	}

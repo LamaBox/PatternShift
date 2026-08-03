@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c77to543wcawv"]
 
 [ext_resource type="Script" uid="uid://lqgdhj3hdslv" path="res://scenes/game/cards/Card.cs" id="1_n7pkt"]
+[ext_resource type="Texture2D" uid="uid://5axapy57qplb" path="res://assets/images/icons/star.png" id="2_ai2te"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hlpf"]
 bg_color = Color(1, 1, 1, 1)
@@ -36,9 +37,34 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_564t5"]
 
+[sub_resource type="Gradient" id="Gradient_ai2te"]
+offsets = PackedFloat32Array(0.17073171, 0.5, 0.8414634)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.84313726, 0, 1, 0.30980393, 0.7647059, 0.96862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ai2te"]
+gradient = SubResource("Gradient_ai2te")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3hlpf"]
+lifetime_randomness = 0.11
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 70, 1)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+angular_velocity_min = -180.00002
+angular_velocity_max = 179.99998
+gravity = Vector3(0, 0, 0)
+use_scale_3d = true
+scale_3d_min = Vector3(0.01, 0.01, 0.01)
+scale_3d_max = Vector3(0.03, 0.03, 0.03)
+scale_over_velocity_min = 0.099999994
+scale_over_velocity_max = 0.29999998
+color_ramp = SubResource("GradientTexture1D_ai2te")
+
 [node name="Card" type="AspectRatioContainer" unique_id=210637065]
 custom_minimum_size = Vector2(100, 140)
-clip_contents = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -87,3 +113,14 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_n7pkt")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ai2te")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_sc8of")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_564t5")
+
+[node name="SelectionParticles" type="GPUParticles2D" parent="." unique_id=554531584]
+position = Vector2(50, 70)
+emitting = false
+amount = 15
+texture = ExtResource("2_ai2te")
+lifetime = 0.8
+preprocess = 1.2
+explosiveness = 1.0
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_3hlpf")
