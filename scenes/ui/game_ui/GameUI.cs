@@ -85,15 +85,17 @@ public partial class GameUI : Control
 			var fill = (CardFill)_random.Next(0, 3);
 			var count = (CardCount)_random.Next(1, 4);
 
-			card.Setup(shape, color, fill, count);
-			card.SetScale(1.0f);
+			CardData data = new CardData(figure, color, fill, count);
+			card.Setup(data);
 
 			card.Scale = new Vector2(cardScale, cardScale);
 			card.SetBaseScale(card.Scale);
 
 			int row = i / 4;
 			int col = i % 4;
+
 			float spacing = 8 * cardScale;
+
 			float x = startX + col * (baseCardWidth * cardScale + spacing);
 			float y = startY + row * (baseCardHeight * cardScale + spacing);
 
@@ -101,11 +103,6 @@ public partial class GameUI : Control
 
 			_cardsContainer.AddChild(card);
 		}
-			CardData data = new CardData(figure, color, fill, count);
-			card.Setup(data);
-
-			card.SetScale(1.2f);
-
 		GD.Print($"Generated {_cardsContainer.GetChildCount()} cards");
 	}
 

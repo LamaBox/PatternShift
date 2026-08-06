@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://w8ijl5xmjo8y"]
 
-[ext_resource type="Texture2D" uid="uid://ck1lqmyvqcwc" path="res://assets/images/icons/achievements/first_discovery.png" id="1_phxi0"]
+[ext_resource type="Texture2D" uid="uid://do5g0ps6pd04t" path="res://assets/images/achievements/first_discovery.png" id="1_phxi0"]
 [ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="2_s8lfc"]
 
 [resource]

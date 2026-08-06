@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://df185apnjqyui"]
 
 [ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_7qtjd"]
-[ext_resource type="Texture2D" uid="uid://bwpj3nwpl0n7w" path="res://assets/images/icons/achievements/warm_up.png" id="1_of62i"]
+[ext_resource type="Texture2D" uid="uid://cs5yu68kas6ov" path="res://assets/images/achievements/warm_up.png" id="1_of62i"]
 
 [resource]
 script = ExtResource("1_7qtjd")
