@@ -135,10 +135,33 @@ public partial class MainMenu : Control
 		AddChild(achievementsInstance);
 	}
 
-	private void OnCollectionPressed() { }
+	private void OnCollectionPressed()
+	{
+		OnStyleSwitchPressed();
+	}
 
 	private void OnQuitPressed()
 	{
 		GetNode<SceneManager>("/root/SceneManager").QuitGame();
+	}
+
+	private void OnStyleSwitchPressed()
+	{
+		if (CardStyleManager.CurrentStyle == CardStyle.Default)
+			CardStyleManager.CurrentStyle = CardStyle.Neon;
+		else
+			CardStyleManager.CurrentStyle = CardStyle.Default;
+
+		GD.Print($"Style switched to: {CardStyleManager.CurrentStyle}");
+
+		foreach (Node child in _fallingCardsLayer.GetChildren())
+		{
+			child.QueueFree();
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			SpawnInitialCard();
+		}
 	}
 }

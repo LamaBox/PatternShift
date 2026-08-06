@@ -9,7 +9,7 @@ public partial class GameUI : Control
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
 	[Export] private Button _pauseButton;
-	[Export] private GridContainer _gridContainer;
+	[Export] private Control _cardsContainer;
 
 	private int _score = 0;
 	private int _streak = 0;
@@ -22,7 +22,8 @@ public partial class GameUI : Control
 	{
 		_pauseButton.Pressed += OnPausePressed;
 		UpdateUI();
-		GenerateCards();
+		CallDeferred(nameof(GenerateCards));
+		GetViewport().SizeChanged += OnViewportResized;
 	}
 
 	public override void _Process(double delta)
@@ -58,10 +59,22 @@ public partial class GameUI : Control
 	{
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 
-		foreach (Node child in _gridContainer.GetChildren())
+		foreach (Node child in _cardsContainer.GetChildren())
 		{
 			child.QueueFree();
 		}
+
+		var screen = GetViewport().GetVisibleRect().Size;
+
+		float baseCardWidth = 100f;
+		float baseCardHeight = 140f;
+
+		float scaleX = (screen.X / 4.5f) / baseCardWidth;
+		float scaleY = (screen.Y / 3.5f) / baseCardHeight;
+		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
+
+		float startX = screen.X * -0.17f;
+		float startY = screen.Y * -0.29f;
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -72,13 +85,33 @@ public partial class GameUI : Control
 			var fill = (CardFill)_random.Next(0, 3);
 			var count = (CardCount)_random.Next(1, 4);
 
+			card.Setup(shape, color, fill, count);
+			card.SetScale(1.0f);
+
+			card.Scale = new Vector2(cardScale, cardScale);
+			card.SetBaseScale(card.Scale);
+
+			int row = i / 4;
+			int col = i % 4;
+			float spacing = 8 * cardScale;
+			float x = startX + col * (baseCardWidth * cardScale + spacing);
+			float y = startY + row * (baseCardHeight * cardScale + spacing);
+
+			card.Position = new Vector2(x, y);
+
+			_cardsContainer.AddChild(card);
+		}
 			CardData data = new CardData(figure, color, fill, count);
 			card.Setup(data);
 
 			card.SetScale(1.2f);
 
-			_gridContainer.AddChild(card);
-		}
+		GD.Print($"Generated {_cardsContainer.GetChildCount()} cards");
+	}
+
+	private void OnViewportResized()
+	{
+		GenerateCards();
 	}
 
 	private void OnPausePressed()
@@ -104,9 +137,7 @@ public partial class GameUI : Control
 
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		
 		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
-		
 		AddChild(gameOverInstance);
 
 		var save = SaveController.LoadGameData();

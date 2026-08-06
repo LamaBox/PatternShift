@@ -130,7 +130,7 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_gridContainer")]
+[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,7 +145,7 @@ _streakLabel = NodePath("Background/VBoxContainer/HorizontalPanel/VBoxContainer/
 _timerLabel = NodePath("Background/VBoxContainer/HorizontalPanel/TimePanel/Time")
 _scoreLabel = NodePath("Background/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer/Score")
 _pauseButton = NodePath("Background/VBoxContainer/HorizontalPanel/PauseButton")
-_gridContainer = NodePath("Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards/GridContainer")
+_cardsContainer = NodePath("Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards/CardsContainer")
 
 [node name="Background" type="PanelContainer" parent="." unique_id=1243382175]
 custom_minimum_size = Vector2(1920, 1080)
@@ -284,8 +284,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_dcmdd")
 
-[node name="GridContainer" type="GridContainer" parent="Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards" unique_id=1158632028]
+[node name="CardsContainer" type="Control" parent="Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards" unique_id=1043748674]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 4
+size_flags_horizontal = 5
+size_flags_vertical = 5
