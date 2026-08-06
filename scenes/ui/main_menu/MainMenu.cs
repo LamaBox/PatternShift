@@ -129,7 +129,9 @@ public partial class MainMenu : Control
 
 	private void OnCollectionPressed()
 	{
-		OnStyleSwitchPressed();
+		var collectionScene = (PackedScene)GD.Load("res://scenes/ui/collection/Collection.tscn");
+		var collectionInstance = collectionScene.Instantiate<Control>();
+		AddChild(collectionInstance);
 	}
 
 	private void OnQuitPressed()
