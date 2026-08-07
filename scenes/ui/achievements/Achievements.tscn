@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bpqt3rbebvsuq"]
+
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="1_db815"]
+[ext_resource type="Script" uid="uid://bxe6frvwy64db" path="res://scenes/ui/achievements/Achievements.cs" id="1_fac8a"]
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="2_fac8a"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="5_m4ll7"]
+
+[node name="Achievements" type="Control" unique_id=980661374 node_paths=PackedStringArray("backButton", "achievementsContainer")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_fac8a")
+backButton = NodePath("Panel/VBoxContainer/HBoxContainer/CloseButton")
+achievementsContainer = NodePath("Panel/VBoxContainer/ScrollContainer/MarginContainer/AchievementsContainer")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=230391656]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 750.0
+offset_top = 425.0
+offset_right = 750.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=668490474]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 210.0
+offset_top = 115.0
+offset_right = 1710.0
+offset_bottom = 965.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_db815")
+theme_override_styles/panel = ExtResource("2_fac8a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=391428600]
+layout_mode = 2
+
+[node name="SelectingAGameMode" type="Label" parent="Panel/VBoxContainer" unique_id=1456591580]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 1.03
+theme_override_font_sizes/font_size = 60
+text = "ДОСТИЖЕНИЯ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1256265561]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.84
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=1176641411]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="AchievementsContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer/MarginContainer" unique_id=426888095]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.96
+theme_override_constants/separation = 35
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1066168344]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 1.27
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1313440860]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("5_m4ll7")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 50
+text = "Назад"

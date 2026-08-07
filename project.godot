@@ -19,11 +19,13 @@ config/icon="uid://dse0xvs2tbsqe"
 
 SceneManager="*uid://hsr5anb7k11h"
 EffectsLayer="*uid://cg0d4ju5c36j2"
+Achievements="*uid://j4lf4vc45o3n"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/stretch_mode=1

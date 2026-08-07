@@ -77,6 +77,7 @@ public partial class Settings : Control
 
 	private void OnClosePressed()
 	{
+		SaveController.SaveSettings((float)_musicVolumeSlider.Value / 100f, false);
 		QueueFree();
 	}
 }

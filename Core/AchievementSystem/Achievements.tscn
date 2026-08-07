@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://j4lf4vc45o3n"]
+
+[ext_resource type="Script" uid="uid://c047evqheeiiv" path="res://Core/AchievementSystem/AchievementSystem.cs" id="1_cke4p"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="2_8ygst"]
+[ext_resource type="Resource" uid="uid://w8ijl5xmjo8y" path="res://resources/achievements/FirstSet.tres" id="3_qtoig"]
+[ext_resource type="Resource" uid="uid://bwfcy42k2nmt8" path="res://resources/achievements/FirstGame.tres" id="4_qtoig"]
+[ext_resource type="Resource" uid="uid://df185apnjqyui" path="res://resources/achievements/Points_1000.tres" id="5_l8182"]
+
+[node name="AchievementSystem" type="Node" unique_id=1380662846]
+script = ExtResource("1_cke4p")
+AllAchievements = Array[ExtResource("2_8ygst")]([ExtResource("3_qtoig"), ExtResource("4_qtoig"), ExtResource("5_l8182")])
+metadata/_custom_type_script = "uid://c047evqheeiiv"

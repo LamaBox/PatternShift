@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bstinvi4c7wuw" path="res://scenes/ui/pause/PausePopup.cs" id="2_jg3dj"]
 [ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="3_d3hbx"]
 
-[node name="PausePopup" type="Control" unique_id=1957672427 node_paths=PackedStringArray("_resumeButton", "_settingsButton", "_quitButton")]
+[node name="PausePopup" type="Control" unique_id=1957672427 node_paths=PackedStringArray("_resumeButton", "_settingsButton", "_quitButton", "_completeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,7 @@ script = ExtResource("2_jg3dj")
 _resumeButton = NodePath("Pause/VBoxContainer/ResumeButton")
 _settingsButton = NodePath("Pause/VBoxContainer/SettingsButton")
 _quitButton = NodePath("Pause/VBoxContainer/QuitButton")
+_completeButton = NodePath("Pause/VBoxContainer/CompleteButton")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=162537972]
 modulate = Color(0, 0, 0, 0.59607846)
@@ -58,6 +59,12 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_type_variation = &"FlatButton"
 text = "Настройки"
+
+[node name="CompleteButton" type="Button" parent="Pause/VBoxContainer" unique_id=1670172285]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"FlatButton"
+text = "Завершить"
 
 [node name="QuitButton" type="Button" parent="Pause/VBoxContainer" unique_id=543777572]
 layout_mode = 2

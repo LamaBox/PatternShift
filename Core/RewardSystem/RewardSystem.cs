@@ -26,7 +26,17 @@ public partial class RewardSystem : Node
 
     private void UnlockReward(RewardData reward)
     {
+        if (reward.IsUnlocked)
+            return;
+
         reward.IsUnlocked = true;
+
+        var save = SaveController.LoadGameData();
+        if (save != null && !save.Rewards.Contains(reward.RewardName))
+        {
+            save.Rewards.Add(reward.RewardName);
+            SaveController.SaveGameData(save);
+        }
 
         EmitSignal(SignalName.RewardUnlocked, reward);
     }

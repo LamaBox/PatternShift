@@ -3,6 +3,8 @@ using System;
 
 public partial class GameUI : Control
 {
+	[Export] private GameController gameController;
+
 	[Export] private Label _streakLabel;
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
@@ -13,6 +15,7 @@ public partial class GameUI : Control
 	private int _streak = 0;
 	private float _time = 300f;
 	private bool _isPaused = false;
+	private bool _isGameOver = false;
 	private Random _random = new Random();
 
 	public override void _Ready()
@@ -25,7 +28,8 @@ public partial class GameUI : Control
 
 	public override void _Process(double delta)
 	{
-		if (_isPaused) return;
+		if (_isPaused || _isGameOver)
+			return;
 
 		_time -= (float)delta;
 		if (_time <= 0)
@@ -76,20 +80,22 @@ public partial class GameUI : Control
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			var shape = (Card.ShapeType)_random.Next(0, 3);
-			var color = (Card.ColorType)_random.Next(0, 3);
-			var fill = (Card.FillType)_random.Next(0, 3);
-			int count = _random.Next(1, 4);
+			var figure = (CardFigure)_random.Next(0, 3);
+			var color = (CardColor)_random.Next(0, 3);
+			var fill = (CardFill)_random.Next(0, 3);
+			var count = (CardCount)_random.Next(1, 4);
 
-			card.Setup(shape, color, fill, count);
-			card.SetScale(1.0f);
+			CardData data = new CardData(figure, color, fill, count);
+			card.Setup(data);
 
 			card.Scale = new Vector2(cardScale, cardScale);
 			card.SetBaseScale(card.Scale);
 
 			int row = i / 4;
 			int col = i % 4;
+
 			float spacing = 8 * cardScale;
+
 			float x = startX + col * (baseCardWidth * cardScale + spacing);
 			float y = startY + row * (baseCardHeight * cardScale + spacing);
 
@@ -97,7 +103,6 @@ public partial class GameUI : Control
 
 			_cardsContainer.AddChild(card);
 		}
-
 		GD.Print($"Generated {_cardsContainer.GetChildCount()} cards");
 	}
 
@@ -109,16 +114,37 @@ public partial class GameUI : Control
 	private void OnPausePressed()
 	{
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
-		var pauseInstance = pauseScene.Instantiate<Control>();
+		var pauseInstance = pauseScene.Instantiate<PausePopup>();
+
+		pauseInstance.CompleteGame += () =>
+		{
+			pauseInstance.QueueFree();
+			EndGame();
+		};
+
 		AddChild(pauseInstance);
 	}
 
 	private void EndGame()
 	{
+		if (_isGameOver)
+			return;
+
+		_isGameOver = true;
+
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
 		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
 		AddChild(gameOverInstance);
+
+		var save = SaveController.LoadGameData();
+		if (save == null) save = new GameSaveData();
+
+		save.TotalGames++;
+		save.BestScore = Math.Max(save.BestScore, _score);
+		save.BestStreak = Math.Max(save.BestStreak, _streak);
+
+		SaveController.SaveGameData(save);
 	}
 
 	public void AddScore(int points)

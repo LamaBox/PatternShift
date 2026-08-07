@@ -9,10 +9,12 @@ public partial class GameOver : Control
 	[Export] private Label _recordLabel2;
 	[Export] private Label _recordLabel3;
 	[Export] private Button _quitButton;
+	[Export] private Button _playAgainButton;
 
 	public override void _Ready()
 	{
 		_quitButton.Pressed += OnQuitPressed;
+		_playAgainButton.Pressed += OnPlayAgainPressed;
 	}
 
 	public void SetData(int score, int streak, int patterns, bool isNewRecord)
@@ -31,5 +33,10 @@ public partial class GameOver : Control
 	private void OnQuitPressed()
 	{
 		GetNode<SceneManager>("/root/SceneManager").GoToMainMenu();
+	}
+	
+	private void OnPlayAgainPressed()
+	{
+		GetNode<SceneManager>("/root/SceneManager").ChangeScene(SceneManager.GameUI);
 	}
 }
