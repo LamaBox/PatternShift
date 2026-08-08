@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bu6gkanf3ij0d"]
+
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="1_p2ob1"]
+[ext_resource type="Script" uid="uid://d1boowncn1bui" path="res://scenes/ui/game_guide/PlayGuide.cs" id="1_x3wil"]
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="2_x3wil"]
+[ext_resource type="Theme" uid="uid://vm3qx3vxv0sr" path="res://assets/themes/UI_theme.tres" id="3_7w8hc"]
+
+[node name="PlayGuide" type="Control" unique_id=1751048793 node_paths=PackedStringArray("_closeButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 966.0
+offset_top = 518.0
+offset_right = 966.0
+offset_bottom = 518.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x3wil")
+_closeButton = NodePath("PlayGuide/VBoxContainer/HBoxContainer/CloseButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=686243145]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="PlayGuide" type="PanelContainer" parent="." unique_id=302381817]
+custom_minimum_size = Vector2(1500, 850)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -425.0
+offset_right = 750.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_p2ob1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayGuide" unique_id=957766217]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayGuide" type="Label" parent="PlayGuide/VBoxContainer" unique_id=1338117602]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 0.55
+theme = ExtResource("2_x3wil")
+theme_override_font_sizes/font_size = 60
+text = "ОБУЧЕНИЕ"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayGuide/VBoxContainer" unique_id=1618677177]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.95
+
+[node name="CloseButton" type="Button" parent="PlayGuide/VBoxContainer/HBoxContainer" unique_id=1269978490]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.9
+theme = ExtResource("3_7w8hc")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 50
+text = "Назад"
+
+[node name="Label" type="Label" parent="PlayGuide/VBoxContainer/HBoxContainer" unique_id=53931437]
+custom_minimum_size = Vector2(1000, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("2_x3wil")
+theme_override_font_sizes/font_size = 40
+text = "Выберите три карты на поле, если их отдельные свойства полностью одинаковы или полностью различны - сет есть"
+vertical_alignment = 1
+autowrap_mode = 3

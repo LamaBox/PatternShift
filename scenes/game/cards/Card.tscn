@@ -124,3 +124,7 @@ preprocess = 1.2
 explosiveness = 1.0
 draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_3hlpf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1338773915]
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1587900092]
