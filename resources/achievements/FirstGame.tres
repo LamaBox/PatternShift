@@ -8,6 +8,7 @@ script = ExtResource("1_4x5tm")
 Id = "first_game"
 AchievementName = "Первые шаги"
 AchievementDescription = "Закончить первую игру"
+Type = 1
 TargetValue = 1
 Icon = ExtResource("1_q1wyh")
 metadata/_custom_type_script = "uid://dlp73yl0k544o"

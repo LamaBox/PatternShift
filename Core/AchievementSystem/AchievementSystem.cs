@@ -15,22 +15,7 @@ public partial class AchievementSystem : Node
 
 	public override void _Ready()
 	{
-		saveData = SaveController.LoadGameData();
-
-		if (saveData == null)
-		{
-			saveData = new GameSaveData();
-		}
-
-		if (!saveData.Achievements.Contains("first_set"))
-		{
-			saveData.Achievements.Add("first_set");
-		}
-		
-		if (!saveData.Achievements.Contains("points_1000"))
-		{
-			saveData.Achievements.Add("points_1000");
-		}
+		saveData = SaveController.GameData;
 
 		foreach (var achievement in AllAchievements)
 		{
@@ -126,10 +111,24 @@ public partial class AchievementSystem : Node
 
 	public void UnlockByType(AchievementType type)
 	{
+		GD.Print($"=== UnlockByType: {type} ===");
+		GD.Print($"AllAchievements count: {AllAchievements.Count}");
+
 		foreach (var achievement in AllAchievements)
 		{
-			if (!achievement.IsUnlocked && achievement.Type == type)
+			GD.Print(
+				$"Achievement: Id={achievement.Id}, " +
+				$"Type={achievement.Type}, " +
+				$"Unlocked={achievement.IsUnlocked}"
+			);
+
+			if (!achievement.IsUnlocked &&
+				achievement.Type == type)
+			{
+				GD.Print($"FOUND! Unlocking: {achievement.Id}");
+
 				UnlockAchievement(achievement);
+			}
 		}
 	}
 

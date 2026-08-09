@@ -7,6 +7,21 @@ public partial class SaveController : Node
     private const string GameDataPath = "user://game_save.tres";
     private const string SettingsPath = "user://settings.cfg";
 
+    private static GameSaveData gameData;
+
+    public static GameSaveData GameData
+    {
+        get
+        {
+            if (gameData == null)
+            {
+                gameData = LoadGameDataFromFile();
+            }
+
+            return gameData;
+        }
+    }
+
     public static void SaveSettings(float volume, bool fullscreen)
     {
         var config = new ConfigFile();
@@ -57,6 +72,28 @@ public partial class SaveController : Node
         }
 
         GameSaveData gameSaveData = ResourceLoader.Load<GameSaveData>(GameDataPath);
+
+        if (gameSaveData == null)
+        {
+            return new GameSaveData();
+        }
+
+        return gameSaveData;
+    }
+
+    private static GameSaveData LoadGameDataFromFile()
+    {
+        if (!ResourceLoader.Exists(GameDataPath))
+        {
+            return new GameSaveData();
+        }
+
+        GameSaveData gameSaveData =
+            ResourceLoader.Load<GameSaveData>(
+                GameDataPath,
+                "",
+                ResourceLoader.CacheMode.Ignore
+            );
 
         if (gameSaveData == null)
         {

@@ -11,8 +11,6 @@ public partial class GameUI : Control
 	[Export] private Button _pauseButton;
 	[Export] private Control _cardsContainer;
 
-	private int _score = 0;
-	private int _streak = 0;
 	private float _time = 300f;
 	private bool _isPaused = false;
 	private bool _isGameOver = false;
@@ -21,7 +19,12 @@ public partial class GameUI : Control
 	public override void _Ready()
 	{
 		_pauseButton.Pressed += OnPausePressed;
+
+		gameController.GameScore.ValueChanged += OnScoreChanged;
+		gameController.GameStreak.ValueChanged += OnStreakChanged;
+
 		UpdateUI();
+
 		CallDeferred(nameof(GenerateCards));
 		GetViewport().SizeChanged += OnViewportResized;
 	}
@@ -50,8 +53,9 @@ public partial class GameUI : Control
 
 	private void UpdateUI()
 	{
-		_streakLabel.Text = $"x{_streak}";
-		_scoreLabel.Text = $"{_score:D4}";
+		_streakLabel.Text = $"x{gameController.GameStreak.CurrentValue}";
+		_scoreLabel.Text = $"{gameController.GameScore.CurrentValue:D4}";
+
 		_timerLabel.Text = $"{Mathf.Floor(_time / 60):00}:{Mathf.Floor(_time % 60):00}";
 	}
 
@@ -132,36 +136,26 @@ public partial class GameUI : Control
 
 		_isGameOver = true;
 
+		gameController.FinishGame();
+
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
+		gameOverInstance.SetData(gameController.GameScore.CurrentValue, gameController.GameStreak.MaxStreak, 0, gameController.GameScore.CurrentValue > 0);
 		AddChild(gameOverInstance);
-
-		var save = SaveController.LoadGameData();
-		if (save == null) save = new GameSaveData();
-
-		save.TotalGames++;
-		save.BestScore = Math.Max(save.BestScore, _score);
-		save.BestStreak = Math.Max(save.BestStreak, _streak);
-
-		SaveController.SaveGameData(save);
-	}
-
-	public void AddScore(int points)
-	{
-		_score += points;
-		UpdateUI();
-	}
-
-	public void SetStreak(int value)
-	{
-		_streak = value;
-		UpdateUI();
 	}
 
 	public void ResetTimer()
 	{
 		_time = 300f;
 		UpdateUI();
+	}
+	private void OnScoreChanged(int value)
+	{
+		_scoreLabel.Text = $"{value:D4}";
+	}
+
+	private void OnStreakChanged(int value)
+	{
+		_streakLabel.Text = $"x{value}";
 	}
 }
