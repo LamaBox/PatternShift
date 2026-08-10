@@ -307,12 +307,10 @@ metadata/_custom_type_script = "uid://bpm5ey4qfilyl"
 
 [node name="Score" type="Node" parent="GameController" unique_id=388563038]
 script = ExtResource("9_85u5h")
-startValue = 250
 metadata/_custom_type_script = "uid://527n861e4g6f"
 
 [node name="Streak" type="Node" parent="GameController" unique_id=1929526048]
 script = ExtResource("10_j5wt8")
-startValue = 20
 metadata/_custom_type_script = "uid://re3hdtpkuwd3"
 
 [node name="ClassicCardValidator" type="Node" parent="GameController" unique_id=1779551402]

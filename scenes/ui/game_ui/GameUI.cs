@@ -136,11 +136,19 @@ public partial class GameUI : Control
 
 		_isGameOver = true;
 
+		int score = gameController.GameScore.CurrentValue;
+		int streak = gameController.GameStreak.CurrentValue;
+
+		var saveData = SaveController.GameData;
+
+		bool isNewRecord = score > saveData.BestScore;
+
 		gameController.FinishGame();
 
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		gameOverInstance.SetData(gameController.GameScore.CurrentValue, gameController.GameStreak.MaxStreak, 0, gameController.GameScore.CurrentValue > 0);
+		gameOverInstance.SetData(score, streak, 0, isNewRecord);
+
 		AddChild(gameOverInstance);
 	}
 

@@ -4,25 +4,40 @@ public partial class Settings : Control
 {
 	[Export] private HSlider _musicVolumeSlider;
 	[Export] private HSlider _soundsVolumeSlider;
+
 	[Export] private LineEdit _musicValueEdit;
 	[Export] private LineEdit _soundsValueEdit;
+
 	[Export] private Button _closeButton;
 
 	public override void _Ready()
 	{
 		_musicVolumeSlider.ValueChanged += OnMusicSliderChanged;
 		_soundsVolumeSlider.ValueChanged += OnSoundsSliderChanged;
+
 		_musicValueEdit.TextChanged += OnMusicTextChanged;
 		_soundsValueEdit.TextChanged += OnSoundsTextChanged;
+
 		_musicValueEdit.TextSubmitted += OnMusicValueSubmitted;
 		_soundsValueEdit.TextSubmitted += OnSoundsValueSubmitted;
+
 		_closeButton.Pressed += OnClosePressed;
 
-		UpdateMusicLabel((float)_musicVolumeSlider.Value);
-		UpdateSoundsLabel((float)_soundsVolumeSlider.Value);
-	}
+		LoadSettings();
+    }
 
-	private void OnMusicSliderChanged(double value) => UpdateMusicLabel((float)value);
+    private void LoadSettings()
+    {
+        var settings = SaveController.SettingsData;
+
+        _musicVolumeSlider.Value = settings.MusicVolume;
+        _soundsVolumeSlider.Value = settings.SoundsVolume;
+
+        UpdateMusicLabel(settings.MusicVolume);
+        UpdateSoundsLabel(settings.SoundsVolume);
+    }
+
+    private void OnMusicSliderChanged(double value) => UpdateMusicLabel((float)value);
 	private void OnSoundsSliderChanged(double value) => UpdateSoundsLabel((float)value);
 
 	private void UpdateMusicLabel(float value) =>
@@ -77,7 +92,16 @@ public partial class Settings : Control
 
 	private void OnClosePressed()
 	{
-		SaveController.SaveSettings((float)_musicVolumeSlider.Value / 100f, false);
-		QueueFree();
-	}
+        var settings = SaveController.SettingsData;
+
+        settings.MusicVolume =
+            Mathf.RoundToInt((float)_musicVolumeSlider.Value);
+
+        settings.SoundsVolume =
+            Mathf.RoundToInt((float)_soundsVolumeSlider.Value);
+
+        SaveController.SaveSettings(settings);
+
+        QueueFree();
+    }
 }

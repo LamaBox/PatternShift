@@ -5,9 +5,11 @@ public partial class GameOver : Control
 	[Export] private Label _scoreLabel;
 	[Export] private Label _streakLabel;
 	[Export] private Label _patternsLabel;
+
 	[Export] private Label _recordLabel1;
 	[Export] private Label _recordLabel2;
 	[Export] private Label _recordLabel3;
+
 	[Export] private Button _quitButton;
 	[Export] private Button _playAgainButton;
 
