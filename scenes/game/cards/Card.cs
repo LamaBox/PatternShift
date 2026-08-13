@@ -3,21 +3,70 @@ using System.Collections.Generic;
 
 public partial class Card : Control
 {
+	private GameUI _gameUI;
+
+	private AudioStreamPlayer _sound;
+	private AudioStreamPlayer _sound2;
 	private Panel _background;
 	private VBoxContainer _shapesContainer;
 	private TextureRect _shapeTemplate;
 	private Panel _highlight;
 	private Button _clickArea;
 	private GpuParticles2D _selectionParticles;
-
 	private Vector2 _baseScale = Vector2.One;
 	private int _originalZIndex = 0;
+	public int CCount = 0;
+
+	public enum ShapeType { Rectangle, Triangle, Hexagon }
+	public enum FillType { Empty, Striped, Solid }
+	public enum ColorType { Orange, Blue, Purple }
+
+	public CardColor Color
+	{
+		get
+		{
+			return cardData.Color;
+		}
+		set
+		{
+			cardData.Color = value;
+		}
+	}
+	public CardFigure Shape {
+		get
+		{
+			return cardData.Figure;
+		}
+		set
+		{
+			cardData.Figure = value;
+		}
+	}
+	public CardFill Fill {
+		get
+		{
+			return cardData.Fill;
+		}
+		set
+		{
+			cardData.Fill = value;
+		}
+	}
+	public CardCount Count {
+		get
+		{
+			return cardData.Count;
+		}
+		set
+		{
+			cardData.Count = value;
+		}
+	}
 
 	public class CardStyleParams
 	{
 		public Vector2 ShapeSize { get; set; }
 		public int Separation { get; set; }
-
 		public CardStyleParams(float width, float height, int separation)
 		{
 			ShapeSize = new Vector2(width, height);
@@ -40,17 +89,23 @@ public partial class Card : Control
 
 	private CardData cardData;
 
-	private bool _isSelected = false;
+	public bool _isSelected = false;
 	private float _currentScale = 1.0f;
 
 	public override void _Ready()
 	{
+		_gameUI = GetTree().GetFirstNodeInGroup("GameUI") as GameUI;
+
 		_background = GetNode<Panel>("Background");
 		_shapesContainer = GetNode<VBoxContainer>("ShapesContainer");
 		_shapeTemplate = GetNode<TextureRect>("ShapesContainer/Shape");
 		_highlight = GetNode<Panel>("Highlight");
 		_clickArea = GetNode<Button>("ClickArea");
 		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
+		_sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р Р…Р В°Р Р†Р ВµР Т‘Р ВµР Р…Р С‘Р Вµ Р Р…Р В° Р С”Р В°РЎР‚РЎвЂљР С•РЎвЂЎР С”РЎС“ 1.mp3");
+		_sound2 = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
+		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р С”Р В»Р С‘Р С” 1.mp3");
 
 		if (_clickArea != null)
 		{
@@ -63,14 +118,6 @@ public partial class Card : Control
 			_selectionParticles.Emitting = false;
 
 		if (cardData != null)
-			UpdateCard();
-	}
-
-	public void Setup(CardData data)
-	{
-		cardData = data;
-
-		if (IsNodeReady())
 			UpdateCard();
 	}
 
@@ -93,6 +140,7 @@ public partial class Card : Control
 		shakeTween.TweenProperty(this, "rotation", 0.02f, 0.05f);
 		shakeTween.TweenProperty(this, "rotation", -0.02f, 0.05f);
 		shakeTween.TweenProperty(this, "rotation", 0.0f, 0.05f);
+		_sound.Play();
 	}
 
 	private void OnUnhover()
@@ -104,10 +152,14 @@ public partial class Card : Control
 		tween.Parallel().TweenProperty(this, "rotation", 0.0f, 0.1f);
 	}
 
+	public void Setup(CardData cardData)
+	{
+		this.cardData = cardData;
+	}
+
 	public void SetScale(float scale)
 	{
 		_currentScale = scale;
-
 		if (IsNodeReady())
 			UpdateCard();
 	}
@@ -128,7 +180,7 @@ public partial class Card : Control
 		return $"res://assets/images/cards/shapes/{styleFolder}/{shapeName}_{fillName}.png";
 	}
 
-	private void UpdateCard()
+	public void UpdateCard()
 	{
 		if (cardData == null)
 			return;
@@ -155,21 +207,15 @@ public partial class Card : Control
 		}
 
 		_shapeTemplate.Texture = texture;
-
 		_shapeTemplate.Size = styleParams.ShapeSize * _currentScale;
-
 		_shapeTemplate.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
 
 		Color color = ColorMap[cardData.Color];
-
 		_shapeTemplate.Modulate = color;
 
-		int count = (int)cardData.Count;
-
-		for (int i = 1; i < count; i++)
+		for (int i = 1; i < (int)cardData.Count; i++)
 		{
 			var duplicate = _shapeTemplate.Duplicate() as TextureRect;
-
 			if (duplicate != null)
 				_shapesContainer.AddChild(duplicate);
 		}
@@ -180,37 +226,34 @@ public partial class Card : Control
 	public void SetSelected(bool selected)
 	{
 		_isSelected = selected;
-
-		if (_highlight == null)
-			return;
-
-		_highlight.Visible = selected;
-
-		if (selected)
+		if (_highlight != null)
 		{
-			if (_selectionParticles != null)
+			_highlight.Visible = selected;
+			if (selected)
+			{
 				_selectionParticles.Emitting = true;
 
-			var tween = CreateTween();
-			tween.SetLoops();
-
-			tween.TweenProperty(_highlight, "modulate:a", 0.9f, 0.3f);
-			tween.TweenProperty(_highlight, "modulate:a", 0.4f, 0.3f);
-		}
-		else
-		{
-			_highlight.Modulate = new Color(1, 1, 1, 0);
-
-			_highlight.Visible = false;
-
-			if (_selectionParticles != null)
+				var tween = CreateTween();
+				tween.SetLoops();
+				tween.TweenProperty(_highlight, "modulate:a", 0.9f, 0.3f);
+				tween.TweenProperty(_highlight, "modulate:a", 0.4f, 0.3f);
+			}
+			else
+			{
+				_highlight.Modulate = new Color(1, 1, 1, 0);
+				_highlight.Visible = false;
 				_selectionParticles.Emitting = false;
+			}
 		}
 	}
 
 	private void OnCardPressed()
 	{
+		_sound2.Play();
 		SetSelected(!_isSelected);
 		GD.Print($"Card clicked: {cardData.Figure}, {cardData.Color}, {cardData.Fill}, {cardData.Count}");
+		CCount += 1;
+		if (CCount < 2) _gameUI.CardSelected();
+		else { CCount = 0; _gameUI.CardDeselected(); }
 	}
 }

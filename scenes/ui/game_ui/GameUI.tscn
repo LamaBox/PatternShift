@@ -324,3 +324,6 @@ metadata/_custom_type_script = "uid://cl1qghsbela6r"
 [node name="FixedPenaltyStrategy" type="Node" parent="GameController" unique_id=601874918]
 script = ExtResource("13_cg7kb")
 metadata/_custom_type_script = "uid://b47gwbx12p3t0"
+[node name="SoundsPlayer1" type="AudioStreamPlayer" parent="." unique_id=522768084]
+
+[node name="SoundsPlayer2" type="AudioStreamPlayer" parent="." unique_id=2015957276]
