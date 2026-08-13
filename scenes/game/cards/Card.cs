@@ -63,6 +63,10 @@ public partial class Card : Control
 		}
 	}
 
+	public enum ShapeType { Rectangle, Triangle, Hexagon }
+	public enum FillType { Empty, Striped, Solid }
+	public enum ColorType { Orange, Blue, Purple }
+
 	public class CardStyleParams
 	{
 		public Vector2 ShapeSize { get; set; }
@@ -80,11 +84,11 @@ public partial class Card : Control
 		{ CardStyle.Neon, new CardStyleParams(76f, 32f, 3) }
 	};
 
-	private static readonly Dictionary<CardColor, Color> ColorMap = new()
+	private static readonly Dictionary<ColorType, Color> ColorMap = new()
 	{
-		{ CardColor.Orange, new Color("#FF9800") },
-		{ CardColor.Blue, new Color("#4FC3F7") },
-		{ CardColor.Purple, new Color("#9C27B0") }
+		{ ColorType.Orange, new Color("#FF9800") },
+		{ ColorType.Blue, new Color("#4FC3F7") },
+		{ ColorType.Purple, new Color("#9C27B0") }
 	};
 
 	private CardData cardData;
@@ -114,11 +118,8 @@ public partial class Card : Control
 			_clickArea.MouseExited += OnUnhover;
 		}
 
-		if (_selectionParticles != null)
-			_selectionParticles.Emitting = false;
-
-		if (cardData != null)
-			UpdateCard();
+		_selectionParticles.Emitting = false;
+		UpdateCard();
 	}
 
 	public void SetBaseScale(Vector2 scale)
@@ -164,15 +165,15 @@ public partial class Card : Control
 			UpdateCard();
 	}
 
-	private string GetShapePath(CardFigure shape, CardFill fill)
+	private string GetShapePath(ShapeType shape, FillType fill)
 	{
 		string styleFolder = CardStyleManager.CurrentStyle == CardStyle.Default ? "default" : "neon";
 
 		string shapeName = shape switch
 		{
-			CardFigure.Rectangle => "rect",
-			CardFigure.Triangle => "triangle",
-			CardFigure.Hexagon => "hexagon",
+			ShapeType.Rectangle => "rect",
+			ShapeType.Triangle => "triangle",
+			ShapeType.Hexagon => "hexagon",
 			_ => "rect"
 		};
 
@@ -182,11 +183,7 @@ public partial class Card : Control
 
 	public void UpdateCard()
 	{
-		if (cardData == null)
-			return;
-
-		if (_shapeTemplate == null || _shapesContainer == null)
-			return;
+		if (_shapeTemplate == null) return;
 
 		var styleParams = StyleParams[CardStyleManager.CurrentStyle];
 
@@ -196,10 +193,8 @@ public partial class Card : Control
 				child.QueueFree();
 		}
 
-		string shapePath = GetShapePath(cardData.Figure, cardData.Fill);
-
-		var texture = GD.Load<Texture2D>(shapePath);
-
+		string shapePath = GetShapePath(_shape, _fill);
+		var texture = (Texture2D)GD.Load(shapePath);
 		if (texture == null)
 		{
 			GD.PrintErr($"Texture not loaded: {shapePath}");

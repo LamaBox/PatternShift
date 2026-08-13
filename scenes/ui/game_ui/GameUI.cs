@@ -7,8 +7,6 @@ using static Godot.WebSocketPeer;
 
 public partial class GameUI : Control
 {
-	[Export] private GameController gameController;
-
 	[Export] private Label _streakLabel;
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
@@ -140,8 +138,7 @@ public partial class GameUI : Control
 
 	public override void _Process(double delta)
 	{
-		if (_isPaused || _isGameOver)
-			return;
+		if (_isPaused) return;
 
 		_time -= (float)delta;
 		if (_time <= 0)
@@ -194,10 +191,12 @@ public partial class GameUI : Control
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			var figure = (CardFigure)_random.Next(0, 3);
-			var color = (CardColor)_random.Next(0, 3);
-			var fill = (CardFill)_random.Next(0, 3);
-			var count = (CardCount)_random.Next(1, 4);
+			var shape = (Card.ShapeType)(TheDeck[0][0]);
+			var color = (Card.ColorType)(TheDeck[0][1]);
+			var fill = (Card.FillType)(TheDeck[0][2]);
+			int count = (TheDeck[0][3]);
+			Discard.Add(TheDeck[0]);
+			TheDeck.RemoveAt(0);
 
 			Discard.Add(TheDeck[0]);
 			TheDeck.RemoveAt(0);
@@ -354,19 +353,12 @@ public partial class GameUI : Control
 	private void OnPausePressed()
 	{
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
-		var pauseInstance = pauseScene.Instantiate<PausePopup>();
-
-		pauseInstance.CompleteGame += () =>
-		{
-			pauseInstance.QueueFree();
-			EndGame();
-		};
-
+		var pauseInstance = pauseScene.Instantiate<Control>();
 		AddChild(pauseInstance);
 		_isPaused = true;
 	}
 
-	private void EndGame()
+	private static void EndGame()
 	{
 		if (_isGameOver)
 			return;
@@ -426,6 +418,34 @@ public partial class GameUI : Control
 		{
 			n--;
 			int k = rng.Next(n + 1); // РЎРѓР В»РЎС“РЎвЂЎР В°Р в„–Р Р…РЎвЂ№Р в„– Р С‘Р Р…Р Т‘Р ВµР С”РЎРѓ Р С•РЎвЂљ 0 Р Т‘Р С• n
+			T value = list[k];
+			list[k] = list[n];
+			list[n] = value;
+		}
+	}
+
+	//Создание колоды
+	private void InitializeDeck()
+	{
+		TheDeck.Clear();
+		for (int c = 0; c < 3; c++)
+			for (int s = 0; s < 3; s++)
+				for (int n = 0; n < 3; n++)
+					for (int f = 1; f < 4; f++)
+					{
+						int[] cardcode = new int[] { c, s, n, f };
+						TheDeck.Add(cardcode);
+					}
+		Shuffle<int[]>(TheDeck);
+	}
+	private void Shuffle<T>(IList<T> list)
+	{
+		var rng = new Random();
+		int n = list.Count;
+		while (n > 1)
+		{
+			n--;
+			int k = rng.Next(n + 1); // случайный индекс от 0 до n
 			T value = list[k];
 			list[k] = list[n];
 			list[n] = value;
