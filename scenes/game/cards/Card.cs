@@ -63,10 +63,6 @@ public partial class Card : Control
 		}
 	}
 
-	public enum ShapeType { Rectangle, Triangle, Hexagon }
-	public enum FillType { Empty, Striped, Solid }
-	public enum ColorType { Orange, Blue, Purple }
-
 	public class CardStyleParams
 	{
 		public Vector2 ShapeSize { get; set; }
@@ -84,11 +80,11 @@ public partial class Card : Control
 		{ CardStyle.Neon, new CardStyleParams(76f, 32f, 3) }
 	};
 
-	private static readonly Dictionary<ColorType, Color> ColorMap = new()
+	private static readonly Dictionary<CardColor, Color> ColorMap = new()
 	{
-		{ ColorType.Orange, new Color("#FF9800") },
-		{ ColorType.Blue, new Color("#4FC3F7") },
-		{ ColorType.Purple, new Color("#9C27B0") }
+		{ CardColor.Orange, new Color("#FF9800") },
+		{ CardColor.Blue, new Color("#4FC3F7") },
+		{ CardColor.Purple, new Color("#9C27B0") }
 	};
 
 	private CardData cardData;
@@ -107,9 +103,9 @@ public partial class Card : Control
 		_clickArea = GetNode<Button>("ClickArea");
 		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
 		_sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р Р…Р В°Р Р†Р ВµР Т‘Р ВµР Р…Р С‘Р Вµ Р Р…Р В° Р С”Р В°РЎР‚РЎвЂљР С•РЎвЂЎР С”РЎС“ 1.mp3");
+		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В Р вЂ¦Р В Р’В°Р В Р вЂ Р В Р’ВµР В РўвЂР В Р’ВµР В Р вЂ¦Р В РЎвЂР В Р’Вµ Р В Р вЂ¦Р В Р’В° Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р В РЎвЂўР РЋРІР‚РЋР В РЎвЂќР РЋРЎвЂњ 1.mp3");
 		_sound2 = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
-		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р С”Р В»Р С‘Р С” 1.mp3");
+		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В РЎвЂќР В Р’В»Р В РЎвЂР В РЎвЂќ 1.mp3");
 
 		if (_clickArea != null)
 		{
@@ -118,8 +114,11 @@ public partial class Card : Control
 			_clickArea.MouseExited += OnUnhover;
 		}
 
-		_selectionParticles.Emitting = false;
-		UpdateCard();
+		if (_selectionParticles != null)
+			_selectionParticles.Emitting = false;
+
+		if (cardData != null)
+			UpdateCard();
 	}
 
 	public void SetBaseScale(Vector2 scale)
@@ -165,15 +164,15 @@ public partial class Card : Control
 			UpdateCard();
 	}
 
-	private string GetShapePath(ShapeType shape, FillType fill)
+	private string GetShapePath(CardFigure shape, CardFill fill)
 	{
 		string styleFolder = CardStyleManager.CurrentStyle == CardStyle.Default ? "default" : "neon";
 
 		string shapeName = shape switch
 		{
-			ShapeType.Rectangle => "rect",
-			ShapeType.Triangle => "triangle",
-			ShapeType.Hexagon => "hexagon",
+			CardFigure.Rectangle => "rect",
+			CardFigure.Triangle => "triangle",
+			CardFigure.Hexagon => "hexagon",
 			_ => "rect"
 		};
 
@@ -183,7 +182,11 @@ public partial class Card : Control
 
 	public void UpdateCard()
 	{
-		if (_shapeTemplate == null) return;
+		if (cardData == null)
+			return;
+
+		if (_shapeTemplate == null || _shapesContainer == null)
+			return;
 
 		var styleParams = StyleParams[CardStyleManager.CurrentStyle];
 
@@ -193,7 +196,7 @@ public partial class Card : Control
 				child.QueueFree();
 		}
 
-		string shapePath = GetShapePath(_shape, _fill);
+		string shapePath = GetShapePath(cardData.Figure, cardData.Fill);
 		var texture = (Texture2D)GD.Load(shapePath);
 		if (texture == null)
 		{

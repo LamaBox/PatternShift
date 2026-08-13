@@ -7,6 +7,8 @@ using static Godot.WebSocketPeer;
 
 public partial class GameUI : Control
 {
+	[Export] private GameController gameController;
+
 	[Export] private Label _streakLabel;
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
@@ -60,7 +62,7 @@ public partial class GameUI : Control
 		if (ChekPattern(CardsField[selectedCards[0]], CardsField[selectedCards[1]], CardsField[selectedCards[2]]))
 		{
 			GD.Print("It`s set!");
-			PlaySound1("res://sounds/Р Р†Р ВµРЎР‚Р Р…Р В°РЎРЏ Р С”Р С•Р СР В±Р С‘Р Р…Р В°РЎвЂ Р С‘РЎРЏ 1.mp3");
+			PlaySound1("res://sounds/Р В Р вЂ Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°Р РЋР РЏ Р В РЎвЂќР В РЎвЂўР В РЎВР В Р’В±Р В РЎвЂР В Р вЂ¦Р В Р’В°Р РЋРІР‚В Р В РЎвЂР РЋР РЏ 1.mp3");
 			CardClickedCounter = 0;
 			if (TheDeck.Count > 0)
 			{
@@ -101,7 +103,7 @@ public partial class GameUI : Control
 		else
 		{
 			GD.Print("It isn`t set");
-			PlaySound1("res://sounds/Р Р…Р ВµР Р†Р ВµРЎР‚Р Р…Р В°РЎРЏ Р С”Р С•Р СР В±Р С‘Р Р…Р В°РЎвЂ Р С‘РЎРЏ 1.mp3");
+			PlaySound1("res://sounds/Р В Р вЂ¦Р В Р’ВµР В Р вЂ Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°Р РЋР РЏ Р В РЎвЂќР В РЎвЂўР В РЎВР В Р’В±Р В РЎвЂР В Р вЂ¦Р В Р’В°Р РЋРІР‚В Р В РЎвЂР РЋР РЏ 1.mp3");
 			CardClickedCounter = 0;
 			for (int i = 0; i < 3; i++)
 			{
@@ -113,7 +115,7 @@ public partial class GameUI : Control
 		}	
 	}
 
-	//Р СџРЎР‚Р С•Р Р†Р ВµРЎР‚Р С”Р В° Р Р…Р В° Р Р…Р В°Р В»Р С‘РЎвЂЎР С‘Р Вµ Р С—Р В°РЎвЂљРЎвЂљР ВµРЎР‚Р Р…Р В°
+	//Р В РЎСџР РЋР вЂљР В РЎвЂўР В Р вЂ Р В Р’ВµР РЋР вЂљР В РЎвЂќР В Р’В° Р В Р вЂ¦Р В Р’В° Р В Р вЂ¦Р В Р’В°Р В Р’В»Р В РЎвЂР РЋРІР‚РЋР В РЎвЂР В Р’Вµ Р В РЎвЂ”Р В Р’В°Р РЋРІР‚С™Р РЋРІР‚С™Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°
 	private static bool ChekPatternAvailable()
 	{
 		for (int c = 0; c < CardsField.Count-2; c++)
@@ -138,7 +140,8 @@ public partial class GameUI : Control
 
 	public override void _Process(double delta)
 	{
-		if (_isPaused) return;
+		if (_isPaused || _isGameOver)
+			return;
 
 		_time -= (float)delta;
 		if (_time <= 0)
@@ -184,19 +187,17 @@ public partial class GameUI : Control
 		float scaleY = (screen.Y / 3.5f) / baseCardHeight;
 		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
 
-		float startX = screen.X * -0.17f; //Р Т‘Р В»РЎРЏ Р С—РЎРЏРЎвЂљР С•Р в„– Р С”Р С•Р В»Р С•Р Р…Р С”Р С‘ Р С—Р С•Р СР ВµР Р…РЎРЏРЎвЂљРЎРЉ Р Р…Р В° -0.21
+		float startX = screen.X * -0.17f; //Р В РўвЂР В Р’В»Р РЋР РЏ Р В РЎвЂ”Р РЋР РЏР РЋРІР‚С™Р В РЎвЂўР В РІвЂћвЂ“ Р В РЎвЂќР В РЎвЂўР В Р’В»Р В РЎвЂўР В Р вЂ¦Р В РЎвЂќР В РЎвЂ Р В РЎвЂ”Р В РЎвЂўР В РЎВР В Р’ВµР В Р вЂ¦Р РЋР РЏР РЋРІР‚С™Р РЋР Р‰ Р В Р вЂ¦Р В Р’В° -0.21
 		float startY = screen.Y * -0.29f;
 
 		for (int i = 0; i < 12; i++)
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			var shape = (Card.ShapeType)(TheDeck[0][0]);
-			var color = (Card.ColorType)(TheDeck[0][1]);
-			var fill = (Card.FillType)(TheDeck[0][2]);
-			int count = (TheDeck[0][3]);
-			Discard.Add(TheDeck[0]);
-			TheDeck.RemoveAt(0);
+			var figure = (CardFigure)_random.Next(0, 3);
+			var color = (CardColor)_random.Next(0, 3);
+			var fill = (CardFill)_random.Next(0, 3);
+			var count = (CardCount)_random.Next(1, 4);
 
 			Discard.Add(TheDeck[0]);
 			TheDeck.RemoveAt(0);
@@ -255,7 +256,7 @@ public partial class GameUI : Control
 
 		if (cardScene == null)
 		{
-			GD.PrintErr("[GameUI] Не удалось загрузить Card.tscn");
+			GD.PrintErr("[GameUI] РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ Card.tscn");
 			return;
 		}
 
@@ -353,12 +354,19 @@ public partial class GameUI : Control
 	private void OnPausePressed()
 	{
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
-		var pauseInstance = pauseScene.Instantiate<Control>();
+		var pauseInstance = pauseScene.Instantiate<PausePopup>();
+
+		pauseInstance.CompleteGame += () =>
+		{
+			pauseInstance.QueueFree();
+			EndGame();
+		};
+
 		AddChild(pauseInstance);
 		_isPaused = true;
 	}
 
-	private static void EndGame()
+	private void EndGame()
 	{
 		if (_isGameOver)
 			return;
@@ -396,7 +404,7 @@ public partial class GameUI : Control
 		_streakLabel.Text = $"x{value}";
 	}
 
-	//Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ Р С”Р С•Р В»Р С•Р Т‘РЎвЂ№
+	//Р В Р Р‹Р В РЎвЂўР В Р’В·Р В РўвЂР В Р’В°Р В Р вЂ¦Р В РЎвЂР В Р’Вµ Р В РЎвЂќР В РЎвЂўР В Р’В»Р В РЎвЂўР В РўвЂР РЋРІР‚в„–
 	private void InitializeDeck()
 	{
 		TheDeck.Clear();
@@ -417,35 +425,7 @@ public partial class GameUI : Control
 		while (n > 1)
 		{
 			n--;
-			int k = rng.Next(n + 1); // РЎРѓР В»РЎС“РЎвЂЎР В°Р в„–Р Р…РЎвЂ№Р в„– Р С‘Р Р…Р Т‘Р ВµР С”РЎРѓ Р С•РЎвЂљ 0 Р Т‘Р С• n
-			T value = list[k];
-			list[k] = list[n];
-			list[n] = value;
-		}
-	}
-
-	//Создание колоды
-	private void InitializeDeck()
-	{
-		TheDeck.Clear();
-		for (int c = 0; c < 3; c++)
-			for (int s = 0; s < 3; s++)
-				for (int n = 0; n < 3; n++)
-					for (int f = 1; f < 4; f++)
-					{
-						int[] cardcode = new int[] { c, s, n, f };
-						TheDeck.Add(cardcode);
-					}
-		Shuffle<int[]>(TheDeck);
-	}
-	private void Shuffle<T>(IList<T> list)
-	{
-		var rng = new Random();
-		int n = list.Count;
-		while (n > 1)
-		{
-			n--;
-			int k = rng.Next(n + 1); // случайный индекс от 0 до n
+			int k = rng.Next(n + 1); // Р РЋР С“Р В Р’В»Р РЋРЎвЂњР РЋРІР‚РЋР В Р’В°Р В РІвЂћвЂ“Р В Р вЂ¦Р РЋРІР‚в„–Р В РІвЂћвЂ“ Р В РЎвЂР В Р вЂ¦Р В РўвЂР В Р’ВµР В РЎвЂќР РЋР С“ Р В РЎвЂўР РЋРІР‚С™ 0 Р В РўвЂР В РЎвЂў n
 			T value = list[k];
 			list[k] = list[n];
 			list[n] = value;

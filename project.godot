@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="PatternShiftV7"
+config/name="PatternShift"
 run/main_scene="uid://bllyklhjrkoao"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="uid://dse0xvs2tbsqe"
@@ -19,11 +19,13 @@ config/icon="uid://dse0xvs2tbsqe"
 
 SceneManager="*uid://hsr5anb7k11h"
 EffectsLayer="*uid://cg0d4ju5c36j2"
+Achievements="*uid://j4lf4vc45o3n"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/stretch_mode=1
