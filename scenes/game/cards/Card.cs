@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public partial class Card : Control
 {
+	private GameUI _gameUI;
+
 	private AudioStreamPlayer _sound;
 	private AudioStreamPlayer _sound2;
 	private Panel _background;
@@ -18,6 +20,48 @@ public partial class Card : Control
 	public enum ShapeType { Rectangle, Triangle, Hexagon }
 	public enum FillType { Empty, Striped, Solid }
 	public enum ColorType { Orange, Blue, Purple }
+
+	public CardColor Color
+	{
+		get
+		{
+			return cardData.Color;
+		}
+		set
+		{
+			cardData.Color = value;
+		}
+	}
+	public CardFigure Shape {
+		get
+		{
+			return cardData.Figure;
+		}
+		set
+		{
+			cardData.Figure = value;
+		}
+	}
+	public CardFill Fill {
+		get
+		{
+			return cardData.Fill;
+		}
+		set
+		{
+			cardData.Fill = value;
+		}
+	}
+	public CardCount Count {
+		get
+		{
+			return cardData.Count;
+		}
+		set
+		{
+			cardData.Count = value;
+		}
+	}
 
 	public class CardStyleParams
 	{
@@ -36,22 +80,22 @@ public partial class Card : Control
 		{ CardStyle.Neon, new CardStyleParams(76f, 32f, 3) }
 	};
 
-	private static readonly Dictionary<ColorType, Color> ColorMap = new()
+	private static readonly Dictionary<CardColor, Color> ColorMap = new()
 	{
-		{ ColorType.Orange, new Color("#FF9800") },
-		{ ColorType.Blue, new Color("#4FC3F7") },
-		{ ColorType.Purple, new Color("#9C27B0") }
+		{ CardColor.Orange, new Color("#FF9800") },
+		{ CardColor.Blue, new Color("#4FC3F7") },
+		{ CardColor.Purple, new Color("#9C27B0") }
 	};
 
-	public ShapeType _shape = ShapeType.Rectangle;
-	public ColorType _color = ColorType.Blue;
-	public FillType _fill = FillType.Empty;
-	public int _count = 1;
+	private CardData cardData;
+
 	public bool _isSelected = false;
 	private float _currentScale = 1.0f;
 
 	public override void _Ready()
 	{
+		_gameUI = GetTree().GetFirstNodeInGroup("GameUI") as GameUI;
+
 		_background = GetNode<Panel>("Background");
 		_shapesContainer = GetNode<VBoxContainer>("ShapesContainer");
 		_shapeTemplate = GetNode<TextureRect>("ShapesContainer/Shape");
@@ -59,9 +103,9 @@ public partial class Card : Control
 		_clickArea = GetNode<Button>("ClickArea");
 		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
 		_sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/наведение на карточку 1.mp3");
+		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В Р вЂ¦Р В Р’В°Р В Р вЂ Р В Р’ВµР В РўвЂР В Р’ВµР В Р вЂ¦Р В РЎвЂР В Р’Вµ Р В Р вЂ¦Р В Р’В° Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р В РЎвЂўР РЋРІР‚РЋР В РЎвЂќР РЋРЎвЂњ 1.mp3");
 		_sound2 = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
-		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/клик 1.mp3");
+		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В РЎвЂќР В Р’В»Р В РЎвЂР В РЎвЂќ 1.mp3");
 
 		if (_clickArea != null)
 		{
@@ -70,8 +114,11 @@ public partial class Card : Control
 			_clickArea.MouseExited += OnUnhover;
 		}
 
-		_selectionParticles.Emitting = false;
-		UpdateCard();
+		if (_selectionParticles != null)
+			_selectionParticles.Emitting = false;
+
+		if (cardData != null)
+			UpdateCard();
 	}
 
 	public void SetBaseScale(Vector2 scale)
@@ -105,30 +152,27 @@ public partial class Card : Control
 		tween.Parallel().TweenProperty(this, "rotation", 0.0f, 0.1f);
 	}
 
-	public void Setup(ShapeType shape, ColorType color, FillType fill, int count)
+	public void Setup(CardData cardData)
 	{
-		_shape = shape;
-		_color = color;
-		_fill = fill;
-		_count = count;
-		UpdateCard();
+		this.cardData = cardData;
 	}
 
 	public void SetScale(float scale)
 	{
 		_currentScale = scale;
-		UpdateCard();
+		if (IsNodeReady())
+			UpdateCard();
 	}
 
-	private string GetShapePath(ShapeType shape, FillType fill)
+	private string GetShapePath(CardFigure shape, CardFill fill)
 	{
 		string styleFolder = CardStyleManager.CurrentStyle == CardStyle.Default ? "default" : "neon";
 
 		string shapeName = shape switch
 		{
-			ShapeType.Rectangle => "rect",
-			ShapeType.Triangle => "triangle",
-			ShapeType.Hexagon => "hexagon",
+			CardFigure.Rectangle => "rect",
+			CardFigure.Triangle => "triangle",
+			CardFigure.Hexagon => "hexagon",
 			_ => "rect"
 		};
 
@@ -138,7 +182,11 @@ public partial class Card : Control
 
 	public void UpdateCard()
 	{
-		if (_shapeTemplate == null) return;
+		if (cardData == null)
+			return;
+
+		if (_shapeTemplate == null || _shapesContainer == null)
+			return;
 
 		var styleParams = StyleParams[CardStyleManager.CurrentStyle];
 
@@ -148,7 +196,7 @@ public partial class Card : Control
 				child.QueueFree();
 		}
 
-		string shapePath = GetShapePath(_shape, _fill);
+		string shapePath = GetShapePath(cardData.Figure, cardData.Fill);
 		var texture = (Texture2D)GD.Load(shapePath);
 		if (texture == null)
 		{
@@ -160,10 +208,10 @@ public partial class Card : Control
 		_shapeTemplate.Size = styleParams.ShapeSize * _currentScale;
 		_shapeTemplate.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
 
-		Color color = ColorMap[_color];
+		Color color = ColorMap[cardData.Color];
 		_shapeTemplate.Modulate = color;
 
-		for (int i = 1; i < _count; i++)
+		for (int i = 1; i < (int)cardData.Count; i++)
 		{
 			var duplicate = _shapeTemplate.Duplicate() as TextureRect;
 			if (duplicate != null)
@@ -201,9 +249,9 @@ public partial class Card : Control
 	{
 		_sound2.Play();
 		SetSelected(!_isSelected);
-		GD.Print($"Card clicked: {_shape}, {_color}, {_fill}, {_count}");
+		GD.Print($"Card clicked: {cardData.Figure}, {cardData.Color}, {cardData.Fill}, {cardData.Count}");
 		CCount += 1;
-		if (CCount < 2) GameUI.CardSelected();
-		else { CCount = 0; GameUI.CardDeselected(); }
+		if (CCount < 2) _gameUI.CardSelected();
+		else { CCount = 0; _gameUI.CardDeselected(); }
 	}
 }

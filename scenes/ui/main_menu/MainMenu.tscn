@@ -207,7 +207,23 @@ shadow_color = Color(0.3882353, 0.28627452, 0.6, 1)
 shadow_size = 1
 shadow_offset = Vector2(0, 10)
 
-[node name="MainMenu" type="Control" unique_id=1769929666 node_paths=PackedStringArray("_playButton", "_settingsButton", "_achievementsButton", "_collectionButton", "_quitButton")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ln5bi"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2509804, 0.13725491, 0.41960785, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6156863, 0.47058824, 0.8352941, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="MainMenu" type="Control" unique_id=1769929666 node_paths=PackedStringArray("_playButton", "_settingsButton", "_achievementsButton", "_collectionButton", "_quitButton", "_totalScoreLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,6 +237,7 @@ _settingsButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxCo
 _achievementsButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer/AchievementsButton")
 _collectionButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer/CollectionButton")
 _quitButton = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/MenuBar/VBoxContainer/QuitButton")
+_totalScoreLabel = NodePath("TotalScorePanel/VBoxContainer/Score")
 
 [node name="Background" type="Panel" parent="." unique_id=267616030]
 layout_mode = 1
@@ -252,6 +269,7 @@ theme_override_constants/separation = 0
 
 [node name="Logo" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1707496063]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PATTERN" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Logo" unique_id=1226857735]
 layout_mode = 2
@@ -393,3 +411,37 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_p1xdv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mlyw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_lmqau")
 text = "2"
+
+[node name="TotalScorePanel" type="PanelContainer" parent="." unique_id=440437221]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_bottom = 82.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(-30, 30)
+theme_override_styles/panel = SubResource("StyleBoxFlat_ln5bi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TotalScorePanel" unique_id=1174468287]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Label" type="Label" parent="TotalScorePanel/VBoxContainer" unique_id=1379886775]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5411765, 0.47843137, 0.6666667, 1)
+theme_override_font_sizes/font_size = 20
+text = "Общий счёт"
+
+[node name="Score" type="Label" parent="TotalScorePanel/VBoxContainer" unique_id=658821138]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.62352943, 0.2509804, 1)
+theme_override_font_sizes/font_size = 45
+text = "0000000"

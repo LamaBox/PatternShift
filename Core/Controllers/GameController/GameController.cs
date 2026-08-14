@@ -24,13 +24,8 @@ public partial class GameController : Node
     public override void _Ready()
     {
         ValidateDependencies();
-        SaveData = SaveController.LoadGameData();
 
-        if (SaveData == null)
-        {
-            SaveData = new GameSaveData();
-            SaveController.SaveGameData(SaveData);
-        }
+        SaveData = SaveController.GameData;
 
         gameAchievementSystem = GetNode<AchievementSystem>("/root/Achievements");
 
@@ -41,7 +36,7 @@ public partial class GameController : Node
     {
         if (cards == null || cards.Count != 3)
         {
-            GD.PrintErr($"[GameController]: РћС€РёР±РєР°! РџСЂРѕРІРµСЂСЏСЏСЃСЊ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 3 РєР°СЂС‚С‹, РїРѕР»СѓС‡РµРЅРѕ: {(cards?.Count ?? 0)}");
+            GD.PrintErr($"[GameController]: Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°! Р В РЎСџР РЋР вЂљР В РЎвЂўР В Р вЂ Р В Р’ВµР РЋР вЂљР РЋР РЏР РЋР РЏР РЋР С“Р РЋР Р‰ Р В РўвЂР В РЎвЂўР В Р’В»Р В Р’В¶Р В Р вЂ¦Р В РЎвЂў Р В Р’В±Р РЋРІР‚в„–Р РЋРІР‚С™Р РЋР Р‰ 3 Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р РЋРІР‚в„–, Р В РЎвЂ”Р В РЎвЂўР В Р’В»Р РЋРЎвЂњР РЋРІР‚РЋР В Р’ВµР В Р вЂ¦Р В РЎвЂў: {(cards?.Count ?? 0)}");
             return;
         }
 
@@ -92,29 +87,33 @@ public partial class GameController : Node
         EmitSignal(SignalName.SetCheckFailed);
     }
 
-    public void FinishGame()
+    public (bool scoreRecord, bool streakRecord) FinishGame()
     {
-        SaveData.TotalGames++;
+        bool scoreRecord = GameScore.CurrentValue > SaveData.BestScore;
+        bool streakRecord = GameStreak.MaxStreak > SaveData.BestStreak;
 
+        SaveData.TotalGames++;
         SaveData.TotalScore += GameScore.CurrentValue;
 
         SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.CurrentValue);
         SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
 
-        if (SaveData.TotalGames == 1)
+        if (SaveData.TotalGames >= 1)
         {
             gameAchievementSystem.UnlockByType(AchievementType.FirstGame);
+            GD.Print($"[GameController] unlock first game achievement");
         }
 
         SaveController.SaveGameData(SaveData);
+        return (scoreRecord, streakRecord);
     }
 
     private void ValidateDependencies()
     {
-        if (GameScore == null) GD.PrintErr($"[GameController] РћС€РёР±РєР°: РќРµ РїСЂРёРєСЂРµРїР»РµРЅ СѓР·РµР» Score РІ РёРЅСЃРїРµРєС‚РѕСЂРµ {Name}");
-        if (GameStreak == null) GD.PrintErr($"[GameController] РћС€РёР±РєР°: РќРµ РїСЂРёРєСЂРµРїР»РµРЅ СѓР·РµР» Streak РІ РёРЅСЃРїРµРєС‚РѕСЂРµ {Name}");
-        if (CardValidator == null) GD.PrintErr($"[GameController] РћС€РёР±РєР°: РќРµ РїСЂРёРєСЂРµРїР»РµРЅ СѓР·РµР» CardValidator РІ РёРЅСЃРїРµРєС‚РѕСЂРµ {Name}");
-        if (StreakStrategy == null) GD.PrintErr($"[GameController] РћС€РёР±РєР°: РќРµ РїСЂРёРєСЂРµРїР»РµРЅ СѓР·РµР» StreakStrategy РІ РёРЅСЃРїРµРєС‚РѕСЂРµ {Name}");
-        if (PenaltyStrategy == null) GD.PrintErr($"[GameController] РћС€РёР±РєР°: РњРµ РїСЂРёРєСЂРµРїР»РµРЅ СѓР·РµР» PenaltyStrategy РІ РёРЅСЃРїРµРєС‚РѕСЂРµ {Name}");
+        if (GameScore == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» Score Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
+        if (GameStreak == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» Streak Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
+        if (CardValidator == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» CardValidator Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
+        if (StreakStrategy == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» StreakStrategy Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
+        if (PenaltyStrategy == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎС™Р В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» PenaltyStrategy Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
     }
 }
