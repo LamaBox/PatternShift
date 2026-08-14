@@ -8,11 +8,17 @@ public partial class MainMenu : Control
 	[Export] private Button _collectionButton;
 	[Export] private Button _quitButton;
 	
+	[Export] private Label _totalScoreLabel;
+	
 	private Timer _spawnTimer;
 	private Node2D _fallingCardsLayer;
 
 	public override void _Ready()
 	{
+		var settings = SaveController.SettingsData;
+
+		UpdateTotalScore();
+		
 		_fallingCardsLayer = GetNode<Node2D>("FallingCardsLayer");
 
 		_playButton.Pressed += OnPlayPressed;
@@ -163,5 +169,17 @@ public partial class MainMenu : Control
 		{
 			SpawnInitialCard();
 		}
+	}
+	
+	private void UpdateTotalScore()
+	{
+		GameSaveData saveData = SaveController.LoadGameData();
+		
+		if (saveData == null)
+		{
+			_totalScoreLabel.Text = "0000000";
+			return;
+		}
+		_totalScoreLabel.Text = saveData.TotalScore.ToString("D7");
 	}
 }

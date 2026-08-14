@@ -80,14 +80,22 @@ public partial class SaveController : Node
     {
         if (!ResourceLoader.Exists(SettingsPath))
         {
-            return new SettingsSaveData();
+            var newSettings = new SettingsSaveData();
+
+            SaveSettings(newSettings);
+
+            return newSettings;
         }
 
         SettingsSaveData settingsSaveData = ResourceLoader.Load<SettingsSaveData>(SettingsPath);
 
         if (settingsSaveData == null)
         {
-            return new SettingsSaveData();
+            var newSettings = new SettingsSaveData();
+
+            SaveSettings(newSettings);
+
+            return newSettings;
         }
 
         return settingsSaveData;

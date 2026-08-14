@@ -378,13 +378,15 @@ public partial class GameUI : Control
 
 		var saveData = SaveController.GameData;
 
-		bool isNewRecord = score > saveData.BestScore;
+		bool isNewScoreRecord = score > saveData.BestScore;
+		bool isNewStreakRecord = streak > saveData.BestStreak;
+		bool isNewPatternsRecord = true;
 
 		gameController.FinishGame();
 
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
 		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		gameOverInstance.SetData(score, streak, 0, isNewRecord);
+		gameOverInstance.SetData(score, streak, 0, isNewScoreRecord, isNewStreakRecord, isNewPatternsRecord);
 
 		AddChild(gameOverInstance);
 	}

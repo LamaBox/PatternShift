@@ -19,18 +19,16 @@ public partial class GameOver : Control
 		_playAgainButton.Pressed += OnPlayAgainPressed;
 	}
 
-	public void SetData(int score, int streak, int patterns, bool isNewRecord)
+	public void SetData(int score, int streak, int patterns, bool isNewScoreRecord, bool isNewStreakRecord, bool isNewPatternsRecord)
 	{
 		_scoreLabel.Text = score.ToString("D4");
 		_streakLabel.Text = $"x{streak}";
 		_patternsLabel.Text = patterns.ToString();
 
-		string recordText = isNewRecord ? "Новый рекорд!" : "";
-		
-		_recordLabel1.Text = recordText;
-		_recordLabel2.Text = recordText;
-		_recordLabel3.Text = recordText;
-	}
+        _recordLabel1.Text = isNewScoreRecord ? "Новый рекорд!" : "";
+        _recordLabel2.Text = isNewStreakRecord ? "Новый рекорд!" : "";
+        _recordLabel3.Text = isNewPatternsRecord ? "Новый рекорд!" : "";
+    }
 
 	private void OnQuitPressed()
 	{
