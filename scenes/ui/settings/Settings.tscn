@@ -63,7 +63,7 @@ alignment = 1
 
 [node name="Settings" type="Label" parent="Settings/VBoxContainer" unique_id=1338117602]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 6
 size_flags_stretch_ratio = 0.55
 theme = ExtResource("3_wyiwp")
 theme_override_font_sizes/font_size = 60
