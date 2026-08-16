@@ -16,18 +16,25 @@ public partial class ParallaxBackground : Control
 
 	public override void _Ready()
 	{
-		_center = -GetViewport().GetVisibleRect().Size * 0.1f;
+		var viewportSize = GetViewport().GetVisibleRect().Size;
+		_center = -viewportSize * 0.1f;
+
+		var bg = new ColorRect();
+		bg.Color = new Color("#0a0a1a");
+		bg.Size = viewportSize * 10f;
+		bg.Position = Vector2.Zero;
+		AddChild(bg);
+		MoveChild(bg, 0);
 
 		foreach (Node child in GetChildren())
 		{
-			if (child is TextureRect textureRect)
+			if (child is TextureRect textureRect && child != bg)
 			{
 				_layers.Add(textureRect);
 				textureRect.StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered;
 				textureRect.Position = _center;
 			}
 		}
-		GD.Print($"Total layers: {_layers.Count}");
 	}
 
 	public override void _Input(InputEvent @event)
@@ -65,7 +72,7 @@ public partial class ParallaxBackground : Control
 			layer.Position = _center + offset;
 		}
 	}
-	
+
 	public Vector2 GetCurrentMouseOffset()
 	{
 		return _currentOffset;
