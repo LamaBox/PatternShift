@@ -36,7 +36,7 @@ public partial class GameController : Node
     {
         if (cards == null || cards.Count != 3)
         {
-            GD.PrintErr($"[GameController]: Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°! Р В РЎСџР РЋР вЂљР В РЎвЂўР В Р вЂ Р В Р’ВµР РЋР вЂљР РЋР РЏР РЋР РЏР РЋР С“Р РЋР Р‰ Р В РўвЂР В РЎвЂўР В Р’В»Р В Р’В¶Р В Р вЂ¦Р В РЎвЂў Р В Р’В±Р РЋРІР‚в„–Р РЋРІР‚С™Р РЋР Р‰ 3 Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р РЋРІР‚в„–, Р В РЎвЂ”Р В РЎвЂўР В Р’В»Р РЋРЎвЂњР РЋРІР‚РЋР В Р’ВµР В Р вЂ¦Р В РЎвЂў: {(cards?.Count ?? 0)}");
+            GD.PrintErr($"[GameController]: The number of cards is insufficient to check for a set. Cards transferred: {(cards?.Count ?? 0)}");
             return;
         }
 
@@ -110,10 +110,10 @@ public partial class GameController : Node
 
     private void ValidateDependencies()
     {
-        if (GameScore == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» Score Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
-        if (GameStreak == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» Streak Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
-        if (CardValidator == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» CardValidator Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
-        if (StreakStrategy == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎСљР В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» StreakStrategy Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
-        if (PenaltyStrategy == null) GD.PrintErr($"[GameController] Р В РЎвЂєР РЋРІвЂљВ¬Р В РЎвЂР В Р’В±Р В РЎвЂќР В Р’В°: Р В РЎС™Р В Р’Вµ Р В РЎвЂ”Р РЋР вЂљР В РЎвЂР В РЎвЂќР РЋР вЂљР В Р’ВµР В РЎвЂ”Р В Р’В»Р В Р’ВµР В Р вЂ¦ Р РЋРЎвЂњР В Р’В·Р В Р’ВµР В Р’В» PenaltyStrategy Р В Р вЂ  Р В РЎвЂР В Р вЂ¦Р РЋР С“Р В РЎвЂ”Р В Р’ВµР В РЎвЂќР РЋРІР‚С™Р В РЎвЂўР РЋР вЂљР В Р’Вµ {Name}");
+        if (GameScore == null) GD.PrintErr($"[GameController] Error: Score node not connected in the Inspector {Name}");
+        if (GameStreak == null) GD.PrintErr($"[GameController] Error: Streak node not connected in the Inspector {Name}");
+        if (CardValidator == null) GD.PrintErr($"[GameController] Error: CardValidator node not connected in the Inspector {Name}");
+        if (StreakStrategy == null) GD.PrintErr($"[GameController] Error: StreakStrategy node not connected in the Inspector {Name}");
+        if (PenaltyStrategy == null) GD.PrintErr($"[GameController] Error: PenaltyStrategy node not connected in the Inspector {Name}");
     }
 }

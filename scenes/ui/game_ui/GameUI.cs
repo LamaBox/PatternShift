@@ -62,7 +62,7 @@ public partial class GameUI : Control
 		if (ChekPattern(CardsField[selectedCards[0]], CardsField[selectedCards[1]], CardsField[selectedCards[2]]))
 		{
 			GD.Print("It`s set!");
-			PlaySound1("res://sounds/Р В Р вЂ Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°Р РЋР РЏ Р В РЎвЂќР В РЎвЂўР В РЎВР В Р’В±Р В РЎвЂР В Р вЂ¦Р В Р’В°Р РЋРІР‚В Р В РЎвЂР РЋР РЏ 1.mp3");
+			PlaySound1("res://sounds/correct_set_1.mp3");
 			CardClickedCounter = 0;
 			if (TheDeck.Count > 0)
 			{
@@ -103,7 +103,7 @@ public partial class GameUI : Control
 		else
 		{
 			GD.Print("It isn`t set");
-			PlaySound1("res://sounds/Р В Р вЂ¦Р В Р’ВµР В Р вЂ Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°Р РЋР РЏ Р В РЎвЂќР В РЎвЂўР В РЎВР В Р’В±Р В РЎвЂР В Р вЂ¦Р В Р’В°Р РЋРІР‚В Р В РЎвЂР РЋР РЏ 1.mp3");
+			PlaySound1("res://sounds/uncorrect_set_1.mp3");
 			CardClickedCounter = 0;
 			for (int i = 0; i < 3; i++)
 			{
@@ -115,7 +115,6 @@ public partial class GameUI : Control
 		}	
 	}
 
-	//Р В РЎСџР РЋР вЂљР В РЎвЂўР В Р вЂ Р В Р’ВµР РЋР вЂљР В РЎвЂќР В Р’В° Р В Р вЂ¦Р В Р’В° Р В Р вЂ¦Р В Р’В°Р В Р’В»Р В РЎвЂР РЋРІР‚РЋР В РЎвЂР В Р’Вµ Р В РЎвЂ”Р В Р’В°Р РЋРІР‚С™Р РЋРІР‚С™Р В Р’ВµР РЋР вЂљР В Р вЂ¦Р В Р’В°
 	private static bool ChekPatternAvailable()
 	{
 		for (int c = 0; c < CardsField.Count-2; c++)
@@ -187,7 +186,7 @@ public partial class GameUI : Control
 		float scaleY = (screen.Y / 3.5f) / baseCardHeight;
 		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
 
-		float startX = screen.X * -0.17f; //Р В РўвЂР В Р’В»Р РЋР РЏ Р В РЎвЂ”Р РЋР РЏР РЋРІР‚С™Р В РЎвЂўР В РІвЂћвЂ“ Р В РЎвЂќР В РЎвЂўР В Р’В»Р В РЎвЂўР В Р вЂ¦Р В РЎвЂќР В РЎвЂ Р В РЎвЂ”Р В РЎвЂўР В РЎВР В Р’ВµР В Р вЂ¦Р РЋР РЏР РЋРІР‚С™Р РЋР Р‰ Р В Р вЂ¦Р В Р’В° -0.21
+		float startX = screen.X * -0.17f;
 		float startY = screen.Y * -0.29f;
 
 		for (int i = 0; i < 12; i++)
@@ -256,7 +255,7 @@ public partial class GameUI : Control
 
 		if (cardScene == null)
 		{
-			GD.PrintErr("[GameUI] РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ Card.tscn");
+			GD.PrintErr("[GameUI] \nFailed to load Card.tscn");
 			return;
 		}
 
@@ -406,7 +405,6 @@ public partial class GameUI : Control
 		_streakLabel.Text = $"x{value}";
 	}
 
-	//Р В Р Р‹Р В РЎвЂўР В Р’В·Р В РўвЂР В Р’В°Р В Р вЂ¦Р В РЎвЂР В Р’Вµ Р В РЎвЂќР В РЎвЂўР В Р’В»Р В РЎвЂўР В РўвЂР РЋРІР‚в„–
 	private void InitializeDeck()
 	{
 		TheDeck.Clear();
@@ -427,7 +425,7 @@ public partial class GameUI : Control
 		while (n > 1)
 		{
 			n--;
-			int k = rng.Next(n + 1); // Р РЋР С“Р В Р’В»Р РЋРЎвЂњР РЋРІР‚РЋР В Р’В°Р В РІвЂћвЂ“Р В Р вЂ¦Р РЋРІР‚в„–Р В РІвЂћвЂ“ Р В РЎвЂР В Р вЂ¦Р В РўвЂР В Р’ВµР В РЎвЂќР РЋР С“ Р В РЎвЂўР РЋРІР‚С™ 0 Р В РўвЂР В РЎвЂў n
+			int k = rng.Next(n + 1);
 			T value = list[k];
 			list[k] = list[n];
 			list[n] = value;
