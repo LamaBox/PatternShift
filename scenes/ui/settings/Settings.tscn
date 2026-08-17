@@ -62,7 +62,7 @@ content_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dm3ql"]
 
-[node name="Settings" type="Control" unique_id=1751048793 node_paths=PackedStringArray("_musicVolumeSlider", "_soundsVolumeSlider", "_musicValueEdit", "_soundsValueEdit", "_closeButton")]
+[node name="Settings" type="Control" unique_id=1751048793 node_paths=PackedStringArray("_screenModeOption", "_resolutionOption", "_uiScaleSlider", "_vsyncOption", "_fpsLimitOption", "_showComboOption", "_colorLabelsOption", "_languageOption", "_musicVolumeSlider", "_soundsVolumeSlider", "_musicValueEdit", "_soundsValueEdit", "_closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,6 +70,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3x2gm")
+_screenModeOption = NodePath("Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer/HBoxContainer/OptionButton")
+_resolutionOption = NodePath("Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer/HBoxContainer2/OptionButton")
+_uiScaleSlider = NodePath("Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer/HBoxContainer3/HSlider")
+_vsyncOption = NodePath("Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer/HBoxContainer4/OptionButton")
+_fpsLimitOption = NodePath("Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer/HBoxContainer5/OptionButton")
+_showComboOption = NodePath("Settings/VBoxContainer/TabContainer/Gameplay/HBoxContainer/OptionButton")
+_colorLabelsOption = NodePath("Settings/VBoxContainer/TabContainer/Accessibility/HBoxContainer/OptionButton")
+_languageOption = NodePath("Settings/VBoxContainer/TabContainer/Interface/HBoxContainer/OptionButton")
 _musicVolumeSlider = NodePath("Settings/VBoxContainer/TabContainer/Sound/Sound/VBoxContainer/MusicVBox/HBoxContainer/MusicVolumeSlider")
 _soundsVolumeSlider = NodePath("Settings/VBoxContainer/TabContainer/Sound/Sound/VBoxContainer/SoundsVBox/HBoxContainer/SoundsVolumeSlider")
 _musicValueEdit = NodePath("Settings/VBoxContainer/TabContainer/Sound/Sound/VBoxContainer/MusicVBox/HBoxContainer/NumericValue")
@@ -127,7 +135,7 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_gahmb")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_cpld0")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_avf5j")
 tab_alignment = 1
-current_tab = 4
+current_tab = 0
 tab_0/title = "Графика"
 tab_1/title = "Геймплей"
 tab_2/title = "Звук"
@@ -135,7 +143,6 @@ tab_3/title = "Специальные возможности"
 tab_4/title = "Интерфейс"
 
 [node name="Graphics" type="PanelContainer" parent="Settings/VBoxContainer/TabContainer" unique_id=178636449]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3hlpf")
 metadata/_tab_index = 0
@@ -216,6 +223,11 @@ text = "Масштаб UI"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+min_value = 0.8
+max_value = 1.5
+step = 0.1
+value = 0.8
+tick_count = 8
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Settings/VBoxContainer/TabContainer/Graphics/VBoxContainer" unique_id=200416743]
 layout_mode = 2
@@ -425,6 +437,7 @@ popup/item_1/text = "Выкл."
 popup/item_1/id = 1
 
 [node name="Interface" type="PanelContainer" parent="Settings/VBoxContainer/TabContainer" unique_id=1870990507]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3hlpf")
 metadata/_tab_index = 4
