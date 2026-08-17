@@ -13,11 +13,18 @@ public partial class AchievementSystem : Node
 
 	private GameSaveData saveData;
 
-	public override void _Ready()
+    private AudioStreamPlayer _achievementSound;
+
+    public override void _Ready()
 	{
 		saveData = SaveController.GameData;
 
-		foreach (var achievement in AllAchievements)
+        _achievementSound = new AudioStreamPlayer();
+        _achievementSound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/unlock_achievement.mp3");
+
+        AddChild(_achievementSound);
+
+        foreach (var achievement in AllAchievements)
 		{
 			achievement.IsUnlocked =
 				saveData.Achievements.Contains(achievement.Id);
@@ -59,7 +66,9 @@ public partial class AchievementSystem : Node
 
 		achievement.IsUnlocked = true;
 
-		if (saveData != null && !saveData.Achievements.Contains(achievement.Id))
+        if (_achievementSound != null) _achievementSound.Play();
+
+        if (saveData != null && !saveData.Achievements.Contains(achievement.Id))
 		{
 			saveData.Achievements.Add(achievement.Id);
 			SaveController.SaveGameData(saveData);

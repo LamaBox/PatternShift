@@ -136,7 +136,7 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("gameController", "_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer")]
+[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("gameController", "_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer") groups=["GameUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

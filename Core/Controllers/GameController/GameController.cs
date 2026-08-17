@@ -12,6 +12,7 @@ public partial class GameController : Node
 
     [Export] public Score GameScore { get; set; }
     [Export] public Streak GameStreak { get; set; }
+    public int SetsThisGame { get; private set; }
 
     [Export] public BaseCardValidator CardValidator { get; set; }
     [Export] public BaseStreakStrategy StreakStrategy { get; set; }
@@ -58,6 +59,7 @@ public partial class GameController : Node
         int streakBonus = StreakStrategy.CalculateScore(GameScore, GameStreak);
         GameScore.Modify(ScoreForOneSet + streakBonus);
 
+        SetsThisGame++;
         SaveData.TotalSets++;
 
         gameAchievementSystem.CheckTotalSets(SaveData.TotalSets);
@@ -87,25 +89,26 @@ public partial class GameController : Node
         EmitSignal(SignalName.SetCheckFailed);
     }
 
-    public (bool scoreRecord, bool streakRecord) FinishGame()
+    public (bool scoreRecord, bool streakRecord, bool PatternsRecord) FinishGame()
     {
         bool scoreRecord = GameScore.CurrentValue > SaveData.BestScore;
         bool streakRecord = GameStreak.MaxStreak > SaveData.BestStreak;
+        bool PatternsRecord = SetsThisGame > SaveData.BestPatterns;
 
         SaveData.TotalGames++;
         SaveData.TotalScore += GameScore.CurrentValue;
 
         SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.CurrentValue);
         SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
+        SaveData.BestPatterns = Math.Max(SaveData.BestPatterns, SetsThisGame);
 
         if (SaveData.TotalGames >= 1)
         {
             gameAchievementSystem.UnlockByType(AchievementType.FirstGame);
-            GD.Print($"[GameController] unlock first game achievement");
         }
 
         SaveController.SaveGameData(SaveData);
-        return (scoreRecord, streakRecord);
+        return (scoreRecord, streakRecord, PatternsRecord);
     }
 
     private void ValidateDependencies()

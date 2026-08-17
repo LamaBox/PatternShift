@@ -27,6 +27,7 @@ public partial class GameUI : Control
 	public static int CardClickedCounter = 0;
 	private static List<Card> CardsField = new();
 	private static bool IsAddCards = false;
+	private List<int> _lastSelectedCardIndices = new();
 
 	public override void _Ready()
 	{
@@ -38,6 +39,9 @@ public partial class GameUI : Control
 
 		gameController.GameScore.ValueChanged += OnScoreChanged;
 		gameController.GameStreak.ValueChanged += OnStreakChanged;
+
+		gameController.SetCheckSuccess += OnSetCheckSuccess;
+		gameController.SetCheckFailed += OnSetCheckFailed;
 
 		UpdateUI();
 		InitializeDeck();
@@ -55,64 +59,30 @@ public partial class GameUI : Control
 	private void CheckSet()
 	{
 		if (CardClickedCounter != 3) return;
-	
-		List<int> selectedCards = new List<int>();
-		for (int i = 0; i < CardsField.Count; i++) if (CardsField[i]._isSelected) selectedCards.Add(i);
-		GD.Print("ListCompiled");
-		if (ChekPattern(CardsField[selectedCards[0]], CardsField[selectedCards[1]], CardsField[selectedCards[2]]))
+
+		List<int> selectedIndices = new List<int>();
+		List<CardData> selectedCards = new List<CardData>();
+
+		for (int i = 0; i < CardsField.Count; i++)
 		{
-			GD.Print("It`s set!");
-			PlaySound1("res://sounds/correct_set_1.mp3");
-			CardClickedCounter = 0;
-			if (TheDeck.Count > 0)
+			if (CardsField[i]._isSelected) 
 			{
-				if (IsAddCards == false)
-				{
-					for (int i = 0; i < 3; i++)
-					{
-						GenerateNewCard(selectedCards[i]);
-					}
-				}
-				else
-				{
-					for (int i = 2; i > -1; i--)
-					{
-						CardsField[selectedCards[i]].QueueFree();
-						CardsField.RemoveAt(selectedCards[i]);
-						GD.Print("CardRemoved");
-					}
-					UpdateCardPosition();
-					GD.Print("CradUpadtePosition");
-				}
-				if (ChekPatternAvailable()) return;
-				AddAdditionalCards();
-			}
-			else
-			{
-				GD.Print("Last 12 card on field");
-				for (int i = 2; i > -1; i--)
-				{
-					CardsField[selectedCards[i]].QueueFree();
-					CardsField.RemoveAt(selectedCards[i]);
-					GD.Print("CardRemoved");
-				}
-				if (ChekPatternAvailable()) return;
-				EndGame();
+				selectedIndices.Add(i);
+				selectedCards.Add(new CardData(CardsField[i].Shape, CardsField[i].Color, CardsField[i].Fill, CardsField[i].Count));
 			}
 		}
-		else
+
+		if (selectedIndices.Count != 3)
 		{
-			GD.Print("It isn`t set");
-			PlaySound1("res://sounds/uncorrect_set_1.mp3");
-			CardClickedCounter = 0;
-			for (int i = 0; i < 3; i++)
-			{
-				CardsField[selectedCards[i]].SetSelected(false);
-				CardsField[selectedCards[i]].CCount = 0;
-			}
-			if (ChekPatternAvailable()) return;
-			AddAdditionalCards();
-		}	
+			GD.PrintErr($"[GameUI] Not 3 cards were selected, but {selectedIndices.Count}");
+			return;
+		}
+
+		_lastSelectedCardIndices = selectedIndices;
+
+		CardClickedCounter = 0;
+
+		gameController.ProcessSelectedSet(selectedCards);
 	}
 
 	private static bool ChekPatternAvailable()
@@ -367,25 +337,22 @@ public partial class GameUI : Control
 
 	private void EndGame()
 	{
-		if (_isGameOver)
-			return;
+		if (_isGameOver) return;
 
 		_isGameOver = true;
 
 		int score = gameController.GameScore.CurrentValue;
-		int streak = gameController.GameStreak.CurrentValue;
+		int streak = gameController.GameStreak.MaxStreak;
+		int patterns = gameController.SetsThisGame;
 
-		var saveData = SaveController.GameData;
-
-		bool isNewScoreRecord = score > saveData.BestScore;
-		bool isNewStreakRecord = streak > saveData.BestStreak;
-		bool isNewPatternsRecord = true;
-
-		gameController.FinishGame();
+		var records = gameController.FinishGame();
 
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
-		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		gameOverInstance.SetData(score, streak, 0, isNewScoreRecord, isNewStreakRecord, isNewPatternsRecord);
+
+		var gameOverInstance =
+			gameOverScene.Instantiate<GameOver>();
+
+		gameOverInstance.SetData(score, streak, patterns, records.scoreRecord, records.streakRecord, records.PatternsRecord);
 
 		AddChild(gameOverInstance);
 	}
@@ -430,5 +397,72 @@ public partial class GameUI : Control
 			list[k] = list[n];
 			list[n] = value;
 		}
+	}
+	private void OnSetCheckSuccess(Godot.Collections.Array<CardData> checkedCards)
+	{
+		GD.Print("[GameUI] Correct SET!");
+
+		PlaySound1("res://sounds/correct_set_1.mp3");
+
+		if (TheDeck.Count > 0)
+		{
+			if (!IsAddCards)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					GenerateNewCard(_lastSelectedCardIndices[i]);
+				}
+			}
+			else
+			{
+				for (int i = 2; i >= 0; i--)
+				{
+					int index = _lastSelectedCardIndices[i];
+
+					CardsField[index].QueueFree();
+					CardsField.RemoveAt(index);
+				}
+
+				UpdateCardPosition();
+			}
+
+			_lastSelectedCardIndices.Clear();
+
+			if (ChekPatternAvailable())
+				return;
+
+			AddAdditionalCards();
+		}
+		else
+		{
+			for (int i = 2; i >= 0; i--)
+			{
+				int index = _lastSelectedCardIndices[i];
+
+				CardsField[index].QueueFree();
+				CardsField.RemoveAt(index);
+			}
+
+			if (ChekPatternAvailable())
+				return;
+
+			EndGame();
+		}
+
+		_lastSelectedCardIndices.Clear();
+	}
+	private void OnSetCheckFailed()
+	{
+		GD.Print("[GameUI] Uncorrect SET!");
+
+		PlaySound1("res://sounds/incorrect_set_1.mp3");
+
+		foreach (int index in _lastSelectedCardIndices)
+		{
+			CardsField[index].SetSelected(false);
+			CardsField[index].CCount = 0;
+		}
+
+		_lastSelectedCardIndices.Clear();
 	}
 }
