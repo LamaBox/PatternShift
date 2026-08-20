@@ -17,14 +17,16 @@ public partial class ModeSelect : Control
 	[Export] private Button _startButton;
 	[Export] private Button _backButton;
 
-	private string _selectedMode = "classic";
+	public static string _selectedMode = "classic";
 
 	public override void _Ready()
 	{
 		_classicButton.Pressed += () => SelectMode("classic");
-		_standardButton.Pressed += () => SelectMode("standard");
+		//_standardButton.Pressed += () => SelectMode("standard");
+		_standardButton.Pressed += () => SelectMode("classic");
 		_timeTrialButton.Pressed += () => SelectMode("time_trial");
-		_dailyButton.Pressed += () => SelectMode("daily");
+		//_dailyButton.Pressed += () => SelectMode("daily");
+		_dailyButton.Pressed += () => SelectMode("classic");
 		_endlessButton.Pressed += () => SelectMode("endless");
 
 		_backButton.Pressed += OnBackPressed;
@@ -45,9 +47,10 @@ public partial class ModeSelect : Control
 				break;
 			case "standard":
 				_standardDesc.Modulate = Colors.White;
-				break;
+                break;
 			case "time_trial":
 				_timeTrialDesc.Modulate = Colors.White;
+				GameUI._isntTimeMode = false;
 				break;
 			case "daily":
 				_dailyDesc.Modulate = Colors.White;

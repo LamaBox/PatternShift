@@ -15,6 +15,7 @@ public partial class PausePopup : Control
 
 	private void OnResumePressed()
 	{
+		GameUI._isPaused = false;
 		QueueFree();
 	}
 
@@ -27,6 +28,8 @@ public partial class PausePopup : Control
 
 	private void OnQuitPressed()
 	{
+		GameUI._isPaused = false;
+		GameUI._isntTimeMode = true;
 		GetNode<SceneManager>("/root/SceneManager").GoToMainMenu();
 	}
 }

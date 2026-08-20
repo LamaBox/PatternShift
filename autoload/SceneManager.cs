@@ -8,6 +8,7 @@ public partial class SceneManager : Node
 	public const string GameUI = "res://scenes/ui/game_ui/GameUI.tscn";
 	public const string PausePopup = "res://scenes/ui/pause/PausePopup.tscn";
 	public const string GameOver = "res://scenes/ui/game_over/GameOver.tscn";
+	public const string GameGuide = "res://scenes/ui/game_guide/PlayGuide.tscn";
 
 	private Node _currentScene;
 

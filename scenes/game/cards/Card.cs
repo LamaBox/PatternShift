@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public partial class Card : Control
 {
+	private AudioStreamPlayer _sound;
+	private AudioStreamPlayer _sound2;
 	private Panel _background;
 	private VBoxContainer _shapesContainer;
 	private TextureRect _shapeTemplate;
@@ -11,6 +13,7 @@ public partial class Card : Control
 	private GpuParticles2D _selectionParticles;
 	private Vector2 _baseScale = Vector2.One;
 	private int _originalZIndex = 0;
+	public int CCount = 0;
 
 	public enum ShapeType { Rectangle, Triangle, Hexagon }
 	public enum FillType { Empty, Striped, Solid }
@@ -40,11 +43,11 @@ public partial class Card : Control
 		{ ColorType.Purple, new Color("#9C27B0") }
 	};
 
-	private ShapeType _shape = ShapeType.Rectangle;
-	private ColorType _color = ColorType.Blue;
-	private FillType _fill = FillType.Empty;
-	private int _count = 1;
-	private bool _isSelected = false;
+	public ShapeType _shape = ShapeType.Rectangle;
+	public ColorType _color = ColorType.Blue;
+	public FillType _fill = FillType.Empty;
+	public int _count = 1;
+	public bool _isSelected = false;
 	private float _currentScale = 1.0f;
 
 	public override void _Ready()
@@ -55,6 +58,10 @@ public partial class Card : Control
 		_highlight = GetNode<Panel>("Highlight");
 		_clickArea = GetNode<Button>("ClickArea");
 		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
+		_sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/наведение на карточку 1.mp3");
+		_sound2 = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
+		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/клик 1.mp3");
 
 		if (_clickArea != null)
 		{
@@ -86,6 +93,7 @@ public partial class Card : Control
 		shakeTween.TweenProperty(this, "rotation", 0.02f, 0.05f);
 		shakeTween.TweenProperty(this, "rotation", -0.02f, 0.05f);
 		shakeTween.TweenProperty(this, "rotation", 0.0f, 0.05f);
+		_sound.Play();
 	}
 
 	private void OnUnhover()
@@ -128,7 +136,7 @@ public partial class Card : Control
 		return $"res://assets/images/cards/shapes/{styleFolder}/{shapeName}_{fillName}.png";
 	}
 
-	private void UpdateCard()
+	public void UpdateCard()
 	{
 		if (_shapeTemplate == null) return;
 
@@ -189,9 +197,13 @@ public partial class Card : Control
 		}
 	}
 
-	private void OnCardPressed()
+	public void OnCardPressed()
 	{
+		_sound2.Play();
 		SetSelected(!_isSelected);
 		GD.Print($"Card clicked: {_shape}, {_color}, {_fill}, {_count}");
+		CCount += 1;
+		if (CCount < 2) GameUI.CardSelected();
+		else { CCount = 0; GameUI.CardDeselected(); }
 	}
 }
