@@ -69,10 +69,6 @@ public partial class GameController : Node
             gameAchievementSystem.UnlockByType(AchievementType.FirstSet);
         }
 
-        SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.HighScore);
-        SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
-        SaveController.SaveGameData(SaveData);
-
         var cardArray = new Godot.Collections.Array<CardData>(cards);
         EmitSignal(SignalName.SetCheckSuccess, cardArray);
     }
@@ -93,10 +89,19 @@ public partial class GameController : Node
     {
         bool scoreRecord = GameScore.CurrentValue > SaveData.BestScore;
         bool streakRecord = GameStreak.MaxStreak > SaveData.BestStreak;
-        bool PatternsRecord = SetsThisGame > SaveData.BestPatterns;
+        bool patternsRecord = SetsThisGame > SaveData.BestPatterns;
 
         SaveData.TotalGames++;
         SaveData.TotalScore += GameScore.CurrentValue;
+
+        if (scoreRecord)
+            SaveData.BestScore = GameScore.CurrentValue;
+
+        if (streakRecord)
+            SaveData.BestStreak = GameStreak.MaxStreak;
+
+        if (patternsRecord)
+            SaveData.BestPatterns = SetsThisGame;
 
         SaveData.BestScore = Math.Max(SaveData.BestScore, GameScore.CurrentValue);
         SaveData.BestStreak = Math.Max(SaveData.BestStreak, GameStreak.MaxStreak);
@@ -108,7 +113,7 @@ public partial class GameController : Node
         }
 
         SaveController.SaveGameData(SaveData);
-        return (scoreRecord, streakRecord, PatternsRecord);
+        return (scoreRecord, streakRecord, patternsRecord);
     }
 
     private void ValidateDependencies()
