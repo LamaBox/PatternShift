@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://ci0gh7m10e81h"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_m0pky"]
+[ext_resource type="Texture2D" uid="uid://dn5swbwsiij01" path="res://assets/images/achievements/quick_hands.png" id="1_qwp6j"]
+
+[resource]
+script = ExtResource("1_m0pky")
+Id = "set_sec_5"
+AchievementName = "Быстрые руки"
+AchievementDescription = "Найти комбинацию за 5 секунд"
+Type = 3
+TargetValue = 1
+Icon = ExtResource("1_qwp6j")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://dhppdc71vdtci"]
+
+[ext_resource type="Texture2D" uid="uid://bucojbroaxmt2" path="res://assets/images/achievements/against_time.png" id="1_duiko"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_pgknf"]
+
+[resource]
+script = ExtResource("1_pgknf")
+Id = "mode_on_time"
+AchievementName = "Время"
+AchievementDescription = "Выиграть режим \"На время\""
+Type = 11
+TargetValue = 1
+Icon = ExtResource("1_duiko")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

@@ -9,10 +9,10 @@ public partial class LinearStreakStrategy : BaseStreakStrategy
 
 	public override int CalculateScore(Score score, Streak streak)
 	{
-		if(streak.CurrentValue < 1) return score.CurrentValue;
+		if(streak.CurrentValue <= 1) return score.CurrentValue;
 
 		int resultMultiplier = Mathf.Clamp(streak.CurrentValue, 1, MaxMultiplier);
 
-		return score.CurrentValue + (PointsPerStreakStep * resultMultiplier);
+		return PointsPerStreakStep * resultMultiplier;
 	}
 }

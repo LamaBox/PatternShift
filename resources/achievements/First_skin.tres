@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://bm3dsp7iq4ng3"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_aycrh"]
+[ext_resource type="Texture2D" uid="uid://c7fi1oxpfclbc" path="res://assets/images/achievements/collector.png" id="1_cygcu"]
+
+[resource]
+script = ExtResource("1_aycrh")
+Id = "first_skin"
+AchievementName = "Коллекционер"
+AchievementDescription = "Открыть первый дизайн карточек"
+Type = 6
+TargetValue = 1
+Icon = ExtResource("1_cygcu")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

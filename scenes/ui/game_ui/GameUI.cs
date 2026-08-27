@@ -42,6 +42,8 @@ public partial class GameUI : Control
 
 		gameController.SetCheckSuccess += OnSetCheckSuccess;
 		gameController.SetCheckFailed += OnSetCheckFailed;
+		gameController.TimeChanged += OnTimeChanged;
+		gameController.GameFinished += EndGame;
 
 		UpdateUI();
 		InitializeDeck();
@@ -322,6 +324,8 @@ public partial class GameUI : Control
 
 	private void OnPausePressed()
 	{
+		gameController.PauseGameTimer();
+
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
 		var pauseInstance = pauseScene.Instantiate<PausePopup>();
 
@@ -330,6 +334,8 @@ public partial class GameUI : Control
 			pauseInstance.QueueFree();
 			EndGame();
 		};
+
+		pauseInstance.Setup(gameController);
 
 		AddChild(pauseInstance);
 		_isPaused = true;
@@ -370,6 +376,14 @@ public partial class GameUI : Control
 	private void OnStreakChanged(int value)
 	{
 		_streakLabel.Text = $"x{value}";
+	}
+
+	private void OnTimeChanged(int remainingTime)
+	{
+		int minutes = remainingTime / 60;
+		int seconds = remainingTime % 60;
+
+		_timerLabel.Text = $"{minutes:00}:{seconds:00}";
 	}
 
 	private void InitializeDeck()

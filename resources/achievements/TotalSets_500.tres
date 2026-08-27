@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://6nu02w1jojm6"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_j83c4"]
+[ext_resource type="Texture2D" uid="uid://dqrcr6vpa7yyw" path="res://assets/images/achievements/genius.png" id="1_mll0k"]
+
+[resource]
+script = ExtResource("1_j83c4")
+Id = "totalSets_500"
+AchievementName = "Гений"
+AchievementDescription = "Найти 500 комбинаций"
+Type = 5
+TargetValue = 500
+Icon = ExtResource("1_mll0k")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

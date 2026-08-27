@@ -7,12 +7,22 @@ public partial class GameController : Node
 {
     [Signal] public delegate void SetCheckSuccessEventHandler(Godot.Collections.Array<CardData> checkedCards);
     [Signal] public delegate void SetCheckFailedEventHandler();
+    [Signal] public delegate void TimeChangedEventHandler(int remainingTime);
+    [Signal] public delegate void GameFinishedEventHandler();
 
     [Export] public int ScoreForOneSet { get; set; } = 0;
+    [Export] public int GameDuration { get; set; } = 300;
+
+    public int RemainingTime { get; private set; }
+
+    private bool _isTimerPaused = false;
 
     [Export] public Score GameScore { get; set; }
     [Export] public Streak GameStreak { get; set; }
-    public int SetsThisGame { get; private set; }
+    [Export] public Timer GameTimer { get; set; }
+
+    public int SetsThisGame { get; private set; } = 0;
+    public int MistakesThisGame { get; private set; } = 0;
 
     [Export] public BaseCardValidator CardValidator { get; set; }
     [Export] public BaseStreakStrategy StreakStrategy { get; set; }
@@ -31,6 +41,10 @@ public partial class GameController : Node
         gameAchievementSystem = GetNode<AchievementSystem>("/root/Achievements");
 
         gameAchievementSystem.Initialize(GameScore, GameStreak);
+
+        GameTimer.Timeout += OnTimerTimeout;
+
+        StartGameTimer();
     }
 
     public void ProcessSelectedSet(List<CardData> cards)
@@ -63,10 +77,21 @@ public partial class GameController : Node
         SaveData.TotalSets++;
 
         gameAchievementSystem.CheckTotalSets(SaveData.TotalSets);
+        gameAchievementSystem.CheckScore(GameScore.CurrentValue);
+        gameAchievementSystem.CheckStreak(GameStreak.CurrentValue);
 
         if (SaveData.TotalSets == 1)
         {
             gameAchievementSystem.UnlockByType(AchievementType.FirstSet);
+        }
+
+        if (RemainingTime >= (GameDuration - 5))
+        {
+            gameAchievementSystem.CheckAchievements(AchievementType.FastSet);
+        }
+        if (RemainingTime >= (GameDuration - 15))
+        {
+            gameAchievementSystem.CheckAchievements(AchievementType.FastSet, SetsThisGame);
         }
 
         var cardArray = new Godot.Collections.Array<CardData>(cards);
@@ -79,6 +104,7 @@ public partial class GameController : Node
         GameScore.Modify(-penalty);
         GameStreak.ResetCurrentValue();
 
+        MistakesThisGame++;
         SaveData.TotalMistakes++;
         SaveController.SaveGameData(SaveData);
 
@@ -112,6 +138,11 @@ public partial class GameController : Node
             gameAchievementSystem.UnlockByType(AchievementType.FirstGame);
         }
 
+        if (MistakesThisGame == 0)
+        {
+            gameAchievementSystem.UnlockByType(AchievementType.NoMistakes);
+        }
+
         SaveController.SaveGameData(SaveData);
         return (scoreRecord, streakRecord, patternsRecord);
     }
@@ -123,5 +154,49 @@ public partial class GameController : Node
         if (CardValidator == null) GD.PrintErr($"[GameController] Error: CardValidator node not connected in the Inspector {Name}");
         if (StreakStrategy == null) GD.PrintErr($"[GameController] Error: StreakStrategy node not connected in the Inspector {Name}");
         if (PenaltyStrategy == null) GD.PrintErr($"[GameController] Error: PenaltyStrategy node not connected in the Inspector {Name}");
+    }
+    public void StartGameTimer()
+    {
+        RemainingTime = GameDuration;
+
+        GameTimer.Start();
+
+        EmitSignal( SignalName.TimeChanged, RemainingTime);
+    }
+
+    private void OnTimerTimeout()
+    {
+        RemainingTime--;
+
+        if (RemainingTime <= 0)
+        {
+            RemainingTime = 0;
+            GameTimer.Stop();
+
+            EmitSignal(SignalName.TimeChanged, RemainingTime);
+
+            EmitSignal(SignalName.GameFinished);
+            return;
+        }
+
+        EmitSignal(SignalName.TimeChanged, RemainingTime);
+    }
+
+    public void PauseGameTimer()
+    {
+        if (GameTimer == null || GameTimer.IsStopped())
+            return;
+
+        _isTimerPaused = true;
+        GameTimer.Paused = true;
+    }
+
+    public void ResumeGameTimer()
+    {
+        if (GameTimer == null)
+            return;
+
+        _isTimerPaused = false;
+        GameTimer.Paused = false;
     }
 }

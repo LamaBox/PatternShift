@@ -296,11 +296,12 @@ layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
-[node name="GameController" type="Node" parent="." unique_id=829617540 node_paths=PackedStringArray("GameScore", "GameStreak", "CardValidator", "StreakStrategy", "PenaltyStrategy")]
+[node name="GameController" type="Node" parent="." unique_id=829617540 node_paths=PackedStringArray("GameScore", "GameStreak", "GameTimer", "CardValidator", "StreakStrategy", "PenaltyStrategy")]
 script = ExtResource("8_vp1mc")
 ScoreForOneSet = 100
 GameScore = NodePath("Score")
 GameStreak = NodePath("Streak")
+GameTimer = NodePath("Timer")
 CardValidator = NodePath("ClassicCardValidator")
 StreakStrategy = NodePath("LinearStreakStrategy")
 PenaltyStrategy = NodePath("FixedPenaltyStrategy")
@@ -328,6 +329,8 @@ metadata/_custom_type_script = "uid://cl1qghsbela6r"
 script = ExtResource("13_cg7kb")
 PenaltyPoints = 100
 metadata/_custom_type_script = "uid://b47gwbx12p3t0"
+
+[node name="Timer" type="Timer" parent="GameController" unique_id=146074093]
 
 [node name="SoundsPlayer1" type="AudioStreamPlayer" parent="." unique_id=522768084]
 

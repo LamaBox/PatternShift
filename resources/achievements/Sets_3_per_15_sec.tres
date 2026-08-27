@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://la6qbi3b3qnr"]
+
+[ext_resource type="Texture2D" uid="uid://dkod2v2n1c01a" path="res://assets/images/achievements/lightning.png" id="1_0kq8x"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_vahwl"]
+
+[resource]
+script = ExtResource("1_vahwl")
+Id = "Sets_3_per_15_sec"
+AchievementName = "Молния"
+AchievementDescription = "Найти 3 комбинации подряд быстрее чем за 15 секунд"
+Type = 10
+TargetValue = 3
+Icon = ExtResource("1_0kq8x")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"
