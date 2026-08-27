@@ -9,6 +9,13 @@ public partial class PausePopup : Control
 	[Export] private Button _quitButton;
 	[Export] private Button _completeButton;
 
+	private GameController _gameController;
+
+	public void Setup(GameController gameController)
+	{
+		_gameController = gameController;
+	}
+
 	public override void _Ready()
 	{
 		_resumeButton.Pressed += OnResumePressed;
@@ -19,6 +26,7 @@ public partial class PausePopup : Control
 
 	private void OnResumePressed()
 	{
+		_gameController.ResumeGameTimer();
 		GameUI._isPaused = false;
 		QueueFree();
 	}

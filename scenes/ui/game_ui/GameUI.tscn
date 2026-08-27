@@ -136,7 +136,7 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("gameController", "_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer")]
+[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("gameController", "_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer") groups=["GameUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -296,10 +296,12 @@ layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
-[node name="GameController" type="Node" parent="." unique_id=829617540 node_paths=PackedStringArray("GameScore", "GameStreak", "CardValidator", "StreakStrategy", "PenaltyStrategy")]
+[node name="GameController" type="Node" parent="." unique_id=829617540 node_paths=PackedStringArray("GameScore", "GameStreak", "GameTimer", "CardValidator", "StreakStrategy", "PenaltyStrategy")]
 script = ExtResource("8_vp1mc")
+ScoreForOneSet = 100
 GameScore = NodePath("Score")
 GameStreak = NodePath("Streak")
+GameTimer = NodePath("Timer")
 CardValidator = NodePath("ClassicCardValidator")
 StreakStrategy = NodePath("LinearStreakStrategy")
 PenaltyStrategy = NodePath("FixedPenaltyStrategy")
@@ -319,11 +321,16 @@ metadata/_custom_type_script = "uid://3n2ahowdbkax"
 
 [node name="LinearStreakStrategy" type="Node" parent="GameController" unique_id=81759365]
 script = ExtResource("12_bd4lo")
+PointsPerStreakStep = 50
+MaxMultiplier = 2147483647
 metadata/_custom_type_script = "uid://cl1qghsbela6r"
 
 [node name="FixedPenaltyStrategy" type="Node" parent="GameController" unique_id=601874918]
 script = ExtResource("13_cg7kb")
+PenaltyPoints = 100
 metadata/_custom_type_script = "uid://b47gwbx12p3t0"
+
+[node name="Timer" type="Timer" parent="GameController" unique_id=146074093]
 
 [node name="SoundsPlayer1" type="AudioStreamPlayer" parent="." unique_id=522768084]
 

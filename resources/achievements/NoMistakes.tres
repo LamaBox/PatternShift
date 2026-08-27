@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://dsmnkn5rtudbs"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_d7sre"]
+[ext_resource type="Texture2D" uid="uid://su540gappm7v" path="res://assets/images/achievements/flawless.png" id="1_v6jhb"]
+
+[resource]
+script = ExtResource("1_d7sre")
+Id = "no_mistakes"
+AchievementName = "Без ошибок"
+AchievementDescription = "Закончить игру без единой ошибки"
+Type = 2
+Icon = ExtResource("1_v6jhb")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"
