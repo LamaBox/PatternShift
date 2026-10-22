@@ -2,6 +2,14 @@ using Godot;
 
 public partial class Settings : Control
 {
+	[Export] private OptionButton _screenModeOption;
+	[Export] private OptionButton _resolutionOption;
+	[Export] private HSlider _uiScaleSlider;
+	[Export] private OptionButton _vsyncOption;
+	[Export] private OptionButton _fpsLimitOption;
+	[Export] private OptionButton _showComboOption;
+	[Export] private OptionButton _colorLabelsOption;
+	[Export] private OptionButton _languageOption;
 	[Export] private HSlider _musicVolumeSlider;
 	[Export] private HSlider _soundsVolumeSlider;
 
@@ -21,23 +29,119 @@ public partial class Settings : Control
 		_musicValueEdit.TextSubmitted += OnMusicValueSubmitted;
 		_soundsValueEdit.TextSubmitted += OnSoundsValueSubmitted;
 
+		_screenModeOption.ItemSelected += OnScreenModeChanged;
+		_resolutionOption.ItemSelected += OnResolutionChanged;
+		_uiScaleSlider.ValueChanged += OnUIScaleChanged;
+		_vsyncOption.ItemSelected += OnVsyncChanged;
+		_fpsLimitOption.ItemSelected += OnFpsLimitChanged;
+		_showComboOption.ItemSelected += OnShowComboChanged;
+		_colorLabelsOption.ItemSelected += OnColorLabelsChanged;
+		_languageOption.ItemSelected += OnLanguageChanged;
+
 		_closeButton.Pressed += OnClosePressed;
 
 		LoadSettings();
-    }
+	}
 
-    private void LoadSettings()
-    {
-        var settings = SaveController.SettingsData;
+	private void LoadSettings()
+	{
+		var settings = SaveController.SettingsData;
 
-        _musicVolumeSlider.Value = settings.MusicVolume;
-        _soundsVolumeSlider.Value = settings.SoundsVolume;
+		_musicVolumeSlider.Value = settings.MusicVolume;
+		_soundsVolumeSlider.Value = settings.SoundsVolume;
 
-        UpdateMusicLabel(settings.MusicVolume);
-        UpdateSoundsLabel(settings.SoundsVolume);
-    }
+		UpdateMusicLabel(settings.MusicVolume);
+		UpdateSoundsLabel(settings.SoundsVolume);
 
-    private void OnMusicSliderChanged(double value) => UpdateMusicLabel((float)value);
+		//Эти настройки пока не сохраняются, выставляем значения по умолчанию
+		_screenModeOption.Select(2);
+		_resolutionOption.Select(0);
+		_uiScaleSlider.Value = 1.0f;
+		_vsyncOption.Select(0);
+		_fpsLimitOption.Select(1);
+		_showComboOption.Select(0);
+		_colorLabelsOption.Select(1);
+		_languageOption.Select(0);
+	}
+
+	private void OnScreenModeChanged(long index)
+	{
+		int mode = (int)index;
+		switch (mode)
+		{
+			case 0:
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+				break;
+			case 1:
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+				break;
+			case 2:
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+				break;
+		}
+		GD.Print($"Screen mode: {_screenModeOption.GetItemText(mode)}");
+	}
+
+	private void OnResolutionChanged(long index)
+	{
+		int idx = (int)index;
+		GD.Print($"Resolution: {_resolutionOption.GetItemText(idx)}");
+	}
+
+	private void OnUIScaleChanged(double value)
+	{
+		GD.Print($"UI Scale: {value:F2}");
+	}
+
+	private void OnVsyncChanged(long index)
+	{
+		bool enabled = index == 0;
+		DisplayServer.WindowSetVsyncMode(enabled ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
+		GD.Print($"V-Sync: {(enabled ? "Вкл" : "Выкл")}");
+	}
+
+	private void OnFpsLimitChanged(long index)
+	{
+		int idx = (int)index;
+		string fps = _fpsLimitOption.GetItemText(idx);
+
+		if (fps == "Отключено" || fps == "Off")
+		{
+			Engine.MaxFps = 0;
+			GD.Print("FPS Limit: Off");
+			return;
+		}
+
+		if (int.TryParse(fps, out int fpsValue))
+		{
+			Engine.MaxFps = fpsValue;
+			GD.Print($"FPS Limit: {fps}");
+		}
+		else
+		{
+			GD.PrintErr($"Invalid FPS value: {fps}");
+		}
+	}
+
+	private void OnShowComboChanged(long index)
+	{
+		bool enabled = index == 0;
+		GD.Print($"Show Combo: {(enabled ? "Вкл" : "Выкл")}");
+	}
+
+	private void OnColorLabelsChanged(long index)
+	{
+		bool enabled = index == 0;
+		GD.Print($"Color Labels: {(enabled ? "Вкл" : "Выкл")}");
+	}
+
+	private void OnLanguageChanged(long index)
+	{
+		int idx = (int)index;
+		GD.Print($"Language: {_languageOption.GetItemText(idx)}");
+	}
+
+	private void OnMusicSliderChanged(double value) => UpdateMusicLabel((float)value);
 	private void OnSoundsSliderChanged(double value) => UpdateSoundsLabel((float)value);
 
 	private void UpdateMusicLabel(float value) =>
@@ -92,16 +196,16 @@ public partial class Settings : Control
 
 	private void OnClosePressed()
 	{
-        var settings = SaveController.SettingsData;
+		var settings = SaveController.SettingsData;
 
-        settings.MusicVolume =
-            Mathf.RoundToInt((float)_musicVolumeSlider.Value);
+		settings.MusicVolume =
+			Mathf.RoundToInt((float)_musicVolumeSlider.Value);
 
-        settings.SoundsVolume =
-            Mathf.RoundToInt((float)_soundsVolumeSlider.Value);
+		settings.SoundsVolume =
+			Mathf.RoundToInt((float)_soundsVolumeSlider.Value);
 
-        SaveController.SaveSettings(settings);
+		SaveController.SaveSettings(settings);
 
-        QueueFree();
-    }
+		QueueFree();
+	}
 }

@@ -62,7 +62,7 @@ layout_mode = 2
 
 [node name="SelectingAGameMode" type="Label" parent="Panel/VBoxContainer" unique_id=871625308]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 6
 size_flags_stretch_ratio = 1.03
 theme_override_font_sizes/font_size = 60
 text = "ВЫБОР РЕЖИМА ИГРЫ"

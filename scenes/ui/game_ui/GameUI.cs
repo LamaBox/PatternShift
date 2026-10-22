@@ -14,9 +14,13 @@ public partial class GameUI : Control
 	[Export] private Label _scoreLabel;
 	[Export] private Button _pauseButton;
 	[Export] private Control _cardsContainer;
+	[Export] private Control _deckPile;
+	[Export] private Control _setPile;
 	private static AudioStreamPlayer sound1;
 	private static AudioStreamPlayer sound2;
 	private static Control _gameui;
+
+	private Card _deckTopCard;
 
 	private float _time = 300f;
 	public static bool _isPaused = false;
@@ -46,6 +50,10 @@ public partial class GameUI : Control
 		gameController.GameFinished += EndGame;
 
 		UpdateUI();
+
+		SetupDeckPile();
+		SetupSetPile();
+
 		InitializeDeck();
 		CallDeferred(nameof(GenerateCards));
 		GetViewport().SizeChanged += OnViewportResized;
@@ -137,6 +145,40 @@ public partial class GameUI : Control
 		_scoreLabel.Text = $"{gameController.GameScore.CurrentValue:D4}";
 
 		_timerLabel.Text = $"{Mathf.Floor(_time / 60):00}:{Mathf.Floor(_time % 60):00}";
+	}
+
+	//Рубашка колоды, карта декоративная и на клики не реагирует
+	private void SetupDeckPile()
+	{
+		if (_deckPile == null) return;
+
+		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
+		_deckTopCard = cardScene.Instantiate<Card>();
+		_deckTopCard.Setup(new CardData(CardFigure.Rectangle, CardColor.Blue, CardFill.Solid, CardCount.One));
+		_deckTopCard.SetBaseScale(Vector2.One);
+		_deckTopCard.Scale = new Vector2(0.5f, 0.5f);
+		_deckTopCard.SetSelected(false);
+		_deckTopCard.MouseFilter = MouseFilterEnum.Ignore;
+		_deckPile.AddChild(_deckTopCard);
+	}
+
+	//Стопка собранных сетов
+	private void SetupSetPile()
+	{
+		if (_setPile == null) return;
+
+		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
+		for (int i = 0; i < 5; i++)
+		{
+			var card = cardScene.Instantiate<Card>();
+			card.Setup(new CardData(CardFigure.Rectangle, CardColor.Blue, CardFill.Solid, CardCount.One));
+			card.Scale = new Vector2(0.4f, 0.4f);
+			card.Rotation = (float)(_random.NextDouble() * 0.2f - 0.1f);
+			card.Position = new Vector2((float)(_random.NextDouble() * 10 - 5), (float)(_random.NextDouble() * 10 - 5));
+			card.SetSelected(false);
+			card.MouseFilter = MouseFilterEnum.Ignore;
+			_setPile.AddChild(card);
+		}
 	}
 
 	private void GenerateCards()

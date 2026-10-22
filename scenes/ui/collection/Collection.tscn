@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://c517oe8dahl8o"]
+
+[ext_resource type="Theme" uid="uid://g0en87gf7qtb" path="res://assets/themes/ModeSelect_font_variation.tres" id="1_8sxgo"]
+[ext_resource type="Script" uid="uid://br1b68ql8kw7t" path="res://scenes/ui/collection/Collection.cs" id="1_dm15d"]
+[ext_resource type="StyleBox" uid="uid://xmn7xcqiwlsh" path="res://assets/themes/panelcontrol.tres" id="2_m3pu7"]
+[ext_resource type="StyleBox" uid="uid://d4ipfq6t2hlnt" path="res://assets/themes/Norm_Left_Button.tres" id="4_kka82"]
+[ext_resource type="StyleBox" uid="uid://c28tgmst24ei0" path="res://assets/themes/Press_Left_Button.tres" id="5_rtru6"]
+[ext_resource type="StyleBox" uid="uid://byco6c8ue24f8" path="res://assets/themes/Hover_Left_Button.tres" id="6_olhnk"]
+[ext_resource type="StyleBox" uid="uid://bg84xjena1u01" path="res://assets/themes/Norm_Right_Button.tres" id="7_njns7"]
+[ext_resource type="StyleBox" uid="uid://ba0yo5j1jy5ja" path="res://assets/themes/Press_Right_Button.tres" id="8_i7ut1"]
+[ext_resource type="StyleBox" uid="uid://brlfshbol5m2k" path="res://assets/themes/Hover_Right_Button.tres" id="9_ylvnp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hlpf"]
+bg_color = Color(0.34509805, 0.18431373, 0.50980395, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.12156863, 0.4, 0.7019608, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(0.05882353, 0.23137255, 0.41960785, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 10)
+
+[node name="Collection" type="Control" unique_id=1770242000 node_paths=PackedStringArray("_styleNameLabel", "_gridContainer", "_prevButton", "_nextButton", "_selectButton", "_backButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dm15d")
+_styleNameLabel = NodePath("Panel/VBoxContainer/HBoxContainer/Label")
+_gridContainer = NodePath("Panel/VBoxContainer/ScrollContainer/GridContainer")
+_prevButton = NodePath("Panel/VBoxContainer/HBoxContainer/Left_Back")
+_nextButton = NodePath("Panel/VBoxContainer/HBoxContainer/Right_Forward")
+_selectButton = NodePath("Panel/VBoxContainer/HBoxContainer2/Select")
+_backButton = NodePath("Panel/VBoxContainer/HBoxContainer2/Back")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=148805884]
+modulate = Color(0, 0, 0, 0.59607846)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=7936585]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -425.0
+offset_right = 750.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_8sxgo")
+theme_override_styles/panel = ExtResource("2_m3pu7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1489452087]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1901946292]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.24
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Left_Back" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=71050428]
+custom_minimum_size = Vector2(80, 90)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+theme_override_styles/normal = ExtResource("4_kka82")
+theme_override_styles/pressed = ExtResource("5_rtru6")
+theme_override_styles/hover = ExtResource("6_olhnk")
+text = "<"
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1052267009]
+custom_minimum_size = Vector2(1200, 70)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_3hlpf")
+text = "Default"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right_Forward" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1033659485]
+custom_minimum_size = Vector2(80, 90)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+theme_override_styles/normal = ExtResource("7_njns7")
+theme_override_styles/pressed = ExtResource("8_i7ut1")
+theme_override_styles/hover = ExtResource("9_ylvnp")
+text = ">"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1729726270]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=131753671]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 9
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=305350217]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="Panel/VBoxContainer/HBoxContainer2" unique_id=726315213]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.0
+text = "Назад"
+
+[node name="Select" type="Button" parent="Panel/VBoxContainer/HBoxContainer2" unique_id=1355978188]
+custom_minimum_size = Vector2(650, 80)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "Выбрать"
