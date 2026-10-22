@@ -10,6 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://dsyg2t080onwg" path="res://assets/images/icons/pause_button_rect.svg" id="5_os7y1"]
 [ext_resource type="FontVariation" uid="uid://c4nsdbrhwj3qt" path="res://assets/themes/GameUI_font_time.tres" id="6_os7y1"]
 [ext_resource type="Texture2D" uid="uid://c2hbtkfbfks87" path="res://assets/images/backgrounds/black_hole_example.png" id="6_vp1mc"]
+[ext_resource type="Script" uid="uid://bpm5ey4qfilyl" path="res://Core/Controllers/GameController/GameController.cs" id="8_vp1mc"]
+[ext_resource type="Script" uid="uid://527n861e4g6f" path="res://Core/Main/Score.cs" id="9_85u5h"]
+[ext_resource type="Script" uid="uid://re3hdtpkuwd3" path="res://Core/Main/Streak.cs" id="10_j5wt8"]
+[ext_resource type="Script" uid="uid://3n2ahowdbkax" path="res://Core/CardValidator/ClassicCardValidator.cs" id="11_stcym"]
+[ext_resource type="Script" uid="uid://cl1qghsbela6r" path="res://Core/StreakStrategy/LinearStreakStrategy.cs" id="12_bd4lo"]
+[ext_resource type="Script" uid="uid://b47gwbx12p3t0" path="res://Core/PenaltyStrategy/FixedPenaltyStrategy.cs" id="13_cg7kb"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_os7y1"]
 content_margin_left = 0.0
@@ -132,7 +138,7 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer", "_deckPile", "_setPile")]
+[node name="GameUi" type="Control" unique_id=1932013931 node_paths=PackedStringArray("gameController", "_streakLabel", "_timerLabel", "_scoreLabel", "_pauseButton", "_cardsContainer", "_deckPile", "_setPile") groups=["GameUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,9 +149,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_dcmdd")
 script = ExtResource("2_f8c3s")
-_streakLabel = NodePath("box/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel/VBoxContainer/Label")
+gameController = NodePath("GameController")
+_streakLabel = NodePath("box/VBoxContainer/HorizontalPanel/VBoxContainer/StreakPanel/VBoxContainer/Streak")
 _timerLabel = NodePath("box/VBoxContainer/HorizontalPanel/TimePanel/Time")
-_scoreLabel = NodePath("box/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer/Label")
+_scoreLabel = NodePath("box/VBoxContainer/HorizontalPanel/VBoxContainer/ScorePanel/VBoxContainer/Score")
 _pauseButton = NodePath("box/VBoxContainer/HorizontalPanel/PauseButton")
 _cardsContainer = NodePath("box/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards/CardsContainer")
 _deckPile = NodePath("box/VBoxContainer/MarginContainer/HBoxContainer/DeckAndSets/VBoxContainer/DeckPile")
@@ -360,3 +367,43 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dcmdd")
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
+
+[node name="GameController" type="Node" parent="." unique_id=829617540 node_paths=PackedStringArray("GameScore", "GameStreak", "GameTimer", "CardValidator", "StreakStrategy", "PenaltyStrategy")]
+script = ExtResource("8_vp1mc")
+ScoreForOneSet = 100
+GameScore = NodePath("Score")
+GameStreak = NodePath("Streak")
+GameTimer = NodePath("Timer")
+CardValidator = NodePath("ClassicCardValidator")
+StreakStrategy = NodePath("LinearStreakStrategy")
+PenaltyStrategy = NodePath("FixedPenaltyStrategy")
+metadata/_custom_type_script = "uid://bpm5ey4qfilyl"
+
+[node name="Score" type="Node" parent="GameController" unique_id=388563038]
+script = ExtResource("9_85u5h")
+metadata/_custom_type_script = "uid://527n861e4g6f"
+
+[node name="Streak" type="Node" parent="GameController" unique_id=1929526048]
+script = ExtResource("10_j5wt8")
+metadata/_custom_type_script = "uid://re3hdtpkuwd3"
+
+[node name="ClassicCardValidator" type="Node" parent="GameController" unique_id=1779551402]
+script = ExtResource("11_stcym")
+metadata/_custom_type_script = "uid://3n2ahowdbkax"
+
+[node name="LinearStreakStrategy" type="Node" parent="GameController" unique_id=81759365]
+script = ExtResource("12_bd4lo")
+PointsPerStreakStep = 50
+MaxMultiplier = 2147483647
+metadata/_custom_type_script = "uid://cl1qghsbela6r"
+
+[node name="FixedPenaltyStrategy" type="Node" parent="GameController" unique_id=601874918]
+script = ExtResource("13_cg7kb")
+PenaltyPoints = 100
+metadata/_custom_type_script = "uid://b47gwbx12p3t0"
+
+[node name="Timer" type="Timer" parent="GameController" unique_id=146074093]
+
+[node name="SoundsPlayer1" type="AudioStreamPlayer" parent="." unique_id=522768084]
+
+[node name="SoundsPlayer2" type="AudioStreamPlayer" parent="." unique_id=2015957276]

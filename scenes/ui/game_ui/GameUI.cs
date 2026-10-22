@@ -1,8 +1,14 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Drawing;
+using static Godot.WebSocketPeer;
 
 public partial class GameUI : Control
 {
+	[Export] private GameController gameController;
+
 	[Export] private Label _streakLabel;
 	[Export] private Label _timerLabel;
 	[Export] private Label _scoreLabel;
@@ -10,29 +16,111 @@ public partial class GameUI : Control
 	[Export] private Control _cardsContainer;
 	[Export] private Control _deckPile;
 	[Export] private Control _setPile;
+	private static AudioStreamPlayer sound1;
+	private static AudioStreamPlayer sound2;
+	private static Control _gameui;
 
-	private int _score = 0;
-	private int _streak = 0;
-	private float _time = 300f;
-	private bool _isPaused = false;
-	private Random _random = new Random();
 	private Card _deckTopCard;
+
+	private float _time = 300f;
+	public static bool _isPaused = false;
+	private bool _isGameOver = false;
+	private Random _random = new Random();
+	private static List<int[]> TheDeck = new();
+	private static List<int[]> Discard = new();
+	public static int CardClickedCounter = 0;
+	private static List<Card> CardsField = new();
+	private static bool IsAddCards = false;
+	private List<int> _lastSelectedCardIndices = new();
 
 	public override void _Ready()
 	{
+		sound1 = GetNode<AudioStreamPlayer>("SoundsPlayer1");
+		sound2 = GetNode<AudioStreamPlayer>("SoundsPlayer2");
+		_cardsContainer = GetNode<Control>("Background/VBoxContainer/MarginContainer/HBoxContainer/GridOfCards/CardsContainer");
+		_gameui = GetNode<Control>(".");
 		_pauseButton.Pressed += OnPausePressed;
+
+		gameController.GameScore.ValueChanged += OnScoreChanged;
+		gameController.GameStreak.ValueChanged += OnStreakChanged;
+
+		gameController.SetCheckSuccess += OnSetCheckSuccess;
+		gameController.SetCheckFailed += OnSetCheckFailed;
+		gameController.TimeChanged += OnTimeChanged;
+		gameController.GameFinished += EndGame;
+
 		UpdateUI();
-		
+
 		SetupDeckPile();
 		SetupSetPile();
-		
+
+		InitializeDeck();
 		CallDeferred(nameof(GenerateCards));
 		GetViewport().SizeChanged += OnViewportResized;
+		var screen = GetViewport().GetVisibleRect().Size;
+		
+	}
+
+	private static void PlaySound1(string s) { sound1.Stream = ResourceLoader.Load<AudioStream>(s); sound1.Play(); }
+	private static void PlaySound2(string s) { sound2.Stream = ResourceLoader.Load<AudioStream>(s); sound2.Play(); }
+	public void CardSelected(){ CardClickedCounter += 1; CheckSet(); }
+	public void CardDeselected() { CardClickedCounter -= 1; }
+
+	private void CheckSet()
+	{
+		if (CardClickedCounter != 3) return;
+
+		List<int> selectedIndices = new List<int>();
+		List<CardData> selectedCards = new List<CardData>();
+
+		for (int i = 0; i < CardsField.Count; i++)
+		{
+			if (CardsField[i]._isSelected) 
+			{
+				selectedIndices.Add(i);
+				selectedCards.Add(new CardData(CardsField[i].Shape, CardsField[i].Color, CardsField[i].Fill, CardsField[i].Count));
+			}
+		}
+
+		if (selectedIndices.Count != 3)
+		{
+			GD.PrintErr($"[GameUI] Not 3 cards were selected, but {selectedIndices.Count}");
+			return;
+		}
+
+		_lastSelectedCardIndices = selectedIndices;
+
+		CardClickedCounter = 0;
+
+		gameController.ProcessSelectedSet(selectedCards);
+	}
+
+	private static bool ChekPatternAvailable()
+	{
+		for (int c = 0; c < CardsField.Count-2; c++)
+			for (int f = c + 1; f < CardsField.Count-1; f++)
+				for (int g = f + 1; g < CardsField.Count; g++)
+				{
+					if (ChekPattern(CardsField[c], CardsField[f], CardsField[g]))
+					{ GD.Print($"Pattern - {c + 1}, {f + 1}, {g + 1}"); return true; }	
+				}
+		GD.Print("The pattern does not exist");
+		return false;
+	}
+	private static bool ChekPattern(Card card1, Card card2, Card card3)
+	{
+		if ((card1.Color == card2.Color && card2.Color == card3.Color && card1.Color == card3.Color || card1.Color != card2.Color && card2.Color != card3.Color && card1.Color != card3.Color) &&
+		   (card1.Shape == card2.Shape && card2.Shape == card3.Shape && card1.Shape == card3.Shape || card1.Shape != card2.Shape && card2.Shape != card3.Shape && card1.Shape != card3.Shape) &&
+		   (card1.Fill == card2.Fill && card2.Fill == card3.Fill && card1.Fill == card3.Fill || card1.Fill != card2.Fill && card2.Fill != card3.Fill && card1.Fill != card3.Fill) &&
+		   (card1.Count == card2.Count && card2.Count == card3.Count && card1.Count == card3.Count || card1.Count != card2.Count &&	card2.Count != card3.Count &&	card1.Count !=	card3.Count))
+		{ return true; }
+		else return false;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (_isPaused) return;
+		if (_isPaused || _isGameOver)
+			return;
 
 		_time -= (float)delta;
 		if (_time <= 0)
@@ -53,16 +141,20 @@ public partial class GameUI : Control
 
 	private void UpdateUI()
 	{
-		_streakLabel.Text = $"x{_streak}";
-		_scoreLabel.Text = $"{_score:D4}";
+		_streakLabel.Text = $"x{gameController.GameStreak.CurrentValue}";
+		_scoreLabel.Text = $"{gameController.GameScore.CurrentValue:D4}";
+
 		_timerLabel.Text = $"{Mathf.Floor(_time / 60):00}:{Mathf.Floor(_time % 60):00}";
 	}
 
+	//Рубашка колоды, карта декоративная и на клики не реагирует
 	private void SetupDeckPile()
 	{
+		if (_deckPile == null) return;
+
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 		_deckTopCard = cardScene.Instantiate<Card>();
-		_deckTopCard.Setup(Card.ShapeType.Rectangle, Card.ColorType.Blue, Card.FillType.Solid, 1);
+		_deckTopCard.Setup(new CardData(CardFigure.Rectangle, CardColor.Blue, CardFill.Solid, CardCount.One));
 		_deckTopCard.SetBaseScale(Vector2.One);
 		_deckTopCard.Scale = new Vector2(0.5f, 0.5f);
 		_deckTopCard.SetSelected(false);
@@ -70,13 +162,16 @@ public partial class GameUI : Control
 		_deckPile.AddChild(_deckTopCard);
 	}
 
+	//Стопка собранных сетов
 	private void SetupSetPile()
 	{
+		if (_setPile == null) return;
+
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 		for (int i = 0; i < 5; i++)
 		{
 			var card = cardScene.Instantiate<Card>();
-			card.Setup(Card.ShapeType.Rectangle, Card.ColorType.Blue, Card.FillType.Solid, 1);
+			card.Setup(new CardData(CardFigure.Rectangle, CardColor.Blue, CardFill.Solid, CardCount.One));
 			card.Scale = new Vector2(0.4f, 0.4f);
 			card.Rotation = (float)(_random.NextDouble() * 0.2f - 0.1f);
 			card.Position = new Vector2((float)(_random.NextDouble() * 10 - 5), (float)(_random.NextDouble() * 10 - 5));
@@ -94,6 +189,7 @@ public partial class GameUI : Control
 		{
 			child.QueueFree();
 		}
+		CardsField.Clear();
 
 		var screen = GetViewport().GetVisibleRect().Size;
 
@@ -111,12 +207,16 @@ public partial class GameUI : Control
 		{
 			var card = cardScene.Instantiate<Card>();
 
-			var shape = (Card.ShapeType)_random.Next(0, 3);
-			var color = (Card.ColorType)_random.Next(0, 3);
-			var fill = (Card.FillType)_random.Next(0, 3);
-			int count = _random.Next(1, 4);
+			var figure = (CardFigure)_random.Next(0, 3);
+			var color = (CardColor)_random.Next(0, 3);
+			var fill = (CardFill)_random.Next(0, 3);
+			var count = (CardCount)_random.Next(1, 4);
 
-			card.Setup(shape, color, fill, count);
+			Discard.Add(TheDeck[0]);
+			TheDeck.RemoveAt(0);
+
+			CardData data = new CardData(figure, color, fill, count);
+			card.Setup(data);
 			card.SetScale(1.0f);
 
 			card.Scale = new Vector2(cardScale, cardScale);
@@ -129,43 +229,134 @@ public partial class GameUI : Control
 			float y = startY + row * (baseCardHeight * cardScale + spacing);
 
 			card.Position = new Vector2(x, y);
-
+			
 			_cardsContainer.AddChild(card);
+			CardsField.Add(card);
 		}
-
+		
 		GD.Print($"Generated {_cardsContainer.GetChildCount()} cards");
+		if(ChekPatternAvailable()) return;
+		AddAdditionalCards();
 	}
 
-	private void SpawnCardFromDeck(Vector2 targetPosition)
+	private static void GenerateNewCard(int i)
 	{
+		var shape = (CardFigure)TheDeck[0][0];
+		var color = (CardColor)TheDeck[0][1];
+		var fill = (CardFill)TheDeck[0][2];
+		var count = (CardCount)TheDeck[0][3];
+
+		Discard.Add(TheDeck[0]);
+		TheDeck.RemoveAt(0);
+
+		CardData data = new CardData(
+		shape,
+		color,
+		fill,
+		count
+		);
+
+		CardsField[i].Setup(data);
+		CardsField[i].SetSelected(false);
+		CardsField[i].CCount = 0;
+		CardsField[i].UpdateCard();
+	}
+
+	private void AddAdditionalCards()
+	{
+		IsAddCards = true;
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
-		var card = cardScene.Instantiate<Card>();
 
-		var shape = (Card.ShapeType)_random.Next(0, 3);
-		var color = (Card.ColorType)_random.Next(0, 3);
-		var fill = (Card.FillType)_random.Next(0, 3);
-		int count = _random.Next(1, 4);
+		if (cardScene == null)
+		{
+			GD.PrintErr("[GameUI] \nFailed to load Card.tscn");
+			return;
+		}
 
-		card.Setup(shape, color, fill, count);
-		card.Scale = new Vector2(0.3f, 0.3f);
-		card.GlobalPosition = _deckPile.GlobalPosition + new Vector2(20, 20);
-		card.SetBaseScale(new Vector2(0.3f, 0.3f));
-		card.Rotation = 0;
+		Vector2 screen; screen.X = 1920; screen.Y = 1080;
+		float baseCardWidth = 100f;
+		float baseCardHeight = 140f;
 
-		_cardsContainer.AddChild(card);
+		float scaleX = (screen.X / 4.5f) / baseCardWidth;
+		float scaleY = (screen.Y / 3.5f) / baseCardHeight;
+		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
 
-		var tween = card.CreateTween();
-		tween.SetParallel(true);
+		float startX = screen.X * -0.17f;
+		float startY = screen.Y * -0.29f;
 
-		float finalScale = 0.75f;
-		tween.TweenProperty(card, "scale", new Vector2(finalScale, finalScale), 0.4f)
-			 .SetEase(Tween.EaseType.Out);
-		tween.TweenProperty(card, "global_position", targetPosition, 0.4f)
-			 .SetEase(Tween.EaseType.Out);
-		tween.TweenProperty(card, "rotation", (float)(_random.NextDouble() * 0.2 - 0.1), 0.4f)
-			 .SetEase(Tween.EaseType.Out);
+		for (int i = 0; i < 12; i++)
+		{
+			CardsField[i].Scale = new Vector2(cardScale, cardScale);
+			CardsField[i].SetBaseScale(CardsField[i].Scale);
 
-		tween.Finished += () => card.SetBaseScale(card.Scale);
+			int row = i / 4;
+			int col = i % 4;
+			float spacing = 8 * cardScale;
+			float x = startX + col * (baseCardWidth * cardScale + spacing);
+			
+
+			CardsField[i].Position = new Vector2(CardsField[i].Position.X - 100, CardsField[i].Position.Y);
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			int icol = 4;
+			int irow = i;
+			float ispacing = 8 * cardScale;
+			float ix = startX + icol * (baseCardWidth * cardScale + ispacing);
+			float iy = startY + irow * (baseCardHeight * cardScale + ispacing);
+			var icard = cardScene.Instantiate<Card>();
+
+			var ishape = (CardFigure)TheDeck[0][0];
+			var icolor = (CardColor)TheDeck[0][1];
+			var ifill = (CardFill)TheDeck[0][2];
+			var icount = (CardCount)TheDeck[0][3];
+
+			Discard.Add(TheDeck[0]);
+			TheDeck.RemoveAt(0);
+
+			CardData data = new CardData(ishape, icolor, ifill, icount);
+			icard.Setup(data);
+
+			icard.SetScale(1.0f);
+
+			icard.Scale = new Vector2(cardScale, cardScale);
+			icard.SetBaseScale(icard.Scale);
+			icard.Position = new Vector2(ix - 100, iy);
+
+			_cardsContainer.AddChild(icard);
+			CardsField.Add(icard);
+		}
+		ChekPatternAvailable();
+	}
+
+	private static void UpdateCardPosition()
+	{
+		IsAddCards = false;
+
+		Vector2 screen; screen.X = 1920; screen.Y = 1080;
+		float baseCardWidth = 100f;
+		float baseCardHeight = 140f;
+
+		float scaleX = (screen.X / 4.5f) / baseCardWidth;
+		float scaleY = (screen.Y / 3.5f) / baseCardHeight;
+		float cardScale = Mathf.Min(scaleX, scaleY) * 0.75f;
+
+		float startX = screen.X * -0.17f + 640;
+		float startY = screen.Y * -0.29f + 350;
+
+		for (int i = 0; i < 12; i++)
+		{
+			CardsField[i].Scale = new Vector2(cardScale, cardScale);
+			CardsField[i].SetBaseScale(CardsField[i].Scale);
+
+			int row = i / 4;
+			int col = i % 4;
+			float spacing = 8 * cardScale;
+			float x = startX + col * (baseCardWidth * cardScale + spacing);
+			float y = startY + row * (baseCardHeight * cardScale + spacing);
+
+			CardsField[i].Position = new Vector2(x, y);
+		}
 	}
 
 	private void OnViewportResized()
@@ -175,34 +366,159 @@ public partial class GameUI : Control
 
 	private void OnPausePressed()
 	{
+		gameController.PauseGameTimer();
+
 		var pauseScene = (PackedScene)GD.Load("res://scenes/ui/pause/PausePopup.tscn");
-		var pauseInstance = pauseScene.Instantiate<Control>();
+		var pauseInstance = pauseScene.Instantiate<PausePopup>();
+
+		pauseInstance.CompleteGame += () =>
+		{
+			pauseInstance.QueueFree();
+			EndGame();
+		};
+
+		pauseInstance.Setup(gameController);
+
 		AddChild(pauseInstance);
+		_isPaused = true;
 	}
 
 	private void EndGame()
 	{
+		if (_isGameOver) return;
+
+		_isGameOver = true;
+
+		int score = gameController.GameScore.CurrentValue;
+		int streak = gameController.GameStreak.MaxStreak;
+		int patterns = gameController.SetsThisGame;
+
+		var records = gameController.FinishGame();
+
 		var gameOverScene = (PackedScene)GD.Load("res://scenes/ui/game_over/GameOver.tscn");
-		var gameOverInstance = gameOverScene.Instantiate<GameOver>();
-		gameOverInstance.SetData(_score, _streak, 0, _score > 0);
+
+		var gameOverInstance =
+			gameOverScene.Instantiate<GameOver>();
+
+		gameOverInstance.SetData(score, streak, patterns, records.scoreRecord, records.streakRecord, records.PatternsRecord);
+
 		AddChild(gameOverInstance);
-	}
-
-	public void AddScore(int points)
-	{
-		_score += points;
-		UpdateUI();
-	}
-
-	public void SetStreak(int value)
-	{
-		_streak = value;
-		UpdateUI();
 	}
 
 	public void ResetTimer()
 	{
 		_time = 300f;
 		UpdateUI();
+	}
+	private void OnScoreChanged(int value)
+	{
+		_scoreLabel.Text = $"{value:D4}";
+	}
+
+	private void OnStreakChanged(int value)
+	{
+		_streakLabel.Text = $"x{value}";
+	}
+
+	private void OnTimeChanged(int remainingTime)
+	{
+		int minutes = remainingTime / 60;
+		int seconds = remainingTime % 60;
+
+		_timerLabel.Text = $"{minutes:00}:{seconds:00}";
+	}
+
+	private void InitializeDeck()
+	{
+		TheDeck.Clear();
+		for (int c = 0; c < 3; c++)
+			for (int s = 0; s < 3; s++)
+				for (int n = 0; n < 3; n++)
+					for (int f = 1; f < 4; f++)
+					{
+						int[] cardcode = new int[] { c, s, n, f };
+						TheDeck.Add(cardcode);
+					}
+		Shuffle<int[]>(TheDeck);
+	}
+	private void Shuffle<T>(IList<T> list)
+	{
+		var rng = new Random();
+		int n = list.Count;
+		while (n > 1)
+		{
+			n--;
+			int k = rng.Next(n + 1);
+			T value = list[k];
+			list[k] = list[n];
+			list[n] = value;
+		}
+	}
+	private void OnSetCheckSuccess(Godot.Collections.Array<CardData> checkedCards)
+	{
+		GD.Print("[GameUI] Correct SET!");
+
+		PlaySound1("res://sounds/correct_set_1.mp3");
+
+		if (TheDeck.Count > 0)
+		{
+			if (!IsAddCards)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					GenerateNewCard(_lastSelectedCardIndices[i]);
+				}
+			}
+			else
+			{
+				for (int i = 2; i >= 0; i--)
+				{
+					int index = _lastSelectedCardIndices[i];
+
+					CardsField[index].QueueFree();
+					CardsField.RemoveAt(index);
+				}
+
+				UpdateCardPosition();
+			}
+
+			_lastSelectedCardIndices.Clear();
+
+			if (ChekPatternAvailable())
+				return;
+
+			AddAdditionalCards();
+		}
+		else
+		{
+			for (int i = 2; i >= 0; i--)
+			{
+				int index = _lastSelectedCardIndices[i];
+
+				CardsField[index].QueueFree();
+				CardsField.RemoveAt(index);
+			}
+
+			if (ChekPatternAvailable())
+				return;
+
+			EndGame();
+		}
+
+		_lastSelectedCardIndices.Clear();
+	}
+	private void OnSetCheckFailed()
+	{
+		GD.Print("[GameUI] Uncorrect SET!");
+
+		PlaySound1("res://sounds/incorrect_set_1.mp3");
+
+		foreach (int index in _lastSelectedCardIndices)
+		{
+			CardsField[index].SetSelected(false);
+			CardsField[index].CCount = 0;
+		}
+
+		_lastSelectedCardIndices.Clear();
 	}
 }

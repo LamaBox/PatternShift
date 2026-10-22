@@ -45,10 +45,10 @@ public partial class Collection : Control
 					for (int count = 1; count <= 3; count++)
 					{
 						var card = CreateCard(
-							(Card.ShapeType)shape,
-							(Card.ColorType)color,
-							(Card.FillType)fill,
-							count
+							(CardFigure)shape,
+							(CardColor)color,
+							(CardFill)fill,
+							(CardCount)count
 						);
 						_gridContainer.AddChild(card);
 					}
@@ -57,12 +57,12 @@ public partial class Collection : Control
 		}
 	}
 
-	private Card CreateCard(Card.ShapeType shape, Card.ColorType color, Card.FillType fill, int count)
+	private Card CreateCard(CardFigure shape, CardColor color, CardFill fill, CardCount count)
 	{
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 		var card = cardScene.Instantiate<Card>();
 
-		card.Setup(shape, color, fill, count);
+		card.Setup(new CardData(shape, color, fill, count));
 		card.SetScale(1.0f);
 		card.SetSelected(false);
 		card.MouseFilter = MouseFilterEnum.Ignore;

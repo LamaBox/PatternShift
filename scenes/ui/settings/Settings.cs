@@ -12,18 +12,23 @@ public partial class Settings : Control
 	[Export] private OptionButton _languageOption;
 	[Export] private HSlider _musicVolumeSlider;
 	[Export] private HSlider _soundsVolumeSlider;
+
 	[Export] private LineEdit _musicValueEdit;
 	[Export] private LineEdit _soundsValueEdit;
+
 	[Export] private Button _closeButton;
 
 	public override void _Ready()
 	{
 		_musicVolumeSlider.ValueChanged += OnMusicSliderChanged;
 		_soundsVolumeSlider.ValueChanged += OnSoundsSliderChanged;
+
 		_musicValueEdit.TextChanged += OnMusicTextChanged;
 		_soundsValueEdit.TextChanged += OnSoundsTextChanged;
+
 		_musicValueEdit.TextSubmitted += OnMusicValueSubmitted;
 		_soundsValueEdit.TextSubmitted += OnSoundsValueSubmitted;
+
 		_screenModeOption.ItemSelected += OnScreenModeChanged;
 		_resolutionOption.ItemSelected += OnResolutionChanged;
 		_uiScaleSlider.ValueChanged += OnUIScaleChanged;
@@ -32,6 +37,7 @@ public partial class Settings : Control
 		_showComboOption.ItemSelected += OnShowComboChanged;
 		_colorLabelsOption.ItemSelected += OnColorLabelsChanged;
 		_languageOption.ItemSelected += OnLanguageChanged;
+
 		_closeButton.Pressed += OnClosePressed;
 
 		LoadSettings();
@@ -39,6 +45,15 @@ public partial class Settings : Control
 
 	private void LoadSettings()
 	{
+		var settings = SaveController.SettingsData;
+
+		_musicVolumeSlider.Value = settings.MusicVolume;
+		_soundsVolumeSlider.Value = settings.SoundsVolume;
+
+		UpdateMusicLabel(settings.MusicVolume);
+		UpdateSoundsLabel(settings.SoundsVolume);
+
+		//Эти настройки пока не сохраняются, выставляем значения по умолчанию
 		_screenModeOption.Select(2);
 		_resolutionOption.Select(0);
 		_uiScaleSlider.Value = 1.0f;
@@ -47,10 +62,6 @@ public partial class Settings : Control
 		_showComboOption.Select(0);
 		_colorLabelsOption.Select(1);
 		_languageOption.Select(0);
-		_musicVolumeSlider.Value = 80;
-		_soundsVolumeSlider.Value = 80;
-		UpdateMusicLabel(80);
-		UpdateSoundsLabel(80);
 	}
 
 	private void OnScreenModeChanged(long index)
@@ -93,14 +104,14 @@ public partial class Settings : Control
 	{
 		int idx = (int)index;
 		string fps = _fpsLimitOption.GetItemText(idx);
-		
+
 		if (fps == "Отключено" || fps == "Off")
 		{
 			Engine.MaxFps = 0;
 			GD.Print("FPS Limit: Off");
 			return;
 		}
-		
+
 		if (int.TryParse(fps, out int fpsValue))
 		{
 			Engine.MaxFps = fpsValue;
@@ -185,6 +196,16 @@ public partial class Settings : Control
 
 	private void OnClosePressed()
 	{
+		var settings = SaveController.SettingsData;
+
+		settings.MusicVolume =
+			Mathf.RoundToInt((float)_musicVolumeSlider.Value);
+
+		settings.SoundsVolume =
+			Mathf.RoundToInt((float)_soundsVolumeSlider.Value);
+
+		SaveController.SaveSettings(settings);
+
 		QueueFree();
 	}
 }

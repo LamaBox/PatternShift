@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://bbetvxo00tbv2"]
+
+[ext_resource type="Texture2D" uid="uid://xfjycp061qup" path="res://assets/images/achievements/logic_master.png" id="1_3dn3s"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_p5kjl"]
+
+[resource]
+script = ExtResource("1_p5kjl")
+Id = "totalSets_100"
+AchievementName = "Мастер логики"
+AchievementDescription = "Найти 100 комбинаций"
+Type = 5
+TargetValue = 100
+Icon = ExtResource("1_3dn3s")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

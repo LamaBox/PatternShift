@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://beq8k6w0saixe"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_3pplh"]
+[ext_resource type="Texture2D" uid="uid://byfxnc1xfv5pi" path="res://assets/images/achievements/legend.png" id="1_vya30"]
+
+[resource]
+script = ExtResource("1_3pplh")
+Id = "all_achievements"
+AchievementName = "Легенда"
+AchievementDescription = "Открыть все дизайны карточек и получить все остальные достижения"
+Type = 12
+TargetValue = 1
+Icon = ExtResource("1_vya30")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

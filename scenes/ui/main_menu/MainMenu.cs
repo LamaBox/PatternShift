@@ -8,11 +8,17 @@ public partial class MainMenu : Control
 	[Export] private Button _collectionButton;
 	[Export] private Button _quitButton;
 	
+	[Export] private Label _totalScoreLabel;
+	
 	private Timer _spawnTimer;
 	private Node2D _fallingCardsLayer;
 
 	public override void _Ready()
 	{
+		var settings = SaveController.SettingsData;
+
+		UpdateTotalScore();
+		
 		_fallingCardsLayer = GetNode<Node2D>("FallingCardsLayer");
 
 		_playButton.Pressed += OnPlayPressed;
@@ -79,11 +85,14 @@ public partial class MainMenu : Control
 		var cardScene = (PackedScene)GD.Load("res://scenes/game/cards/Card.tscn");
 		var card = cardScene.Instantiate<Card>();
 
-		var shape = (Card.ShapeType)GD.RandRange(0, 2);
-		var color = (Card.ColorType)GD.RandRange(0, 2);
-		var fill = (Card.FillType)GD.RandRange(0, 2);
-		int count = (int)GD.RandRange(1, 3);
-		card.Setup(shape, color, fill, count);
+		var figure = (CardFigure)GD.RandRange(0, 2);
+		var color = (CardColor)GD.RandRange(0, 2);
+		var fill = (CardFill)GD.RandRange(0, 2);
+		var count = (CardCount)GD.RandRange(1, 3);
+
+		CardData data = new CardData(figure, color, fill, count);
+
+		card.Setup(data);
 
 		float scale = GD.Randf() * 1.5f + 1.5f;
 		card.SetScale(scale);
@@ -125,7 +134,12 @@ public partial class MainMenu : Control
 		AddChild(settingsInstance);
 	}
 
-	private void OnAchievementsPressed() { }
+	private void OnAchievementsPressed() 
+	{
+		var achievementsScene = (PackedScene)GD.Load("res://scenes/ui/achievements/Achievements.tscn");
+		var achievementsInstance = achievementsScene.Instantiate<Control>();
+		AddChild(achievementsInstance);
+	}
 
 	private void OnCollectionPressed()
 	{
@@ -157,5 +171,17 @@ public partial class MainMenu : Control
 		{
 			SpawnInitialCard();
 		}
+	}
+	
+	private void UpdateTotalScore()
+	{
+		GameSaveData saveData = SaveController.LoadGameData();
+		
+		if (saveData == null)
+		{
+			_totalScoreLabel.Text = "0000000";
+			return;
+		}
+		_totalScoreLabel.Text = saveData.TotalScore.ToString("D7");
 	}
 }

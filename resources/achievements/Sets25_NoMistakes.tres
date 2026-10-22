@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://b47joqpxeutb4"]
+
+[ext_resource type="Texture2D" uid="uid://muacqjn047gh" path="res://assets/images/achievements/unstoppable.png" id="1_3ua8n"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="2_lilv8"]
+
+[resource]
+script = ExtResource("2_lilv8")
+Id = "Sets_25_without_mistakes"
+AchievementName = "Без промаха"
+AchievementDescription = "Найти 25 комбинаций подряд без ошибок"
+Type = 8
+TargetValue = 25
+Icon = ExtResource("1_3ua8n")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"
