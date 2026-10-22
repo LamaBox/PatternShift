@@ -6,6 +6,7 @@ public partial class GameSaveData : Resource
 {
     [Export] public int BestScore { get; set; } = 0;
     [Export] public int BestStreak { get; set; } = 0;
+    [Export] public int BestPatterns { get; set; } = 0;
 
     [Export] public int TotalScore { get; set; } = 0;
 

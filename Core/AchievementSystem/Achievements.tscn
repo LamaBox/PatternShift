@@ -5,8 +5,22 @@
 [ext_resource type="Resource" uid="uid://w8ijl5xmjo8y" path="res://resources/achievements/FirstSet.tres" id="3_qtoig"]
 [ext_resource type="Resource" uid="uid://bwfcy42k2nmt8" path="res://resources/achievements/FirstGame.tres" id="4_qtoig"]
 [ext_resource type="Resource" uid="uid://df185apnjqyui" path="res://resources/achievements/Points_1000.tres" id="5_l8182"]
+[ext_resource type="Resource" uid="uid://dsmnkn5rtudbs" path="res://resources/achievements/NoMistakes.tres" id="6_bjm61"]
+[ext_resource type="Resource" uid="uid://c0khsml6efaq" path="res://resources/achievements/TotalSets_10.tres" id="7_g78ka"]
+[ext_resource type="Resource" uid="uid://35cjnbw2xnvw" path="res://resources/achievements/TotalSets_50.tres" id="8_y5vsq"]
+[ext_resource type="Resource" uid="uid://bbetvxo00tbv2" path="res://resources/achievements/TotalSets_100.tres" id="9_y5vsq"]
+[ext_resource type="Resource" uid="uid://6nu02w1jojm6" path="res://resources/achievements/TotalSets_500.tres" id="10_ls5uk"]
+[ext_resource type="Resource" uid="uid://b47joqpxeutb4" path="res://resources/achievements/Sets25_NoMistakes.tres" id="11_ls5uk"]
+[ext_resource type="Resource" uid="uid://ci0gh7m10e81h" path="res://resources/achievements/Set_sec_5.tres" id="12_6dm4i"]
+[ext_resource type="Resource" uid="uid://dx6j4hc5a4x6s" path="res://resources/achievements/Series_5.tres" id="12_slb81"]
+[ext_resource type="Resource" uid="uid://bjowubeeylxw6" path="res://resources/achievements/Series_10.tres" id="13_hlqj6"]
+[ext_resource type="Resource" uid="uid://c4okwdq8fvn6o" path="res://resources/achievements/Series_20.tres" id="14_fffem"]
+[ext_resource type="Resource" uid="uid://dqnoxgli30dom" path="res://resources/achievements/Set_10_per_minute.tres" id="16_8vpy1"]
+[ext_resource type="Resource" uid="uid://la6qbi3b3qnr" path="res://resources/achievements/Sets_3_per_15_sec.tres" id="17_qqku5"]
+[ext_resource type="Resource" uid="uid://dhppdc71vdtci" path="res://resources/achievements/Mode_on_time.tres" id="18_gddjv"]
+[ext_resource type="Resource" uid="uid://beq8k6w0saixe" path="res://resources/achievements/All_achievements.tres" id="19_v8q2g"]
 
 [node name="AchievementSystem" type="Node" unique_id=1380662846]
 script = ExtResource("1_cke4p")
-AllAchievements = Array[ExtResource("2_8ygst")]([ExtResource("3_qtoig"), ExtResource("4_qtoig"), ExtResource("5_l8182")])
+AllAchievements = Array[ExtResource("2_8ygst")]([ExtResource("3_qtoig"), ExtResource("4_qtoig"), ExtResource("6_bjm61"), ExtResource("12_6dm4i"), ExtResource("5_l8182"), ExtResource("7_g78ka"), ExtResource("8_y5vsq"), ExtResource("9_y5vsq"), ExtResource("10_ls5uk"), ExtResource("12_slb81"), ExtResource("13_hlqj6"), ExtResource("14_fffem"), ExtResource("11_ls5uk"), ExtResource("16_8vpy1"), ExtResource("17_qqku5"), ExtResource("18_gddjv"), ExtResource("19_v8q2g")])
 metadata/_custom_type_script = "uid://c047evqheeiiv"

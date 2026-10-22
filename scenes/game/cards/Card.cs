@@ -103,9 +103,9 @@ public partial class Card : Control
 		_clickArea = GetNode<Button>("ClickArea");
 		_selectionParticles = GetNode<GpuParticles2D>("SelectionParticles");
 		_sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В Р вЂ¦Р В Р’В°Р В Р вЂ Р В Р’ВµР В РўвЂР В Р’ВµР В Р вЂ¦Р В РЎвЂР В Р’Вµ Р В Р вЂ¦Р В Р’В° Р В РЎвЂќР В Р’В°Р РЋР вЂљР РЋРІР‚С™Р В РЎвЂўР РЋРІР‚РЋР В РЎвЂќР РЋРЎвЂњ 1.mp3");
+		_sound.Stream = ResourceLoader.Load<AudioStream>("res://sounds/card_hover_1.mp3");
 		_sound2 = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
-		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/Р В РЎвЂќР В Р’В»Р В РЎвЂР В РЎвЂќ 1.mp3");
+		_sound2.Stream = ResourceLoader.Load<AudioStream>("res://sounds/card_click_1.mp3");
 
 		if (_clickArea != null)
 		{

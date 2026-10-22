@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://c4okwdq8fvn6o"]
+
+[ext_resource type="Texture2D" uid="uid://ifxglfh6dkdq" path="res://assets/images/achievements/streak_x20.png" id="1_4qy0a"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_u8umm"]
+
+[resource]
+script = ExtResource("1_u8umm")
+Id = "series_20"
+AchievementName = "Серия ×20"
+AchievementDescription = "Cделать серию из 20 правильных ответов"
+Type = 7
+TargetValue = 20
+Icon = ExtResource("1_4qy0a")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

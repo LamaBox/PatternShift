@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://bjowubeeylxw6"]
+
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_8jng8"]
+[ext_resource type="Texture2D" uid="uid://bxij4eev2d8lq" path="res://assets/images/achievements/streak_x10.png" id="1_vrsk4"]
+
+[resource]
+script = ExtResource("1_8jng8")
+Id = "series_10"
+AchievementName = "Серия ×10"
+AchievementDescription = "Сделать серию из 10 правильных ответов"
+Type = 7
+TargetValue = 10
+Icon = ExtResource("1_vrsk4")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

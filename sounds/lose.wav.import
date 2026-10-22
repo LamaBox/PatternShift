@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ee27ggy3ip61"
-path="res://.godot/imported/победа.wav-2aa3db3cd0e3e34191701264b441ca85.sample"
+uid="uid://7s2cslgt8pvr"
+path="res://.godot/imported/lose.wav-cb4e7670a5fe2d89b40e499c15bd8f1b.sample"
 
 [deps]
 
-source_file="res://sounds/победа.wav"
-dest_files=["res://.godot/imported/победа.wav-2aa3db3cd0e3e34191701264b441ca85.sample"]
+source_file="res://sounds/lose.wav"
+dest_files=["res://.godot/imported/lose.wav-cb4e7670a5fe2d89b40e499c15bd8f1b.sample"]
 
 [params]
 

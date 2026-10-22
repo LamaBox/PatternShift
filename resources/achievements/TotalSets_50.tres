@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://35cjnbw2xnvw"]
+
+[ext_resource type="Texture2D" uid="uid://bdofd68t12sb" path="res://assets/images/achievements/analyst.png" id="1_dqbtw"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="1_li4cs"]
+
+[resource]
+script = ExtResource("1_li4cs")
+Id = "totalSets_50"
+AchievementName = "Аналитик "
+AchievementDescription = "Найти 50 комбинаций"
+Type = 5
+TargetValue = 50
+Icon = ExtResource("1_dqbtw")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"

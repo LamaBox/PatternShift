@@ -25,10 +25,10 @@ public partial class GameOver : Control
 		_streakLabel.Text = $"x{streak}";
 		_patternsLabel.Text = patterns.ToString();
 
-        _recordLabel1.Text = isNewScoreRecord ? "Новый рекорд!" : "";
-        _recordLabel2.Text = isNewStreakRecord ? "Новый рекорд!" : "";
-        _recordLabel3.Text = isNewPatternsRecord ? "Новый рекорд!" : "";
-    }
+		_recordLabel1.Text = isNewScoreRecord ? "Новый рекорд!" : "";
+		_recordLabel2.Text = isNewStreakRecord ? "Новый рекорд!" : "";
+		_recordLabel3.Text = isNewPatternsRecord ? "Новый рекорд!" : "";
+	}
 
 	private void OnQuitPressed()
 	{

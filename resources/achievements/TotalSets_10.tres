@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AchievementData" format=3 uid="uid://c0khsml6efaq"]
+
+[ext_resource type="Texture2D" uid="uid://qolle4ecu4o2" path="res://assets/images/achievements/explorer.png" id="1_7xif6"]
+[ext_resource type="Script" uid="uid://dlp73yl0k544o" path="res://Core/AchievementSystem/AchievementData.cs" id="2_66fdo"]
+
+[resource]
+script = ExtResource("2_66fdo")
+Id = "totalSets_10"
+AchievementName = "Исследователь "
+AchievementDescription = "Найти 10 комбинаций"
+Type = 5
+TargetValue = 10
+Icon = ExtResource("1_7xif6")
+metadata/_custom_type_script = "uid://dlp73yl0k544o"
